@@ -39,8 +39,26 @@ export async function generateMetadata({ params }) {
   const { data: frontmatter } = matter(fileContents);
 
   return {
-    title: `${frontmatter.title} - Alexi Canamo`,
+    title: frontmatter.title,
     description: frontmatter.excerpt || "Blog post by Alexi Canamo",
+    openGraph: {
+      title: frontmatter.title,
+      description: frontmatter.excerpt || "Blog post by Alexi Canamo",
+      images: frontmatter.coverImage
+        ? [frontmatter.coverImage]
+        : ["/og-image.png"],
+      type: "article",
+      publishedTime: frontmatter.date,
+      authors: ["Alexi Canamo"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: frontmatter.title,
+      description: frontmatter.excerpt || "Blog post by Alexi Canamo",
+      images: frontmatter.coverImage
+        ? [frontmatter.coverImage]
+        : ["/og-image.png"],
+    },
   };
 }
 

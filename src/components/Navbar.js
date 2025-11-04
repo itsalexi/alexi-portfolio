@@ -57,7 +57,11 @@ export default function PortfolioNavbar() {
           >
             Contact
           </NavbarButton>
-          <NavbarButton variant="dark" href="/resume.pdf" className="text-sm">
+          <NavbarButton
+            variant="dark"
+            href={socials.resume}
+            className="text-sm"
+          >
             Resume
           </NavbarButton>
         </div>
@@ -99,7 +103,9 @@ export default function PortfolioNavbar() {
             Contact
           </a>
           <a
-            href="/resume.pdf"
+            href={socials.resume}
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-neutral-600 dark:text-neutral-300"
             onClick={() => setIsOpen(false)}
           >

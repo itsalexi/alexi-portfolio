@@ -5,8 +5,15 @@ import BlogCard from "@/components/BlogCard";
 import { calculateReadingTime } from "@/lib/reading-time";
 
 export const metadata = {
-  title: "Blog - Alexi Canamo",
-  description: "Thoughts on technology, web development, and building products",
+  title: "Blog",
+  description:
+    "Technical articles, development insights, and lessons learned from building software. Read about web development, React, Next.js, and my journey as a CS student.",
+  openGraph: {
+    title: "Blog - Alexi Canamo",
+    description:
+      "Technical articles and insights about software development, web technologies, and my journey as a Computer Science student at Ateneo.",
+    images: ["/og-image.png"],
+  },
 };
 
 // This is a server component - statically generated at build time

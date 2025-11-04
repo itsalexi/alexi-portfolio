@@ -92,6 +92,7 @@ export default function TalksClient({ talks: initialTalks = [] }) {
               location={talk.location}
               description={talk.shortDescription}
               topics={talk.topics}
+              image={talk.images?.[0]}
             />
           ))}
         </div>

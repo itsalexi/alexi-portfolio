@@ -31,9 +31,9 @@ export default function AboutClient() {
             <div className="grid md:grid-cols-2 gap-16 items-center">
               {/* Left - Profile */}
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
                 className="space-y-6"
               >
                 <div className="relative aspect-square rounded-2xl overflow-hidden max-w-md mx-auto md:mx-0">
@@ -68,9 +68,9 @@ export default function AboutClient() {
 
               {/* Right - Intro */}
               <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.15 }}
                 className="space-y-6"
               >
                 <div>
@@ -518,40 +518,44 @@ export default function AboutClient() {
 
                 <div className="pt-6 border-t border-white/10">
                   <p className="text-white/60 text-sm mb-4">Connect with me</p>
-                  <div className="flex gap-4">
+                  <div className="grid grid-cols-2 sm:flex gap-3">
                     <a
                       href={socials.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
+                      className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
                     >
-                      <IconBrandGithub className="w-5 h-5" />
-                      <span className="text-sm">GitHub</span>
+                      <IconBrandGithub className="w-5 h-5 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">GitHub</span>
                     </a>
                     <a
                       href={socials.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
+                      className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
                     >
-                      <IconBrandLinkedin className="w-5 h-5" />
-                      <span className="text-sm">LinkedIn</span>
+                      <IconBrandLinkedin className="w-5 h-5 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">
+                        LinkedIn
+                      </span>
                     </a>
                     <a
                       href={socials.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
+                      className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
                     >
-                      <IconBrandInstagram className="w-5 h-5" />
-                      <span className="text-sm">Instagram</span>
+                      <IconBrandInstagram className="w-5 h-5 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">
+                        Instagram
+                      </span>
                     </a>
                     <a
                       href={`mailto:${socials.email}`}
-                      className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
+                      className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
                     >
-                      <IconMail className="w-5 h-5" />
-                      <span className="text-sm">Email</span>
+                      <IconMail className="w-5 h-5 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">Email</span>
                     </a>
                   </div>
                 </div>
@@ -561,7 +565,7 @@ export default function AboutClient() {
         </section>
 
         {/* Big CTA with TextHoverEffect */}
-        <section className="relative py-32 px-6 overflow-visible">
+        <section className="relative py-8 md:py-32 px-6 overflow-visible">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}

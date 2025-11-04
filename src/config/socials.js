@@ -3,4 +3,5 @@ export const socials = {
   linkedin: "https://linkedin.com/in/alexicanamo",
   instagram: "https://instagram.com/alexicanamo",
   email: "alexicanamo@gmail.com",
+  resume: "https://cv.alexi.life",
 };

@@ -4,9 +4,15 @@ import matter from "gray-matter";
 import ProjectsClient from "./ProjectsClient";
 
 export const metadata = {
-  title: "Projects - Alexi Canamo",
+  title: "Projects",
   description:
-    "A collection of my projects, from web applications to side projects",
+    "Portfolio of software projects by Alexi Canamo including Enlistment Helper, QPI Calculator, One Big Match, and more tools used by thousands of Ateneo students.",
+  openGraph: {
+    title: "Projects - Alexi Canamo",
+    description:
+      "Browse my portfolio of web applications and tools including Enlistment Helper, QPI Calculator, and One Big Match - helping thousands of students.",
+    images: ["/og-image.png"],
+  },
 };
 
 // This is a server component - statically generated at build time

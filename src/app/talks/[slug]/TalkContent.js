@@ -31,7 +31,7 @@ export default function TalkContent({ talk }) {
       <div className="max-w-6xl mx-auto px-6 pt-6 pb-12">
         {/* Carousel */}
         {slideData.length > 0 && (
-          <div className="relative w-full mb-12 overflow-x-hidden min-h-[60vmin]">
+          <div className="relative w-full mb-12 overflow-hidden min-h-[60vmin]">
             <Carousel slides={slideData} />
           </div>
         )}

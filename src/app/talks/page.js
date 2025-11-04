@@ -4,9 +4,15 @@ import matter from "gray-matter";
 import TalksClient from "./TalksClient";
 
 export const metadata = {
-  title: "Talks - Alexi Canamo",
+  title: "Talks & Workshops",
   description:
-    "Workshops and talks I've given on technology and web development",
+    "Workshops and talks by Alexi Canamo on web development, React, Next.js, Git, and modern software development practices. Sharing knowledge with the tech community.",
+  openGraph: {
+    title: "Talks & Workshops - Alexi Canamo",
+    description:
+      "Workshops and presentations on web development, React, Next.js, and software development best practices.",
+    images: ["/og-image.png"],
+  },
 };
 
 // This is a server component - statically generated at build time

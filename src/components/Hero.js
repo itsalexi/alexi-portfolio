@@ -124,8 +124,10 @@ export default function Hero() {
               </Button>
             </Link>
             <a
-              href="/resume.pdf"
-              aria-label="Download Resume"
+              href={socials.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View Resume"
               className="hidden sm:block"
             >
               <Button
@@ -174,7 +176,12 @@ export default function Hero() {
             </div>
 
             <div className="flex w-full items-center gap-3 sm:hidden">
-              <a href="/resume.pdf" aria-label="Download Resume">
+              <a
+                href={socials.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="View Resume"
+              >
                 <Button
                   variant="outline"
                   className="h-12 px-6 border-blue-500/30 hover:bg-blue-500/10"
