@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Navbar,
   NavBody,
@@ -13,38 +13,23 @@ import {
   NavbarButton,
 } from "./ui/resizable-navbar";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 
 export default function PortfolioNavbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
   const router = useRouter();
 
-  // Check if we're on a talk detail page
-  const isTalkDetailPage = pathname?.startsWith("/talks/");
-
-  // Check if we're on the home page
-  const isHomePage = pathname === "/";
-
   const navItems = [
-    { name: "Projects", link: "#projects" },
-    { name: "Experience", link: "#experience" },
-    { name: "Skills", link: "#skills" },
+    { name: "Projects", link: "/projects" },
+    { name: "Talks", link: "/talks" },
+    { name: "Blog", link: "/blog" },
+    { name: "About", link: "/about" },
   ];
 
-  // Handle navigation with proper routing
+  // Handle navigation
   const handleNavClick = (e, link) => {
     e.preventDefault();
     setIsOpen(false);
-
-    if (isHomePage) {
-      const element = document.querySelector(link);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      router.push(`/${link}`);
-    }
+    router.push(link);
   };
 
   return (
@@ -87,15 +72,6 @@ export default function PortfolioNavbar() {
             <span className="text-lg">Alexi</span>
           </Link>
           <div className="flex items-center gap-2">
-            {isTalkDetailPage && (
-              <button
-                type="button"
-                onClick={() => router.push("/#talks")}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-neutral-600 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4" /> Back
-              </button>
-            )}
             <MobileNavToggle
               isOpen={isOpen}
               onClick={() => setIsOpen(!isOpen)}

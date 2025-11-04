@@ -2,14 +2,26 @@
 
 import ReactMarkdown from "react-markdown";
 import FloatingBackButton from "../../../components/FloatingBackButton";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function ProjectContent({ project }) {
   return (
     <div className="min-h-screen bg-transparent">
       <FloatingBackButton />
 
-      <div className="max-w-4xl mx-auto px-6 pt-20 pb-12">
+      {/* Back Button */}
+      <div className="max-w-4xl mx-auto px-6 pt-24">
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors group"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Back
+        </Link>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-6 pt-6 pb-12">
         {/* Featured Image */}
         {project.image && (
           <div className="mb-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
