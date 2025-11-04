@@ -1,56 +1,41 @@
 "use client";
 
-import { motion } from "motion/react";
 import ReactMarkdown from "react-markdown";
 import FloatingBackButton from "../../../components/FloatingBackButton";
 import Carousel from "../../../components/ui/carousel";
 
 export default function TalkContent({ talk }) {
-  const slideData = talk.images?.map((image, index) => ({
-    title: `Photo ${index + 1}`,
-    src: image,
-  })) || [];
+  const slideData =
+    talk.images?.map((image, index) => ({
+      title: `Photo ${index + 1}`,
+      src: image,
+    })) || [];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-transparent">
       <FloatingBackButton />
-      
-      <div className="max-w-6xl mx-auto px-6 py-12">
+
+      <div className="max-w-6xl mx-auto px-6 pt-20 pb-12">
         {/* Carousel */}
         {slideData.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="relative w-full mb-12 overflow-x-hidden"
-          >
+          <div className="relative w-full mb-12 overflow-x-hidden min-h-[60vmin]">
             <Carousel slides={slideData} />
-          </motion.div>
+          </div>
         )}
 
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: slideData.length > 0 ? 0.2 : 0.1 }}
-          className="mb-8"
-        >
+        <div className="mb-8">
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-3">
             {talk.title}
           </h1>
           <p className="text-white/60 text-sm md:text-base">
             {talk.event} • {talk.date}
           </p>
-        </motion.div>
+        </div>
 
         {/* Topics */}
         {talk.topics && talk.topics.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-wrap gap-2 mb-8"
-          >
+          <div className="flex flex-wrap gap-2 mb-8">
             {talk.topics.map((topic, index) => (
               <span
                 key={index}
@@ -59,63 +44,58 @@ export default function TalkContent({ talk }) {
                 {topic}
               </span>
             ))}
-          </motion.div>
+          </div>
         )}
 
         {/* Short Description */}
         {talk.shortDescription && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mb-8"
-          >
+          <div className="mb-8">
             <p className="text-white/80 text-lg leading-relaxed">
               {talk.shortDescription}
             </p>
-          </motion.div>
+          </div>
         )}
 
         {/* Full Description (Markdown) */}
-        <motion.article
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-headings:font-bold prose-h2:text-2xl prose-h2:mb-6 prose-h2:mt-12 prose-h2:pb-2 prose-h2:border-b prose-h2:border-white/10 prose-p:text-white/80 prose-p:leading-relaxed prose-p:text-base prose-ul:space-y-3 prose-li:text-white/80 prose-li:text-base prose-strong:text-white prose-strong:font-semibold prose-code:text-blue-400 prose-code:bg-blue-500/10 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:border prose-img:border-white/10 prose-img:shadow-2xl mb-12"
-        >
+        <article className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-headings:font-bold prose-h2:text-2xl prose-h2:mb-6 prose-h2:mt-12 prose-h2:pb-2 prose-h2:border-b prose-h2:border-white/10 prose-p:text-white/80 prose-p:leading-relaxed prose-p:text-base prose-ul:space-y-3 prose-li:text-white/80 prose-li:text-base prose-strong:text-white prose-strong:font-semibold prose-code:text-blue-400 prose-code:bg-blue-500/10 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:border prose-img:border-white/10 prose-img:shadow-2xl mb-12">
           <ReactMarkdown
             components={{
-              h2: ({node, ...props}) => (
-                <h2 className="text-2xl font-bold text-white mb-6 mt-12 pb-2 border-b border-white/10" {...props} />
+              h2: ({ node, ...props }) => (
+                <h2
+                  className="text-2xl font-bold text-white mb-6 mt-12 pb-2 border-b border-white/10"
+                  {...props}
+                />
               ),
-              p: ({node, ...props}) => (
-                <p className="text-white/80 leading-relaxed text-base mb-4" {...props} />
+              p: ({ node, ...props }) => (
+                <p
+                  className="text-white/80 leading-relaxed text-base mb-4"
+                  {...props}
+                />
               ),
-              ul: ({node, ...props}) => (
+              ul: ({ node, ...props }) => (
                 <ul className="space-y-3 mb-6" {...props} />
               ),
-              li: ({node, ...props}) => (
-                <li className="text-white/80 text-base flex items-start gap-2" {...props}>
+              li: ({ node, ...props }) => (
+                <li
+                  className="text-white/80 text-base flex items-start gap-2"
+                  {...props}
+                >
                   <span className="text-blue-400 mt-1">•</span>
                   <span>{props.children}</span>
                 </li>
               ),
-              strong: ({node, ...props}) => (
+              strong: ({ node, ...props }) => (
                 <strong className="text-white font-semibold" {...props} />
               ),
             }}
           >
             {talk.fullDescription}
           </ReactMarkdown>
-        </motion.article>
+        </article>
 
         {/* Link Button */}
         {talk.link && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
+          <div>
             <a
               href={talk.link}
               target="_blank"
@@ -123,11 +103,21 @@ export default function TalkContent({ talk }) {
               className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold text-sm transition-all hover:scale-105"
             >
               View Details
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
               </svg>
             </a>
-          </motion.div>
+          </div>
         )}
       </div>
     </div>

@@ -10,6 +10,7 @@ techStack:
 liveUrl: null
 githubUrl: null
 image: /images/projects/one-big-match-featured.webp
+featured: true
 ---
 
 ## Overview
@@ -18,8 +19,6 @@ Building a platform to help students discover and apply to internships and oppor
 
 ## The Problem
 
-
-
 As a student myself, I've experienced how difficult it is to find relevant opportunities. Students spend hours scrolling through job boards that aren't tailored to their skills or interests. Meanwhile, companies struggle to reach the right student candidates.
 
 The current solutions are either too generic (LinkedIn, Indeed) or too focused on specific schools. There's a gap for a platform that truly understands what students are looking for and matches them intelligently.
@@ -27,12 +26,14 @@ The current solutions are either too generic (LinkedIn, Indeed) or too focused o
 ## What I'm Building
 
 **For Students**
+
 - Smart matching algorithm that learns from your interests
 - Clean, simple profile creation with skills and preferences
 - Personalized opportunity recommendations
 - Easy application tracking
 
 **For Companies**
+
 - Dashboard to post opportunities and manage applications
 - Access to a curated pool of student talent
 - Filtering and search tools to find the right candidates

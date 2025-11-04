@@ -19,7 +19,7 @@ export default function PortfolioNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  
+
   // Check if we're on a talk detail page
   const isTalkDetailPage = pathname?.startsWith("/talks/");
 
@@ -69,7 +69,7 @@ export default function PortfolioNavbar() {
             {isTalkDetailPage && (
               <button
                 type="button"
-                onClick={() => router.push('/#talks')}
+                onClick={() => router.push("/#talks")}
                 className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-neutral-600 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" /> Back
@@ -93,22 +93,20 @@ export default function PortfolioNavbar() {
               {item.name}
             </a>
           ))}
-          <div className="flex flex-col gap-2 pt-4">
-            <NavbarButton
-              variant="secondary"
-              href="mailto:alexi@example.com"
-              className="w-full text-sm"
-            >
-              Contact
-            </NavbarButton>
-            <NavbarButton
-              variant="dark"
-              href="/resume.pdf"
-              className="w-full text-sm"
-            >
-              Resume
-            </NavbarButton>
-          </div>
+          <a
+            href="mailto:alexi@example.com"
+            className="text-neutral-600 dark:text-neutral-300"
+            onClick={() => setIsOpen(false)}
+          >
+            Contact
+          </a>
+          <a
+            href="/resume.pdf"
+            className="text-neutral-600 dark:text-neutral-300"
+            onClick={() => setIsOpen(false)}
+          >
+            Resume
+          </a>
         </MobileNavMenu>
       </MobileNav>
     </Navbar>

@@ -95,6 +95,10 @@ export const techStack = {
     name: "Vercel",
     icon: "https://cdn.simpleicons.org/vercel/000000",
   },
+  cloudflare: {
+    name: "Cloudflare Workers",
+    icon: "https://cdn.simpleicons.org/cloudflare/F38020",
+  },
 
   // Other
   graphql: {

@@ -4,19 +4,23 @@ import React from "react";
 
 export const Meteors = ({ number, className }) => {
   const meteors = new Array(number || 20).fill(true);
-  
+
   // Seeded random function for deterministic values
   const seededRandom = (seed) => {
     const x = Math.sin(seed) * 10000;
     return x - Math.floor(x);
   };
-  
+
   return (
     <>
       {meteors.map((el, idx) => {
         const meteorCount = number || 20;
-        // Calculate position to evenly distribute meteors across container width
-        const position = idx * (800 / meteorCount) - 400; // Spread across 800px range, centered
+        // Calculate position to evenly distribute meteors across full viewport width
+        const positionPercent =
+          Math.round((idx / meteorCount) * 100 * 100) / 100;
+        const topPercent = Math.round(seededRandom(idx + 50) * 30 * 100) / 100;
+        const delay = Math.round(seededRandom(idx + 1) * -20 * 100) / 100;
+        const duration = Math.floor(seededRandom(idx + 11) * 5 + 5);
 
         return (
           <span
@@ -27,10 +31,10 @@ export const Meteors = ({ number, className }) => {
               className
             )}
             style={{
-              top: "-40px", // Start above the container
-              left: position + "px",
-              animationDelay: seededRandom(idx + 1) * -20 + "s", // Negative delay to start mid-animation
-              animationDuration: Math.floor(seededRandom(idx + 11) * 5 + 5) + "s", // Duration between 5-10s
+              top: topPercent + "%",
+              left: positionPercent + "%",
+              animationDelay: delay + "s",
+              animationDuration: duration + "s",
             }}
           ></span>
         );
