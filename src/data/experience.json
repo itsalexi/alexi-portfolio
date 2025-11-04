@@ -1,0 +1,132 @@
+{
+  "experiences": [
+    {
+      "year": "2025",
+      "items": [
+        {
+          "type": "work",
+          "title": "Software Engineer Intern",
+          "company": "NextPay (YC W21)",
+          "duration": "Sep 2025 – Present",
+          "location": "Remote",
+          "summary": "Building marketing pages and customer dashboards with React, Next.js, and TypeScript",
+          "details": [
+            "Built a complete marketing landing page end to end, from responsive UI design to production deployment",
+            "Collaborating with a cross-functional team of 5+ engineers on a customer-facing dashboard",
+            "Developing scalable front-end components using React, Next.js, and TypeScript within an agile workflow"
+          ],
+          "skills": ["Front-End Development", "Stakeholder Management", "Web Development"]
+        },
+        {
+          "type": "leadership",
+          "title": "AVP for IT Skills & Development",
+          "company": "Ateneo MISA",
+          "duration": "Jul 2025 – Present",
+          "location": "Quezon City, Philippines · On-site",
+          "summary": "Leading workshops for 20+ developers and building internal tools",
+          "details": [
+            "Trains and guides officers and members to help them improve and stay active in the cluster",
+            "Organizes workshops and training sessions to build skills needed for projects",
+            "Handles and oversees projects related to the development of apps and digital tools"
+          ],
+          "skills": ["Project Management", "Training and Development"]
+        },
+        {
+          "type": "leadership",
+          "title": "Head of HR",
+          "company": "SOSE Sanggu",
+          "duration": "Jun 2025 – Present",
+          "location": "Quezon City, Philippines · On-site",
+          "summary": "Leading recruitment, onboarding, and member formation initiatives",
+          "details": [
+            "Oversee member formation projects and internal initiatives",
+            "Lead recruitment and onboarding efforts for new members",
+            "Organize events that promote personal growth and team building"
+          ],
+          "skills": ["Project Management", "Human Capital Management", "Team Collaboration", "Communication"]
+        },
+        {
+          "type": "startup",
+          "title": "Founder",
+          "company": "One Big Match",
+          "duration": "May 2025 – Present",
+          "location": "National Capital Region, Philippines · On-site",
+          "summary": "Building a web app for org events, managing a team of 3, reaching out to orgs for early feedback",
+          "details": [
+            "Leading product vision, backend development, and go-to-market planning for a web app built to make org events and mixers more fun and meaningful",
+            "Managing a small team of student designers and developers",
+            "Currently reaching out to orgs and communities for early interest and feedback ahead of launch"
+          ],
+          "skills": ["Project Management", "Leadership", "Operations Management", "Product Management", "Back-End Web Development"]
+        },
+        {
+          "type": "leadership",
+          "title": "Externals Core Team",
+          "company": "Computer Society of the Ateneo",
+          "duration": "Jan 2025 – May 2025",
+          "location": "On-site",
+          "summary": "Managed communications and follow-ups for Seniors' Send-Off event",
+          "details": [
+            "Drafted and sent professional email communications to seniors and alumni for the Seniors' Send-Off X LoopBack 2025 event",
+            "Managed follow-ups to ensure timely responses and smooth event preparation"
+          ],
+          "skills": ["Stakeholder Management", "Event Planning and Coordination"]
+        }
+      ]
+    },
+    {
+      "year": "2024",
+      "items": [
+        {
+          "type": "education",
+          "title": "Bachelor of Science in Computer Science",
+          "company": "Ateneo de Manila University",
+          "duration": "Aug 2024 – May 2028",
+          "location": "Quezon City, Metro Manila",
+          "summary": "Pursuing BS Computer Science degree"
+        },
+        {
+          "type": "leadership",
+          "title": "Frontend Developer",
+          "company": "Computer Society of the Ateneo",
+          "duration": "Sep 2024 – May 2025",
+          "location": "Philippines",
+          "summary": "Built user-friendly interfaces for CompSAt projects",
+          "details": [
+            "Implemented user-friendly interfaces for CompSAt projects, ensuring seamless navigation and visually appealing layouts",
+            "Worked with fellow developers to create intuitive digital experiences that align with organizational goals and standards"
+          ],
+          "skills": ["Front-End Development", "React.js", "Next.js", "Python", "Web Development"]
+        },
+        {
+          "type": "leadership",
+          "title": "Logistics Core Team | Blue Hacks 2025",
+          "company": "Computer Society of the Ateneo",
+          "duration": "Dec 2024 – Feb 2025",
+          "location": "On-site",
+          "summary": "Managed logistics for Blue Hacks 2025 hackathon",
+          "details": [
+            "Managed logistics for Blue Hacks 2025, overseeing venue reservation, layout setup, food coordination, and event materials",
+            "Ensured smooth event execution by handling the timely delivery and arrangement of resources",
+            "Collaborated with team members to meet deadlines and maintain efficiency throughout the planning and event day"
+          ],
+          "skills": ["Event Management", "Logistics Management", "Team Collaboration"]
+        },
+        {
+          "type": "leadership",
+          "title": "Web Developer",
+          "company": "TEDxAteneoDeManila",
+          "duration": "Nov 2024 – May 2025",
+          "location": "Quezon City, Philippines · Hybrid",
+          "summary": "Led team of 3 developers to build TEDx event website",
+          "details": [
+            "Led a team of 3 developers to design and build the TEDxAteneoDeManila 2025 website, ensuring a seamless user experience",
+            "Aligned the site's layout and navigation with the event theme and TEDx brand standards",
+            "Ensured optimal performance and responsiveness across all devices"
+          ],
+          "skills": ["Front-End Development", "HTML", "Web Design"]
+        }
+      ]
+    }
+  ]
+}

@@ -69,9 +69,9 @@ export default function Hero() {
                   <Typewriter
                     options={{
                       strings: [
-                        "developer.",
-                        "security researcher.",
-                        "speaker.",
+                        "software engineer.",
+                        "founder.",
+                        "student leader.",
                       ],
                       autoStart: true,
                       loop: true,
@@ -99,8 +99,8 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            I build useful tools, share what I learn, and publish security
-            findings. Explore my projects, talks, research, and writing.
+            CS student at Ateneo de Manila University. Software Engineer Intern at NextPay (YC W21). 
+            Building One Big Match and leading tech workshops at MISA.
           </motion.p>
 
           <motion.div

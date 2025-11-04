@@ -1,24 +1,22 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { motion } from "motion/react";
 import React from "react";
 
 export const Meteors = ({ number, className }) => {
   const meteors = new Array(number || 20).fill(true);
-  const prng = (seed) => {
+  
+  // Seeded random function for deterministic values
+  const seededRandom = (seed) => {
     const x = Math.sin(seed) * 10000;
     return x - Math.floor(x);
   };
+  
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="h-full w-full"
-    >
+    <>
       {meteors.map((el, idx) => {
         const meteorCount = number || 20;
-        const position = (idx / meteorCount) * 100;
+        // Calculate position to evenly distribute meteors across container width
+        const position = idx * (800 / meteorCount) - 400; // Spread across 800px range, centered
 
         return (
           <span
@@ -29,14 +27,14 @@ export const Meteors = ({ number, className }) => {
               className
             )}
             style={{
-              top: "0",
-              left: position + "%",
-              animationDelay: (prng(idx + 1) * 5).toFixed(3) + "s",
-              animationDuration: 5 + Math.floor(prng(idx + 11) * 5) + "s",
+              top: "-40px", // Start above the container
+              left: position + "px",
+              animationDelay: seededRandom(idx + 1) * -20 + "s", // Negative delay to start mid-animation
+              animationDuration: Math.floor(seededRandom(idx + 11) * 5 + 5) + "s", // Duration between 5-10s
             }}
           ></span>
         );
       })}
-    </motion.div>
+    </>
   );
 };

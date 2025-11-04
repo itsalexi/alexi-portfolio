@@ -42,7 +42,7 @@ export default function ClickParticles() {
           return (
             <motion.div
               key={particle.id}
-              className="absolute h-2 w-2 rounded-full"
+              className="absolute h-1 w-1 rounded-full"
               style={{
                 left: particle.x,
                 top: particle.y,

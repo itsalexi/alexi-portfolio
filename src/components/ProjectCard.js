@@ -1,0 +1,88 @@
+"use client";
+
+import Image from "next/image";
+import { motion } from "motion/react";
+import { techStack as techStackConfig } from "../lib/tech-stack";
+import { CardContainer, CardBody } from "./ui/3d-card";
+
+export default function ProjectCard({ title, description, image, techStack, link }) {
+  // Convert string keys to tech objects
+  const techItems = techStack?.map(key => 
+    typeof key === 'string' ? techStackConfig[key] : key
+  ).filter(Boolean) || [];
+  return (
+    <CardContainer containerClassName="py-0">
+      <CardBody className="w-full h-auto">
+        <motion.a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group relative block overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+      {/* Project Image */}
+      <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-blue-500/10 to-purple-500/10">
+        {image ? (
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center">
+            <span className="text-4xl font-bold text-white/20">{title[0]}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="p-6">
+        {/* Title */}
+        <h3 className="mb-2 text-xl font-semibold text-white transition-colors group-hover:text-blue-400">
+          {title}
+        </h3>
+
+        {/* Description */}
+        <p className="mb-4 text-sm leading-relaxed text-white/70">
+          {description}
+        </p>
+
+        {/* Tech Stack */}
+        {techItems && techItems.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2">
+            {techItems.map((tech, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 ring-1 ring-white/10"
+              >
+                {tech.icon && (
+                  <div className="relative h-4 w-4">
+                    <Image
+                      src={tech.icon}
+                      alt={tech.name}
+                      width={16}
+                      height={16}
+                      className="object-contain"
+                    />
+                  </div>
+                )}
+                <span className="text-xs font-medium text-white/80">
+                  {tech.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Hover Effect Overlay */}
+      <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500/0 to-purple-500/0 opacity-0 transition-opacity duration-300 group-hover:from-blue-500/5 group-hover:to-purple-500/5 group-hover:opacity-100" />
+        </motion.a>
+      </CardBody>
+    </CardContainer>
+  );
+}
