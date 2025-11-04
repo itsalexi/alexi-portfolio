@@ -21,7 +21,7 @@ export default function ProjectsPage() {
           <div className="mb-12 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Projects</h1>
             <p className="text-white/60 text-lg">
-              A collection of my projects and work
+              Building solutions that solve real problems and create value
             </p>
           </div>
           <div className="bg-white/5 rounded-lg p-12 text-center border border-white/10">
@@ -54,7 +54,7 @@ export default function ProjectsPage() {
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Projects</h1>
           <p className="text-white/60 text-lg">
-            A collection of {projects.length} projects I've built
+            Building solutions that solve real problems and create value
           </p>
         </div>
 

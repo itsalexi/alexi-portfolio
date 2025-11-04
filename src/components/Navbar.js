@@ -13,6 +13,7 @@ import {
   NavbarButton,
 } from "./ui/resizable-navbar";
 import Link from "next/link";
+import { socials } from "../config/socials";
 
 export default function PortfolioNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +52,7 @@ export default function PortfolioNavbar() {
         <div className="relative z-20 flex items-center gap-2">
           <NavbarButton
             variant="secondary"
-            href="mailto:alexi@example.com"
+            href={`mailto:${socials.email}`}
             className="text-sm"
           >
             Contact
@@ -91,7 +92,7 @@ export default function PortfolioNavbar() {
             </a>
           ))}
           <a
-            href="mailto:alexi@example.com"
+            href={`mailto:${socials.email}`}
             className="text-neutral-600 dark:text-neutral-300"
             onClick={() => setIsOpen(false)}
           >

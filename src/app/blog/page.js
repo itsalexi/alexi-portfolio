@@ -21,7 +21,7 @@ export default function BlogPage() {
           <div className="mb-12 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Blog</h1>
             <p className="text-white/60 text-lg">
-              Thoughts on technology, web development, and building products
+              Insights on technology, development practices, and lessons learned
             </p>
           </div>
           <div className="bg-white/5 rounded-lg p-12 text-center">
@@ -62,7 +62,7 @@ export default function BlogPage() {
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Blog</h1>
           <p className="text-white/60 text-lg">
-            Thoughts on technology, web development, and building products
+            Insights on technology, development practices, and lessons learned
           </p>
         </div>
 

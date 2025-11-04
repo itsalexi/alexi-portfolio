@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { Search, Filter } from "lucide-react";
 import ProjectCard from "@/components/ProjectCard";
+import { Dropdown } from "@/components/ui/dropdown";
 
 export default function ProjectsClient({ projects: initialProjects = [] }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,6 +17,14 @@ export default function ProjectsClient({ projects: initialProjects = [] }) {
     });
     return Array.from(techSet).sort();
   }, [initialProjects]);
+
+  // Format tech stack for dropdown
+  const techOptions = useMemo(() => {
+    return [
+      { value: "all", label: "All Technologies" },
+      ...allTechStack.map((tech) => ({ value: tech, label: tech })),
+    ];
+  }, [allTechStack]);
 
   // Filter projects based on search and tech filter
   const filteredProjects = useMemo(() => {
@@ -49,20 +58,14 @@ export default function ProjectsClient({ projects: initialProjects = [] }) {
         </div>
 
         {/* Tech Filter */}
-        <div className="relative min-w-[200px]">
-          <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 pointer-events-none" />
-          <select
+        <div className="min-w-[200px]">
+          <Dropdown
             value={selectedTech}
-            onChange={(e) => setSelectedTech(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all appearance-none cursor-pointer"
-          >
-            <option value="all">All Technologies</option>
-            {allTechStack.map((tech) => (
-              <option key={tech} value={tech}>
-                {tech}
-              </option>
-            ))}
-          </select>
+            onChange={setSelectedTech}
+            options={techOptions}
+            placeholder="All Technologies"
+            icon={Filter}
+          />
         </div>
       </div>
 
@@ -98,4 +101,3 @@ export default function ProjectsClient({ projects: initialProjects = [] }) {
     </>
   );
 }
-

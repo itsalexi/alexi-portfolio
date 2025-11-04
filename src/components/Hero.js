@@ -24,10 +24,11 @@ import { useState, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import Typewriter from "typewriter-effect";
 import { motion } from "motion/react";
+import { socials } from "../config/socials";
 
 export default function Hero() {
   const copyEmail = () => {
-    navigator.clipboard.writeText("alexi@example.com");
+    navigator.clipboard.writeText(socials.email);
     toast.success("Email copied to clipboard!");
   };
   return (
@@ -83,9 +84,9 @@ export default function Hero() {
                 </div>
               </div>
             </div>
-            <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-full ring-2 ring-blue-500/30 ring-offset-2 ring-offset-black sm:h-24 sm:w-24">
+            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 ring-blue-500/30 ring-offset-2 ring-offset-black sm:h-24 sm:w-24">
               <Image
-                src="/avatar.jpg"
+                src="/avatar.webp"
                 alt="Alexi avatar"
                 fill
                 className="object-cover"
@@ -99,8 +100,9 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            CS student at Ateneo de Manila University. Software Engineer Intern at NextPay (YC W21). 
-            Building One Big Match and leading tech workshops at MISA.
+            CS student at Ateneo de Manila University. Software Engineer Intern
+            at NextPay (YC W21). Building One Big Match and leading tech
+            workshops at MISA.
           </motion.p>
 
           <motion.div
@@ -136,7 +138,7 @@ export default function Hero() {
 
             <div className="ml-auto hidden items-center gap-3 border-l border-white/10 pl-8 sm:flex">
               <a
-                href="https://github.com/"
+                href={socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-14 w-14 items-center justify-center rounded-lg bg-[#24292e] transition-all hover:scale-105"
@@ -145,7 +147,7 @@ export default function Hero() {
                 <IconBrandGithub className="h-6 w-6 text-white" />
               </a>
               <a
-                href="https://linkedin.com/"
+                href={socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-14 w-14 items-center justify-center rounded-lg bg-[#0A66C2] transition-all hover:scale-105"
@@ -154,7 +156,7 @@ export default function Hero() {
                 <IconBrandLinkedin className="h-6 w-6 text-white" />
               </a>
               <a
-                href="https://instagram.com/"
+                href={socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-14 w-14 items-center justify-center rounded-lg bg-linear-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] transition-all hover:scale-105"
@@ -181,7 +183,7 @@ export default function Hero() {
                 </Button>
               </a>
               <a
-                href="https://github.com/"
+                href={socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#24292e] transition-all hover:scale-105"
@@ -190,7 +192,7 @@ export default function Hero() {
                 <IconBrandGithub className="h-5 w-5 text-white" />
               </a>
               <a
-                href="https://linkedin.com/"
+                href={socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0A66C2] transition-all hover:scale-105"
@@ -199,7 +201,7 @@ export default function Hero() {
                 <IconBrandLinkedin className="h-5 w-5 text-white" />
               </a>
               <a
-                href="https://instagram.com/"
+                href={socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] transition-all hover:scale-105"

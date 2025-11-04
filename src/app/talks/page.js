@@ -23,7 +23,7 @@ export default function TalksPage() {
               Talks & Workshops
             </h1>
             <p className="text-white/60 text-lg">
-              Workshops and talks I've given on technology and web development
+              Sharing knowledge and empowering others through teaching
             </p>
           </div>
           <div className="bg-white/5 rounded-lg p-12 text-center border border-white/10">
@@ -65,7 +65,7 @@ export default function TalksPage() {
             Talks & Workshops
           </h1>
           <p className="text-white/60 text-lg">
-            {talks.length} workshops and talks on technology and web development
+            Sharing knowledge and empowering others through teaching
           </p>
         </div>
 

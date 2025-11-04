@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { Search, Filter } from "lucide-react";
 import TalkCard from "@/components/TalkCard";
+import { Dropdown } from "@/components/ui/dropdown";
 
 export default function TalksClient({ talks: initialTalks = [] }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,6 +17,14 @@ export default function TalksClient({ talks: initialTalks = [] }) {
     });
     return Array.from(topicsSet).sort();
   }, [initialTalks]);
+
+  // Format topics for dropdown
+  const topicOptions = useMemo(() => {
+    return [
+      { value: "all", label: "All Topics" },
+      ...allTopics.map((topic) => ({ value: topic, label: topic })),
+    ];
+  }, [allTopics]);
 
   // Filter talks based on search and topic filter
   const filteredTalks = useMemo(() => {
@@ -52,20 +61,14 @@ export default function TalksClient({ talks: initialTalks = [] }) {
         </div>
 
         {/* Topic Filter */}
-        <div className="relative min-w-[200px]">
-          <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 pointer-events-none" />
-          <select
+        <div className="min-w-[200px]">
+          <Dropdown
             value={selectedTopic}
-            onChange={(e) => setSelectedTopic(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all appearance-none cursor-pointer"
-          >
-            <option value="all">All Topics</option>
-            {allTopics.map((topic) => (
-              <option key={topic} value={topic}>
-                {topic}
-              </option>
-            ))}
-          </select>
+            onChange={setSelectedTopic}
+            options={topicOptions}
+            placeholder="All Topics"
+            icon={Filter}
+          />
         </div>
       </div>
 
