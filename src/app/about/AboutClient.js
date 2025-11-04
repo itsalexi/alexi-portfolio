@@ -52,16 +52,8 @@ export default function AboutClient() {
                     <span>18 years old</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <IconMapPin className="w-4 h-4" />
-                    <span>Manila, Philippines</span>
-                  </div>
-                  <div className="flex items-center gap-2">
                     <IconSchool className="w-4 h-4" />
-                    <span>CS Sophomore @ ADMU</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <IconStar className="w-4 h-4" />
-                    <span>DOST Merit Scholar</span>
+                    <span>CS @ ADMU</span>
                   </div>
                 </div>
               </motion.div>
