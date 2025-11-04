@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { techStack as techStackConfig } from "../lib/tech-stack";
 import { CardContainer, CardBody } from "./ui/3d-card";
@@ -12,17 +13,15 @@ export default function ProjectCard({ title, description, image, techStack, link
   ).filter(Boolean) || [];
   return (
     <CardContainer containerClassName="py-0">
-      <CardBody className="w-full h-auto">
-        <motion.a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group relative block overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
+      <CardBody className="w-full h-full">
+        <Link href={link} className="h-full">
+          <motion.div
+            className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
       {/* Project Image */}
       <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-blue-500/10 to-purple-500/10">
         {image ? (
@@ -40,7 +39,7 @@ export default function ProjectCard({ title, description, image, techStack, link
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      <div className="flex flex-1 flex-col p-6">
         {/* Title */}
         <h3 className="mb-2 text-xl font-semibold text-white transition-colors group-hover:text-blue-400">
           {title}
@@ -53,7 +52,7 @@ export default function ProjectCard({ title, description, image, techStack, link
 
         {/* Tech Stack */}
         {techItems && techItems.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="mt-auto flex flex-wrap items-center gap-2">
             {techItems.map((tech, index) => (
               <div
                 key={index}
@@ -81,7 +80,8 @@ export default function ProjectCard({ title, description, image, techStack, link
 
       {/* Hover Effect Overlay */}
       <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500/0 to-purple-500/0 opacity-0 transition-opacity duration-300 group-hover:from-blue-500/5 group-hover:to-purple-500/5 group-hover:opacity-100" />
-        </motion.a>
+          </motion.div>
+        </Link>
       </CardBody>
     </CardContainer>
   );

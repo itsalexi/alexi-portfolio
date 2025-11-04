@@ -1,13 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function FloatingBackButton() {
   const { scrollY } = useScroll();
   const [visible, setVisible] = useState(false);
+  const router = useRouter();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 100) {
@@ -20,8 +21,9 @@ export default function FloatingBackButton() {
   return (
     <div className="hidden lg:block fixed top-4 inset-x-0 z-40 w-full pointer-events-none">
       <div className="max-w-7xl mx-auto px-4 flex justify-start">
-        <Link href="/#talks">
-          <motion.div
+        <motion.button
+          type="button"
+          onClick={() => router.back()}
           animate={{
             opacity: visible ? 1 : 0,
             y: visible ? 20 : 0,
@@ -41,8 +43,7 @@ export default function FloatingBackButton() {
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="text-sm font-medium">Back</span>
-          </motion.div>
-        </Link>
+          </motion.button>
       </div>
     </div>
   );
