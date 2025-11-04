@@ -23,11 +23,29 @@ export default function PortfolioNavbar() {
   // Check if we're on a talk detail page
   const isTalkDetailPage = pathname?.startsWith("/talks/");
 
+  // Check if we're on the home page
+  const isHomePage = pathname === "/";
+
   const navItems = [
     { name: "Projects", link: "#projects" },
     { name: "Experience", link: "#experience" },
     { name: "Skills", link: "#skills" },
   ];
+
+  // Handle navigation with proper routing
+  const handleNavClick = (e, link) => {
+    e.preventDefault();
+    setIsOpen(false);
+
+    if (isHomePage) {
+      const element = document.querySelector(link);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      router.push(`/${link}`);
+    }
+  };
 
   return (
     <Navbar className="fixed top-4">
@@ -40,7 +58,10 @@ export default function PortfolioNavbar() {
           <span className="text-lg">Alexi</span>
         </Link>
 
-        <NavItems items={navItems} />
+        <NavItems
+          items={navItems}
+          onItemClick={(e, link) => handleNavClick(e, link)}
+        />
 
         <div className="relative z-20 flex items-center gap-2">
           <NavbarButton
@@ -88,7 +109,7 @@ export default function PortfolioNavbar() {
               key={idx}
               href={item.link}
               className="text-neutral-600 dark:text-neutral-300"
-              onClick={() => setIsOpen(false)}
+              onClick={(e) => handleNavClick(e, item.link)}
             >
               {item.name}
             </a>
