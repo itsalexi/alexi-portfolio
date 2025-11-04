@@ -22,9 +22,9 @@ export default function ProjectCard({
   return (
     <CardContainer containerClassName="py-0">
       <CardBody className="w-full h-full">
-        <Link href={link} className="h-full">
+        <Link href={link} className="h-full block">
           <motion.div
-            className="group relative rounded-xl"
+            className="group relative rounded-xl h-full"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -40,7 +40,7 @@ export default function ProjectCard({
             />
             <div className="relative z-10 flex h-full flex-col overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm transition-all hover:bg-white/10">
               {/* Project Image */}
-              <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-blue-500/10 to-purple-500/10">
+              <div className="relative w-full h-48 overflow-hidden bg-gradient-to-br from-blue-500/10 to-purple-500/10">
                 {image ? (
                   <Image
                     src={image}
