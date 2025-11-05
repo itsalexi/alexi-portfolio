@@ -1,65 +1,48 @@
 ---
 slug: portfolio-website
 title: Portfolio Website
-tagline: A modern portfolio built with Next.js and Aceternity UI
+tagline: >-
+  The very site you're on now. This is the third major iteration of my
+  portfolio, designed to find the perfect balance between the creative vibe of
+  my first site and the clean, structured feel of my second. It's a minimal and
+  modern showcase for my work.
 techStack:
   - nextjs
   - react
   - tailwind
-  - typescript
-liveUrl: 'https://alexi.dev'
-githubUrl: 'https://github.com/itsalexi/portfolio'
-image: /images/projects/portfolio-website-featured.webp
-featured: true
+liveUrl: "https://alexi.life"
+githubUrl: null
+image: /images/projects/portfolio-website-featured.webp?v=1762341726193
+featured: false
+order: 6
 ---
 
-## Overview
+#### **The Gist**
 
-Built a modern, interactive portfolio website from scratch to showcase my projects, experience, and skills. The site features smooth animations, responsive design, and a clean, professional aesthetic that makes it easy for recruiters and collaborators to learn about my work.
+This site has been through a few major phases. Looking back at the old versions is a cool way to see how my style and skills have changed over time. Each one was a snapshot of where I was in my journey as a developer.
 
-## The Challenge
+#### **Version 1.0: The Lofi Era (3-4 Years Ago)**
 
-As a CS student building my career, I needed a professional online presence that would:
+My first portfolio was all about the vibe. I was really into lofi aesthetics, so I designed a page with a moody, illustrated forest scene that felt calm and atmospheric. It was less of a resume and more of a personal passion project.
 
-- Stand out from generic portfolio templates
-- Showcase my technical skills through the site itself
-- Be easy to update with new projects and experiences
-- Load fast and work perfectly on all devices
-- Make a strong first impression with recruiters
+To be honest, this version had the most raw personality. It was a direct reflection of my tastes at the time and wasn't trying to be anything other than a cool space on the internet. While it was creative, it wasn't the most practical for showcasing a growing list of projects.
 
-## What I Built
+![image_2025-11-05_191739355.png](/images/projects/portfolio-website-1762341460315.webp)
 
-**Interactive Components**
-- Smooth page transitions with Framer Motion
-- Interactive skill cards with detailed modals
-- 3D card effects on project previews
-- Animated timeline for experience section
+#### **Version 2.0: The Professional Pivot (Last Year)**
 
-**Content Management**
-- Markdown-based project case studies
-- JSON-driven experience and talks data
-- Easy-to-update content without touching code
-- Local admin panel for editing (dev only)
+For the next version, I made a hard pivot toward something more professional. I wanted a site that screamed "developer," so I went with a clean, structured look. It had the classic dark, grid background and a card based layout that kept everything neat.
 
-**Technical Features**
-- Static site generation for blazing fast performance
-- Responsive design that adapts to any screen size
-- Optimized images and lazy loading
-- SEO-friendly with proper meta tags
+This design was way more functional and did a much better job of presenting my work clearly. But in the process, it lost that personal touch that made the first one special. It was effective, but it felt a little generic.
 
-## The Process
+![image_2025-11-05_191815105.png](/images/projects/portfolio-website-1762341495127.webp)
 
-Started by researching modern portfolio designs and identifying what makes them effective. Chose Next.js 14 for its performance and developer experience, paired with Aceternity UI for beautiful pre-built components.
+#### **Version 3.0: Finding the Balance (Today)**
 
-Built the site iteratively, starting with the hero section and gradually adding more sections. Focused on making each component reusable and maintainable.
+That brings us here. This current site is my effort to blend the unique personality of the first version with the clean functionality of the second. The goal was to build something sleek and modern that still felt like me.
 
-## Key Takeaways
+![image_2025-11-05_191849690.png](/images/projects/portfolio-website-1762341529714.webp)
 
-- **Framer Motion mastery** - Learned how to create complex, performant animations
-- **Next.js App Router** - Understood the new paradigm and how to leverage SSG
-- **Component architecture** - Built a scalable system that's easy to extend
-- **Performance optimization** - Achieved 95+ Lighthouse scores across the board
+I focused on a minimal design with strong typography and a refined color palette to let the work speak for itself. It’s direct, confident, and feels like the right balance between expressing my style and showcasing my skills.
 
-## Impact
-
-Created a professional online presence that effectively showcases my work and skills. The site has helped me land interviews and makes it easy to share my portfolio with potential employers and collaborators.
+Each iteration was a learning process. It's been a journey of figuring out not just how to build things, but how to best tell my own story online.

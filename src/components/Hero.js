@@ -71,7 +71,8 @@ export default function Hero() {
                     options={{
                       strings: [
                         "software engineer.",
-                        "founder.",
+                        "dreamer",
+                        "builder.",
                         "student leader.",
                       ],
                       autoStart: true,
@@ -100,9 +101,8 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            CS student at Ateneo de Manila University. Software Engineer Intern
-            at NextPay (YC W21). Building One Big Match and leading tech
-            workshops at MISA.
+            CS student at Ateneo who likes building stuff. Currently interning
+            at NextPay (YC W21) and leading workshops at MISA.
           </motion.p>
 
           <motion.div

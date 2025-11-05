@@ -30,10 +30,10 @@ export default function ProjectCard({
           {image ? (
             <Image
               key={image}
-              src={image.split('?')[0]}
+              src={image.split("?")[0]}
               alt={title}
               fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
             />
           ) : (
             <div className="flex h-full items-center justify-center">
@@ -49,7 +49,11 @@ export default function ProjectCard({
           {/* Title */}
           <h3
             className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2 overflow-hidden"
-            style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+            }}
           >
             {title}
           </h3>
@@ -57,7 +61,11 @@ export default function ProjectCard({
           {/* Description */}
           <p
             className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3 overflow-hidden text-ellipsis break-words flex-grow"
-            style={{ display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical" }}
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: "vertical",
+            }}
           >
             {normalizeEllipsis(description)}
           </p>

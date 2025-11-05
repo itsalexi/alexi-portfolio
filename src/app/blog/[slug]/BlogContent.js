@@ -30,7 +30,7 @@ export default function BlogContent({ blog }) {
             <img
               src={blog.image}
               alt={blog.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
             />
           </div>
         )}

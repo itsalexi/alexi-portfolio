@@ -59,7 +59,7 @@ export default function TalkCard({
                 src={image}
                 alt={title}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                className="object-cover object-top group-hover:scale-105 transition-transform duration-300"
                 sizes="(max-width: 768px) 192px, 256px"
               />
             </div>

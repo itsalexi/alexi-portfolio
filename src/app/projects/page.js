@@ -51,6 +51,15 @@ export default function ProjectsPage() {
         slug: file.replace(".md", ""),
         ...frontmatter,
       };
+    })
+    .sort((a, b) => {
+      // Sort by order field (lower numbers first), then by title if order is not set
+      const orderA = a.order ?? 999;
+      const orderB = b.order ?? 999;
+      if (orderA !== orderB) {
+        return orderA - orderB;
+      }
+      return (a.title || "").localeCompare(b.title || "");
     });
 
   return (

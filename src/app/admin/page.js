@@ -28,6 +28,7 @@ export default function AdminPage() {
     liveUrl: "",
     githubUrl: "",
     image: "",
+    order: "",
   });
   const [talkData, setTalkData] = useState({
     title: "",
@@ -90,6 +91,72 @@ export default function AdminPage() {
     setContent(data.content);
   };
 
+  const moveProjectUp = async (index) => {
+    if (index === 0) return; // Already at top
+
+    const newProjects = [...projects];
+    const currentProject = newProjects[index];
+    const aboveProject = newProjects[index - 1];
+
+    // Swap orders
+    const tempOrder = currentProject.order;
+    currentProject.order = aboveProject.order;
+    aboveProject.order = tempOrder;
+
+    // Swap positions
+    [newProjects[index], newProjects[index - 1]] = [
+      newProjects[index - 1],
+      newProjects[index],
+    ];
+    setProjects(newProjects);
+
+    // Save both projects with new orders
+    await saveProjectOrder(currentProject.slug, currentProject.order);
+    await saveProjectOrder(aboveProject.slug, aboveProject.order);
+  };
+
+  const moveProjectDown = async (index) => {
+    if (index === projects.length - 1) return; // Already at bottom
+
+    const newProjects = [...projects];
+    const currentProject = newProjects[index];
+    const belowProject = newProjects[index + 1];
+
+    // Swap orders
+    const tempOrder = currentProject.order;
+    currentProject.order = belowProject.order;
+    belowProject.order = tempOrder;
+
+    // Swap positions
+    [newProjects[index], newProjects[index + 1]] = [
+      newProjects[index + 1],
+      newProjects[index],
+    ];
+    setProjects(newProjects);
+
+    // Save both projects with new orders
+    await saveProjectOrder(currentProject.slug, currentProject.order);
+    await saveProjectOrder(belowProject.slug, belowProject.order);
+  };
+
+  const saveProjectOrder = async (slug, order) => {
+    // Load project data
+    const res = await fetch(`/api/admin/projects/${slug}`);
+    const data = await res.json();
+
+    // Update order and save
+    const updatedFrontmatter = { ...data.frontmatter, order };
+    await fetch(`/api/admin/projects/${slug}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        frontmatter: updatedFrontmatter,
+        content: data.content,
+        newSlug: slug,
+      }),
+    });
+  };
+
   const loadTalk = async (slug) => {
     const res = await fetch(`/api/admin/talks/${slug}`);
     const data = await res.json();
@@ -148,7 +215,11 @@ export default function AdminPage() {
     await fetch(`/api/admin/talks/${selectedTalk}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...talkData, fullDescription: content, newSlug: talkSlug }),
+      body: JSON.stringify({
+        ...talkData,
+        fullDescription: content,
+        newSlug: talkSlug,
+      }),
     });
     alert("Saved!");
     // Reload talks list and update selection if slug changed
@@ -178,6 +249,12 @@ export default function AdminPage() {
 
   const createNew = () => {
     if (contentType === "projects") {
+      // Calculate next order number
+      const maxOrder =
+        projects.length > 0
+          ? Math.max(...projects.map((p) => p.order || 0))
+          : 0;
+
       setSelectedProject("new");
       setProjectSlug("new-project");
       setSelectedTalk(null);
@@ -188,6 +265,7 @@ export default function AdminPage() {
         techStack: "",
         liveUrl: "",
         githubUrl: "",
+        order: maxOrder + 1,
       });
       setContent("## Overview\n\nYour content here...");
     } else if (contentType === "talks") {
@@ -378,19 +456,81 @@ export default function AdminPage() {
 
             <div className="space-y-2">
               {contentType === "projects"
-                ? projects.map((project) => (
-                    <button
-                      key={project}
-                      type="button"
-                      onClick={() => loadProject(project)}
-                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
-                        selectedProject === project
+                ? projects.map((project, index) => (
+                    <div
+                      key={project.slug}
+                      className={`flex items-center gap-2 rounded-lg transition-colors ${
+                        selectedProject === project.slug
                           ? "bg-white/20"
-                          : "bg-white/5 hover:bg-white/10"
+                          : "bg-white/5"
                       }`}
                     >
-                      {project}
-                    </button>
+                      <button
+                        type="button"
+                        onClick={() => loadProject(project.slug)}
+                        className="flex-1 text-left px-4 py-2 hover:bg-white/5 rounded-l-lg transition-colors"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="text-white/60 text-xs font-mono min-w-[24px] text-right">
+                            {project.order}
+                          </span>
+                          <div className="flex-1">
+                            <div className="text-sm font-medium text-white">
+                              {project.title}
+                            </div>
+                            <div className="text-xs text-white/40">
+                              {project.slug}
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                      <div className="flex flex-col pr-2">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            moveProjectUp(index);
+                          }}
+                          disabled={index === 0}
+                          className="text-white/40 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                          title="Move up"
+                        >
+                          <svg
+                            className="w-4 h-4"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            moveProjectDown(index);
+                          }}
+                          disabled={index === projects.length - 1}
+                          className="text-white/40 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                          title="Move down"
+                        >
+                          <svg
+                            className="w-4 h-4"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
                   ))
                 : contentType === "talks"
                 ? talks.map((talk) => (
@@ -608,28 +748,55 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="flex items-center gap-3 cursor-pointer">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="flex items-center gap-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={frontmatter.featured || false}
+                          onChange={(e) =>
+                            setFrontmatter({
+                              ...frontmatter,
+                              featured: e.target.checked,
+                            })
+                          }
+                          className="w-5 h-5 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                        />
+                        <div>
+                          <span className="text-sm text-white font-medium">
+                            Featured Project
+                          </span>
+                          <p className="text-xs text-white/60">
+                            Show this project on the homepage
+                          </p>
+                        </div>
+                      </label>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm text-white/60 mb-2">
+                        Display Order *
+                      </label>
                       <input
-                        type="checkbox"
-                        checked={frontmatter.featured || false}
+                        type="number"
+                        value={frontmatter.order || ""}
                         onChange={(e) =>
                           setFrontmatter({
                             ...frontmatter,
-                            featured: e.target.checked,
+                            order: e.target.value
+                              ? parseInt(e.target.value)
+                              : 1,
                           })
                         }
-                        className="w-5 h-5 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                        placeholder="1, 2, 3..."
+                        min="1"
+                        required
+                        className="w-full px-4 py-2 bg-white/10 rounded-lg border border-white/20 focus:border-blue-500 focus:outline-none"
                       />
-                      <div>
-                        <span className="text-sm text-white font-medium">
-                          Featured Project
-                        </span>
-                        <p className="text-xs text-white/60">
-                          Show this project on the homepage (max 2)
-                        </p>
-                      </div>
-                    </label>
+                      <p className="text-xs text-white/40 mt-1">
+                        Lower numbers appear first • Use arrows to reorder
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -802,7 +969,7 @@ export default function AdminPage() {
                       {talkData.images && talkData.images.length > 0 && (
                         <div className="grid grid-cols-3 gap-2">
                           {talkData.images.map((img, idx) => (
-                            <div key={idx} className="relative group">
+                            <div key={img} className="relative group">
                               <img
                                 src={img}
                                 alt={`Carousel ${idx + 1}`}
@@ -814,7 +981,7 @@ export default function AdminPage() {
                                   setTalkData({
                                     ...talkData,
                                     images: talkData.images.filter(
-                                      (_, i) => i !== idx
+                                      (imgUrl) => imgUrl !== img
                                     ),
                                   })
                                 }

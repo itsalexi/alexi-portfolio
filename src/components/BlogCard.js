@@ -28,7 +28,7 @@ export default function BlogCard({
             <img
               src={image}
               alt={title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
             />
           </div>
         )}
@@ -52,7 +52,11 @@ export default function BlogCard({
           {/* Title */}
           <h3
             className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2 overflow-hidden"
-            style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+            }}
           >
             {title}
           </h3>
@@ -61,7 +65,11 @@ export default function BlogCard({
           {excerpt && (
             <p
               className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3 overflow-hidden text-ellipsis flex-grow"
-              style={{ display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical" }}
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
+              }}
             >
               {normalizeEllipsis(excerpt)}
             </p>
