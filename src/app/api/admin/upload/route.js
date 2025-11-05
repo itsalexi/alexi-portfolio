@@ -45,8 +45,10 @@ export async function POST(request) {
       })
       .toFile(filepath);
 
-    // Return URL
-    const url = `/images/projects/${filename}`;
+    // Return URL with cache-busting timestamp for featured images
+    const url = isFeatured 
+      ? `/images/projects/${filename}?v=${timestamp}`
+      : `/images/projects/${filename}`;
     return NextResponse.json({ url, filename });
   } catch (error) {
     console.error("Upload error:", error);

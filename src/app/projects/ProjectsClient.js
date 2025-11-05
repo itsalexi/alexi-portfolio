@@ -78,16 +78,17 @@ export default function ProjectsClient({ projects: initialProjects = [] }) {
 
       {/* Projects Grid */}
       {filteredProjects.length > 0 ? (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" style={{ gridAutoRows: '1fr' }}>
           {filteredProjects.map((project) => (
-            <ProjectCard
-              key={project.slug}
-              title={project.title}
-              description={project.tagline}
-              image={project.image}
-              techStack={project.techStack}
-              link={`/projects/${project.slug}`}
-            />
+            <div key={project.slug} className="flex">
+              <ProjectCard
+                title={project.title}
+                description={project.tagline}
+                image={project.image}
+                techStack={project.techStack}
+                link={`/projects/${project.slug}`}
+              />
+            </div>
           ))}
         </div>
       ) : (

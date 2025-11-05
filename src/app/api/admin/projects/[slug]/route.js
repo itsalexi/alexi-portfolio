@@ -29,7 +29,8 @@ export async function GET(request, { params }) {
         : "",
       liveUrl: frontmatter.liveUrl || "",
       githubUrl: frontmatter.githubUrl || "",
-      image: frontmatter.image || ""
+      image: frontmatter.image || "",
+      featured: frontmatter.featured || false
     },
     content
   });
@@ -67,7 +68,8 @@ export async function POST(request, { params }) {
     techStack: techStackArray,
     liveUrl: frontmatter.liveUrl || null,
     githubUrl: frontmatter.githubUrl || null,
-    image: frontmatter.image || null
+    image: frontmatter.image || null,
+    featured: frontmatter.featured || false
   });
   
   const newFilePath = path.join(projectsDirectory, `${finalSlug}.md`);
