@@ -40,7 +40,7 @@ export default function ProjectCard({
             />
             <div className="relative z-10 flex h-full flex-col overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm transition-all hover:bg-white/10">
               {/* Project Image */}
-              <div className="relative w-full h-48 overflow-hidden bg-gradient-to-br from-blue-500/10 to-purple-500/10">
+              <div className="relative w-full h-48 overflow-hidden bg-gradient-to-br from-blue-500/10 to-purple-500/10 flex-shrink-0">
                 {image ? (
                   <Image
                     src={image}
@@ -65,7 +65,7 @@ export default function ProjectCard({
                 </h3>
 
                 {/* Description */}
-                <p className="mb-4 text-sm leading-relaxed text-white/70">
+                <p className="mb-4 text-sm leading-relaxed text-white/70 flex-grow">
                   {description}
                 </p>
 

@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Hero from "../components/Hero";
 import ProjectCard from "../components/ProjectCard";
+import BlogCard from "../components/BlogCard";
 import ExperienceCard from "../components/ExperienceCard";
 import CompanyExperienceGroup from "../components/CompanyExperienceGroup";
 import TalkItem from "../components/TalkItem";
@@ -16,7 +17,7 @@ import experienceData from "../data/experience.json";
 import { badgeConfig } from "../config/badges";
 import { techStack } from "../lib/tech-stack";
 
-export default function HomeClient({ talks, featuredProjects }) {
+export default function HomeClient({ talks, featuredProjects, recentBlogs }) {
   const [activeFilter, setActiveFilter] = useState("all");
 
   // Group experiences by company
@@ -113,7 +114,7 @@ export default function HomeClient({ talks, featuredProjects }) {
               projects that solve real problems
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featuredProjects.map((project) => (
               <ProjectCard
                 key={project.slug}
@@ -122,6 +123,61 @@ export default function HomeClient({ talks, featuredProjects }) {
                 image={project.image}
                 link={`/projects/${project.slug}`}
                 techStack={project.techStack}
+              />
+            ))}
+          </div>
+        </section>
+
+        <section id="blog" aria-label="Recent Blog Posts" className="py-20">
+          <div className="mb-8">
+            <div className="flex items-end justify-between mb-4">
+              <div>
+                <p className="text-blue-500 text-xs font-semibold uppercase tracking-wider mb-2">
+                  Writing
+                </p>
+                <h2 className="text-3xl font-bold text-white">
+                  Recent Blog Posts
+                </h2>
+              </div>
+              <a
+                href="/blog"
+                className="text-sm text-white/60 hover:text-white transition-colors flex items-center gap-2 group"
+              >
+                <span className="hidden sm:inline">View All Posts</span>
+                <span className="sm:hidden">View All</span>
+                <svg
+                  className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </a>
+            </div>
+            <p className="text-white/60 text-sm max-w-2xl">
+              Insights on technology, development practices, and lessons learned
+              from building software
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {recentBlogs.map((blog) => (
+              <BlogCard
+                key={blog.slug}
+                slug={blog.slug}
+                title={blog.title}
+                date={blog.date}
+                excerpt={blog.excerpt}
+                tags={blog.tags}
+                image={blog.image}
+                author={blog.author}
+                readTime={blog.readTime}
               />
             ))}
           </div>

@@ -17,6 +17,9 @@ export default function AdminPage() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedTalk, setSelectedTalk] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const [projectSlug, setProjectSlug] = useState("");
+  const [talkSlug, setTalkSlug] = useState("");
+  const [blogSlug, setBlogSlug] = useState("");
   const [content, setContent] = useState("");
   const [frontmatter, setFrontmatter] = useState({
     title: "",
@@ -80,6 +83,7 @@ export default function AdminPage() {
     const res = await fetch(`/api/admin/projects/${slug}`);
     const data = await res.json();
     setSelectedProject(slug);
+    setProjectSlug(slug);
     setSelectedTalk(null);
     setSelectedBlog(null);
     setFrontmatter(data.frontmatter);
@@ -90,6 +94,7 @@ export default function AdminPage() {
     const res = await fetch(`/api/admin/talks/${slug}`);
     const data = await res.json();
     setSelectedTalk(slug);
+    setTalkSlug(slug);
     setSelectedProject(null);
     setSelectedBlog(null);
     setTalkData({
@@ -108,6 +113,7 @@ export default function AdminPage() {
     const res = await fetch(`/api/admin/blogs/${slug}`);
     const data = await res.json();
     setSelectedBlog(slug);
+    setBlogSlug(slug);
     setSelectedProject(null);
     setSelectedTalk(null);
     setBlogData({
@@ -126,36 +132,54 @@ export default function AdminPage() {
     await fetch(`/api/admin/projects/${selectedProject}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ frontmatter, content }),
+      body: JSON.stringify({ frontmatter, content, newSlug: projectSlug }),
     });
     alert("Saved!");
+    // Reload projects list and update selection if slug changed
+    const res = await fetch("/api/admin/projects");
+    const data = await res.json();
+    setProjects(data);
+    if (projectSlug !== selectedProject) {
+      setSelectedProject(projectSlug);
+    }
   };
 
   const saveTalk = async () => {
     await fetch(`/api/admin/talks/${selectedTalk}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...talkData, fullDescription: content }),
+      body: JSON.stringify({ ...talkData, fullDescription: content, newSlug: talkSlug }),
     });
     alert("Saved!");
+    // Reload talks list and update selection if slug changed
+    const res = await fetch("/api/admin/talks");
+    const data = await res.json();
+    setTalks(data);
+    if (talkSlug !== selectedTalk) {
+      setSelectedTalk(talkSlug);
+    }
   };
 
   const saveBlog = async () => {
     await fetch(`/api/admin/blogs/${selectedBlog}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...blogData, content }),
+      body: JSON.stringify({ ...blogData, content, newSlug: blogSlug }),
     });
     alert("Saved!");
-    // Reload blogs list
+    // Reload blogs list and update selection if slug changed
     const res = await fetch("/api/admin/blogs");
     const data = await res.json();
     setBlogs(data);
+    if (blogSlug !== selectedBlog) {
+      setSelectedBlog(blogSlug);
+    }
   };
 
   const createNew = () => {
     if (contentType === "projects") {
       setSelectedProject("new");
+      setProjectSlug("new-project");
       setSelectedTalk(null);
       setSelectedBlog(null);
       setFrontmatter({
@@ -168,6 +192,7 @@ export default function AdminPage() {
       setContent("## Overview\n\nYour content here...");
     } else if (contentType === "talks") {
       setSelectedTalk("new");
+      setTalkSlug("new-talk");
       setSelectedProject(null);
       setSelectedBlog(null);
       setTalkData({
@@ -182,6 +207,7 @@ export default function AdminPage() {
       setContent("## Talk Description\n\nYour talk details here...");
     } else if (contentType === "blogs") {
       setSelectedBlog("new");
+      setBlogSlug("new-blog");
       setSelectedProject(null);
       setSelectedTalk(null);
       setBlogData({
@@ -425,6 +451,22 @@ export default function AdminPage() {
 
                   <div>
                     <label className="block text-sm text-white/60 mb-2">
+                      Slug (URL)
+                    </label>
+                    <input
+                      type="text"
+                      value={projectSlug}
+                      onChange={(e) => setProjectSlug(e.target.value)}
+                      placeholder="my-project-name"
+                      className="w-full px-4 py-2 bg-white/10 rounded-lg border border-white/20 focus:border-blue-500 focus:outline-none font-mono text-sm"
+                    />
+                    <p className="text-xs text-white/40 mt-1">
+                      Used in URL: /projects/{projectSlug}
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm text-white/60 mb-2">
                       Tagline
                     </label>
                     <input
@@ -655,6 +697,22 @@ export default function AdminPage() {
                       }
                       className="w-full px-4 py-2 bg-white/10 rounded-lg border border-white/20 focus:border-blue-500 focus:outline-none"
                     />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm text-white/60 mb-2">
+                      Slug (URL)
+                    </label>
+                    <input
+                      type="text"
+                      value={talkSlug}
+                      onChange={(e) => setTalkSlug(e.target.value)}
+                      placeholder="my-talk-name"
+                      className="w-full px-4 py-2 bg-white/10 rounded-lg border border-white/20 focus:border-blue-500 focus:outline-none font-mono text-sm"
+                    />
+                    <p className="text-xs text-white/40 mt-1">
+                      Used in URL: /talks/{talkSlug}
+                    </p>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-4">
@@ -906,6 +964,22 @@ export default function AdminPage() {
                       }
                       className="w-full px-4 py-2 bg-white/10 rounded-lg border border-white/20 focus:border-blue-500 focus:outline-none"
                     />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm text-white/60 mb-2">
+                      Slug (URL)
+                    </label>
+                    <input
+                      type="text"
+                      value={blogSlug}
+                      onChange={(e) => setBlogSlug(e.target.value)}
+                      placeholder="my-blog-post"
+                      className="w-full px-4 py-2 bg-white/10 rounded-lg border border-white/20 focus:border-blue-500 focus:outline-none font-mono text-sm"
+                    />
+                    <p className="text-xs text-white/40 mt-1">
+                      Used in URL: /blog/{blogSlug}
+                    </p>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-4">

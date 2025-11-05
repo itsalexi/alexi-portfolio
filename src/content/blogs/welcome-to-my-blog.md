@@ -1,36 +1,38 @@
 ---
 slug: welcome-to-my-blog
-title: Welcome to My Blog
-date: "Nov 4, 2025"
+title: Hi I'm Alexi
+date: 'May 29, 2025'
 excerpt: >-
-  An introduction to my blog where I'll be sharing my thoughts on web
-  development, technology, and building products.
+  Hi there. I’m Alexi, a Computer Science student who enjoys building things,
+  tinkering with code, and sometimes stumbling into bugs I probably wasn’t
+  supposed to find. I’ve been meaning to start a blog for a while now, mostly to
+  have a space where I can share the things I’m learning, building, and
+  occasionally breaking (in good faith, of course).
 tags:
   - Meta
   - Personal
 image: /images/projects/null-1762262001331.webp
 author: Alexi Canamo
-readTime: 1 min read
+readTime: 2 min read
 featured: false
 ---
+Hi there. I’m **Alexi**, a Computer Science student who enjoys building things, tinkering with code, and sometimes stumbling into bugs I probably wasn’t supposed to find. I’ve been meaning to start a blog for a while now, mostly to have a space where I can share the things I’m learning, building, and occasionally breaking (in good faith, of course).
 
-## Welcome!
+Here’s what you can expect to see here:
 
-Thanks for stopping by my blog. This is where I'll be sharing my thoughts, experiences, and learnings as I build projects and explore new technologies.
+- Projects I’m working on, whether it’s a tool to help students or just something random I thought would be fun to build
+- Stories from finding bugs or vulnerabilities, and what happens after reporting them
+- Writeups and walkthroughs that I hope can help someone else out there
+- Some personal reflections too — things I’m figuring out as I go through college and tech life
 
-## What to Expect
+If you’re curious, here are a few projects I’ve worked on so far:
 
-I'll be writing about:
+- [**ADMU Tuition Fee Viewer**](https://tuition.alexi.life) – A quick way to check your tuition fees without digging through PDFs
+- [**ADMU QPI Calculator**](https://qpi.alexi.life) – Helps Ateneo students compute their QPI faster!
+- [**My personal site**](https://alexi.life) – Everything else about me in one place, you’re on it right now!
 
-- **Web Development** - Deep dives into React, Next.js, and modern web technologies
-- **Product Building** - Lessons learned from building and launching products
-- **Technology Trends** - My takes on emerging technologies and industry trends
-- **Tutorials** - Step-by-step guides on building things from scratch
+I don’t have everything figured out, but I enjoy learning and sharing along the way. If even one post here helps someone else or sparks an idea, I’d be happy.
 
-## Why I'm Writing
+Thanks for stopping by. I’ll be posting soon.
 
-I believe in learning in public. Writing helps me organize my thoughts, solidify my understanding, and hopefully help others who are on a similar journey.
-
-## Stay Connected
-
-Follow along as I share my journey. New posts coming soon!
+— **Alexi**

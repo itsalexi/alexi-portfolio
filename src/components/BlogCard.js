@@ -15,15 +15,15 @@ export default function BlogCard({
   readTime,
 }) {
   return (
-    <Link href={`/blog/${slug}`}>
+    <Link href={`/blog/${slug}`} className="h-full block">
       <motion.article
-        className="group relative rounded-xl bg-white/3 border border-white/8 hover:border-white/20 hover:bg-white/6 transition-all overflow-hidden"
+        className="group relative h-full rounded-xl bg-white/3 border border-white/8 hover:border-white/20 hover:bg-white/6 transition-all overflow-hidden flex flex-col"
         whileHover={{ y: -4 }}
         transition={{ duration: 0.2 }}
       >
         {/* Featured Image */}
         {image && (
-          <div className="relative w-full h-48 overflow-hidden">
+          <div className="relative w-full h-48 overflow-hidden flex-shrink-0">
             <img
               src={image}
               alt={title}
@@ -33,7 +33,7 @@ export default function BlogCard({
         )}
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-6 flex flex-col flex-1">
           {/* Metadata */}
           <div className="flex items-center gap-4 text-xs text-white/60 mb-3">
             <div className="flex items-center gap-1.5">
@@ -55,14 +55,14 @@ export default function BlogCard({
 
           {/* Excerpt */}
           {excerpt && (
-            <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3">
+            <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
               {excerpt}
             </p>
           )}
 
           {/* Tags */}
           {tags && tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-auto">
               {tags.map((tag, index) => (
                 <span
                   key={index}

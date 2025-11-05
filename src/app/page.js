@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import HomeClient from "./HomeClient";
+import { calculateReadingTime } from "@/lib/reading-time";
 
 export const metadata = {
   title: "Home",
@@ -52,12 +53,50 @@ function loadProjects() {
       return frontmatter;
     })
     .filter((project) => project.featured === true)
-    .slice(0, 2); // Only return first 2 featured projects
+al
+}
+
+function loadBlogs() {
+  const blogsDirectory = path.join(process.cwd(), "src/content/blogs");
+
+  if (!fs.existsSync(blogsDirectory)) {
+    return [];
+  }
+
+  const files = fs.readdirSync(blogsDirectory);
+
+  return files
+    .filter((file) => file.endsWith(".md"))
+    .map((file) => {
+      const filePath = path.join(blogsDirectory, file);
+      const fileContents = fs.readFileSync(filePath, "utf8");
+      const { data: frontmatter, content } = matter(fileContents);
+      return {
+        slug: file.replace(".md", ""),
+        ...frontmatter,
+        readTime: calculateReadingTime(content),
+      };
+    })
+    .sort((a, b) => {
+      // Sort by date (newest first)
+      if (a.date && b.date) {
+        return new Date(b.date) - new Date(a.date);
+      }
+      return 0;
+    })
+    .slice(0, 3); // Only return first 3 recent blogs
 }
 
 export default function Home() {
   const talks = loadTalks();
   const featuredProjects = loadProjects();
+  const recentBlogs = loadBlogs();
 
-  return <HomeClient talks={talks} featuredProjects={featuredProjects} />;
+  return (
+    <HomeClient
+      talks={talks}
+      featuredProjects={featuredProjects}
+      recentBlogs={recentBlogs}
+    />
+  );
 }

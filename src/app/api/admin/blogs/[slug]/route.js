@@ -41,6 +41,7 @@ export async function POST(request, { params }) {
 
   const { slug } = await params;
   const blogData = await request.json();
+  const { newSlug } = blogData;
 
   const blogsDirectory = path.join(process.cwd(), "src/content/blogs");
 
@@ -57,10 +58,12 @@ export async function POST(request, { params }) {
   // Calculate reading time automatically
   const readTime = calculateReadingTime(blogData.content);
 
+  // Determine final slug
+  const finalSlug = newSlug || (slug === "new" ? blogData.title.toLowerCase().replace(/\s+/g, "-") : slug);
+
   // Build markdown file
   const fileContent = matter.stringify(blogData.content, {
-    slug:
-      slug === "new" ? blogData.title.toLowerCase().replace(/\s+/g, "-") : slug,
+    slug: finalSlug,
     title: blogData.title,
     date: blogData.date,
     excerpt: blogData.excerpt,
@@ -71,16 +74,19 @@ export async function POST(request, { params }) {
     featured: blogData.featured || false,
   });
 
-  const fileName =
-    slug === "new"
-      ? `${blogData.title.toLowerCase().replace(/\s+/g, "-")}.md`
-      : `${slug}.md`;
+  const newFilePath = path.join(blogsDirectory, `${finalSlug}.md`);
+  const oldFilePath = path.join(blogsDirectory, `${slug}.md`);
 
-  const filePath = path.join(blogsDirectory, fileName);
-  fs.writeFileSync(filePath, fileContent);
+  // If slug changed and old file exists, delete it
+  if (slug !== "new" && slug !== finalSlug && fs.existsSync(oldFilePath)) {
+    fs.unlinkSync(oldFilePath);
+  }
+
+  // Write new file
+  fs.writeFileSync(newFilePath, fileContent);
 
   return NextResponse.json({
     success: true,
-    slug: fileName.replace(".md", ""),
+    slug: finalSlug,
   });
 }
