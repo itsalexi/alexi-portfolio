@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { techStack as techStackConfig } from "../lib/tech-stack";
+import { normalizeEllipsis } from "../lib/text";
 
 export default function ProjectCard({
   title,
@@ -46,13 +47,19 @@ export default function ProjectCard({
         {/* Content */}
         <div className="p-6 flex flex-col flex-1">
           {/* Title */}
-          <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2">
+          <h3
+            className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2 overflow-hidden"
+            style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}
+          >
             {title}
           </h3>
 
           {/* Description */}
-          <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
-            {description}
+          <p
+            className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3 overflow-hidden text-ellipsis break-words flex-grow"
+            style={{ display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical" }}
+          >
+            {normalizeEllipsis(description)}
           </p>
 
           {/* Tech Stack */}

@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { Calendar, Clock } from "lucide-react";
+import { normalizeEllipsis } from "../lib/text";
 
 export default function BlogCard({
   slug,
@@ -49,14 +50,20 @@ export default function BlogCard({
           </div>
 
           {/* Title */}
-          <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2">
+          <h3
+            className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2 overflow-hidden"
+            style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}
+          >
             {title}
           </h3>
 
           {/* Excerpt */}
           {excerpt && (
-            <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
-              {excerpt}
+            <p
+              className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3 overflow-hidden text-ellipsis flex-grow"
+              style={{ display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical" }}
+            >
+              {normalizeEllipsis(excerpt)}
             </p>
           )}
 
