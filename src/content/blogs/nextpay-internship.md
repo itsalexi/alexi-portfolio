@@ -10,7 +10,7 @@ excerpt: >-
 tags:
   - Personal
   - Startups
-image: /images/projects/null-1763278317174.webp
+image: /images/projects/null-1763278481699.webp
 author: Alexi Canamo
 readTime: 6 min read
 featured: true
