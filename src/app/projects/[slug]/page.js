@@ -20,13 +20,13 @@ export async function generateMetadata({ params }) {
   const { data: frontmatter } = matter(fileContents);
 
   return {
-    title: frontmatter.title,
+    title: `Project | ${frontmatter.title}`,
     description:
       frontmatter.shortDescription ||
       frontmatter.description ||
       `${frontmatter.title} - Project by Alexi Canamo`,
     openGraph: {
-      title: frontmatter.title,
+      title: `Project | ${frontmatter.title}`,
       description:
         frontmatter.shortDescription || frontmatter.description || "",
       images: frontmatter.image ? [frontmatter.image] : ["/og-image.png"],
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: "summary_large_image",
-      title: frontmatter.title,
+      title: `Project | ${frontmatter.title}`,
       description:
         frontmatter.shortDescription || frontmatter.description || "",
       images: frontmatter.image ? [frontmatter.image] : ["/og-image.png"],
