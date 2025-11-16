@@ -29,9 +29,7 @@ export async function generateMetadata({ params }) {
       title: frontmatter.title,
       description:
         frontmatter.shortDescription || frontmatter.description || "",
-      images: frontmatter.featuredImage
-        ? [frontmatter.featuredImage]
-        : ["/og-image.png"],
+      images: frontmatter.image ? [frontmatter.image] : ["/og-image.png"],
       type: "article",
     },
     twitter: {
@@ -39,9 +37,7 @@ export async function generateMetadata({ params }) {
       title: frontmatter.title,
       description:
         frontmatter.shortDescription || frontmatter.description || "",
-      images: frontmatter.featuredImage
-        ? [frontmatter.featuredImage]
-        : ["/og-image.png"],
+      images: frontmatter.image ? [frontmatter.image] : ["/og-image.png"],
     },
   };
 }
