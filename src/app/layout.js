@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import PageTransition from "../components/PageTransition";
 import BackgroundEffects from "../components/BackgroundEffects";
 import Script from "next/script";
@@ -202,6 +203,7 @@ export default function RootLayout({ children }) {
         <div className="relative z-10">
           <Navbar />
           <PageTransition>{children}</PageTransition>
+          <Footer />
         </div>
       </body>
     </html>

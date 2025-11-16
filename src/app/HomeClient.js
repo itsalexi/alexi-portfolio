@@ -13,9 +13,12 @@ import { BackgroundBeams } from "../components/ui/background-beams";
 import { Timeline } from "../components/ui/timeline";
 import { Meteors } from "../components/ui/meteors";
 import { GlowingEffect } from "../components/ui/glowing-effect";
+import { TextHoverEffect } from "../components/ui/text-hover-effect";
+import { motion } from "motion/react";
 import experienceData from "../data/experience.json";
 import { badgeConfig } from "../config/badges";
 import { techStack } from "../lib/tech-stack";
+import { socials } from "../config/socials";
 
 export default function HomeClient({ talks, featuredProjects, recentBlogs }) {
   const [activeFilter, setActiveFilter] = useState("all");
@@ -55,7 +58,7 @@ export default function HomeClient({ talks, featuredProjects, recentBlogs }) {
   }, [activeFilter]);
 
   return (
-    <div className="relative flex min-h-screen items-stretch justify-center overflow-clip bg-transparent font-sans">
+    <div className="relative flex flex-col min-h-screen items-center overflow-clip bg-transparent font-sans">
       {/* Meteors - appear at top on mobile, after hero on desktop */}
       <div className="pointer-events-none absolute inset-0 z-0 top-0 sm:top-[100vh]">
         <Meteors number={25} />
@@ -317,6 +320,36 @@ export default function HomeClient({ talks, featuredProjects, recentBlogs }) {
           </div>
         </section>
       </main>
+
+      {/* Big CTA with TextHoverEffect - Full Width Outside Container */}
+      <section className="relative py-8 md:py-32 px-6 overflow-visible w-full">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center relative z-10"
+        >
+          <div className="h-80 md:h-96 w-full flex items-center justify-center mb-8">
+            <div className="w-full max-w-6xl">
+              <TextHoverEffect text="ALEXI" />
+            </div>
+          </div>
+
+          <p className="text-white/60 text-xl mb-8 max-w-2xl mx-auto">
+            Got an idea? Want to collaborate on something cool?
+            <br />
+            <span className="text-white">Let's make it happen.</span>
+          </p>
+
+          <a
+            href={`mailto:${socials.email}`}
+            className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-black bg-white rounded-lg hover:bg-white/90 transition-all duration-300 hover:scale-105"
+          >
+            Get in Touch
+          </a>
+        </motion.div>
+      </section>
     </div>
   );
 }

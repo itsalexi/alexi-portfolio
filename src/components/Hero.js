@@ -1,26 +1,14 @@
 "use client";
 
-import Button from "./ui/Button";
 import Badge from "./ui/Badge";
-import StatPill from "./ui/StatPill";
-import { Spotlight } from "./ui/spotlight";
-import { Meteors } from "./ui/meteors";
-import { FloatingDock } from "./ui/floating-dock";
-import Link from "next/link";
+import { HoverBorderGradient } from "./ui/hover-border-gradient";
 import {
-  IconFolder,
-  IconNotebook,
   IconMail,
   IconBrandGithub,
   IconBrandLinkedin,
   IconBrandInstagram,
-  IconDownload,
-  IconCopy,
-  IconCheck,
 } from "@tabler/icons-react";
-import { GlareCard } from "./ui/glare-card";
 import Image from "next/image";
-import { useState, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import Typewriter from "typewriter-effect";
 import { motion } from "motion/react";
@@ -85,7 +73,7 @@ export default function Hero() {
                 </div>
               </div>
             </div>
-            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 ring-blue-500/30 ring-offset-2 ring-offset-black sm:h-24 sm:w-24">
+            <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-full ring-2 ring-blue-500/30 ring-offset-2 ring-offset-black sm:h-32 sm:w-32 md:h-36 md:w-36">
               <Image
                 src="/avatar.webp"
                 alt="Alexi avatar"
@@ -101,8 +89,8 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            CS student at Ateneo who likes building stuff. Currently interning
-            at NextPay (YC W21) and leading workshops at MISA.
+            CS student at Ateneo who likes building stuff. Teaching workshops
+            and creating tools that help thousands of students.
           </motion.p>
 
           <motion.div
@@ -111,31 +99,19 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <Link
-              href="/blog"
-              aria-label="Read Blog"
-              className="hidden sm:block"
-            >
-              <Button
-                variant="primary"
-                className="h-14 px-8 text-base bg-linear-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
-              >
-                Read Blog
-              </Button>
-            </Link>
             <a
-              href={socials.resume}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="View Resume"
+              href={`mailto:${socials.email}`}
+              aria-label="Connect with me"
               className="hidden sm:block"
             >
-              <Button
-                variant="outline"
-                className="h-14 px-8 text-base border-blue-500/30 hover:bg-blue-500/10"
+              <HoverBorderGradient
+                as="div"
+                containerClassName="rounded-full"
+                className="bg-black text-white dark:bg-black flex items-center space-x-2 h-14 px-8 text-base font-medium"
               >
-                <IconDownload className="mr-2 h-5 w-5" /> Resume
-              </Button>
+                <IconMail className="h-5 w-5" />
+                <span>Get in touch</span>
+              </HoverBorderGradient>
             </a>
 
             <div className="ml-auto hidden items-center gap-3 border-l border-white/10 pl-8 sm:flex">
@@ -176,19 +152,6 @@ export default function Hero() {
             </div>
 
             <div className="flex w-full items-center gap-3 sm:hidden">
-              <a
-                href={socials.resume}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="View Resume"
-              >
-                <Button
-                  variant="outline"
-                  className="h-12 px-6 border-blue-500/30 hover:bg-blue-500/10"
-                >
-                  <IconDownload className="mr-2 h-4 w-4" /> Resume
-                </Button>
-              </a>
               <a
                 href={socials.github}
                 target="_blank"

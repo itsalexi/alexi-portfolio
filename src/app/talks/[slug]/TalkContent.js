@@ -1,10 +1,7 @@
 "use client";
 
 import ReactMarkdown from "react-markdown";
-import FloatingBackButton from "../../../components/FloatingBackButton";
 import Carousel from "../../../components/ui/carousel";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 
 export default function TalkContent({ talk }) {
   const slideData =
@@ -15,20 +12,7 @@ export default function TalkContent({ talk }) {
 
   return (
     <div className="min-h-screen bg-transparent">
-      <FloatingBackButton />
-
-      {/* Back Button */}
-      <div className="max-w-6xl mx-auto px-6 pt-24">
-        <Link
-          href="/talks"
-          className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          Back
-        </Link>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-6 pt-6 pb-12">
+      <div className="max-w-6xl mx-auto px-6 pt-24 pb-12">
         {/* Carousel */}
         {slideData.length > 0 && (
           <div className="relative w-full mb-12 overflow-hidden min-h-[60vmin]">

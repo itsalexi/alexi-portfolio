@@ -1,27 +1,12 @@
 "use client";
 
-import { Calendar, Clock, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { Calendar, Clock } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import FloatingBackButton from "@/components/FloatingBackButton";
 
 export default function BlogContent({ blog }) {
   return (
     <div className="min-h-screen bg-transparent text-white pt-20">
-      <FloatingBackButton />
-
-      {/* Back Button */}
-      <div className="max-w-4xl mx-auto px-6 pt-8">
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          Back
-        </Link>
-      </div>
-
       {/* Article Header */}
       <article className="max-w-4xl mx-auto px-6 py-6">
         {/* Featured Image */}
