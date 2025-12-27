@@ -6,6 +6,7 @@ import {
   Github,
   Linkedin,
   Instagram,
+  MessageCircle,
   Mail,
   FileText,
   Heart,
@@ -32,6 +33,12 @@ export default function Footer() {
       href: socials.instagram,
       icon: Instagram,
       label: "Instagram Profile",
+    },
+    {
+      name: "Discord",
+      href: socials.discord,
+      icon: MessageCircle,
+      label: "Join Discord Community",
     },
     {
       name: "Email",

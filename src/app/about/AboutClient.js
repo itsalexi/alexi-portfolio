@@ -15,6 +15,7 @@ import {
   IconBrandGithub,
   IconBrandLinkedin,
   IconBrandInstagram,
+  IconBrandDiscord,
   IconMail,
 } from "@tabler/icons-react";
 import { socials } from "../../config/socials";
@@ -540,6 +541,17 @@ export default function AboutClient() {
                       <IconBrandInstagram className="w-5 h-5 flex-shrink-0" />
                       <span className="text-sm whitespace-nowrap">
                         Instagram
+                      </span>
+                    </a>
+                    <a
+                      href={socials.discord}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
+                    >
+                      <IconBrandDiscord className="w-5 h-5 flex-shrink-0" />
+                      <span className="text-sm whitespace-nowrap">
+                        Discord
                       </span>
                     </a>
                     <a

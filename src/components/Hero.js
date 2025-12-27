@@ -7,6 +7,7 @@ import {
   IconBrandGithub,
   IconBrandLinkedin,
   IconBrandInstagram,
+  IconBrandDiscord,
 } from "@tabler/icons-react";
 import Image from "next/image";
 import { toast, Toaster } from "sonner";
@@ -94,60 +95,82 @@ export default function Hero() {
           </motion.p>
 
           <motion.div
-            className="flex w-full flex-wrap items-center gap-4"
+            className="flex w-full flex-wrap sm:flex-wrap lg:flex-nowrap items-center gap-3 sm:gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <a
-              href={`mailto:${socials.email}`}
-              aria-label="Connect with me"
-              className="hidden sm:block"
-            >
-              <HoverBorderGradient
-                as="div"
-                containerClassName="rounded-full"
-                className="bg-black text-white dark:bg-black flex items-center space-x-2 h-14 px-8 text-base font-medium"
+            <div className="hidden sm:flex items-center gap-3 md:gap-4">
+              <a href={`mailto:${socials.email}`} aria-label="Connect with me">
+                <HoverBorderGradient
+                  as="div"
+                  containerClassName="rounded-full"
+                  className="bg-black text-white dark:bg-black flex items-center space-x-2 h-12 md:h-14 px-5 md:px-8 text-sm md:text-base font-medium"
+                >
+                  <IconMail className="h-4 w-4 md:h-5 md:w-5" />
+                  <span>Get in touch</span>
+                </HoverBorderGradient>
+              </a>
+              <a
+                href={socials.discord}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Join Discord Community"
               >
-                <IconMail className="h-5 w-5" />
-                <span>Get in touch</span>
-              </HoverBorderGradient>
-            </a>
+                <HoverBorderGradient
+                  as="div"
+                  containerClassName="rounded-full"
+                  className="bg-[#5865F2] text-white flex items-center space-x-2 h-12 md:h-14 px-5 md:px-8 text-sm md:text-base font-medium"
+                >
+                  <IconBrandDiscord className="h-4 w-4 md:h-5 md:w-5" />
+                  <span>Join my Discord</span>
+                </HoverBorderGradient>
+              </a>
+            </div>
 
-            <div className="ml-auto hidden items-center gap-3 border-l border-white/10 pl-8 sm:flex">
+            <div className="hidden sm:flex lg:ml-auto items-center gap-2 md:gap-3 lg:border-l lg:border-white/10 lg:pl-8">
               <a
                 href={socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-14 w-14 items-center justify-center rounded-lg bg-[#24292e] transition-all hover:scale-105"
+                className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-lg bg-[#24292e] transition-all hover:scale-105"
                 aria-label="GitHub profile"
               >
-                <IconBrandGithub className="h-6 w-6 text-white" />
+                <IconBrandGithub className="h-5 w-5 md:h-6 md:w-6 text-white" />
               </a>
               <a
                 href={socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-14 w-14 items-center justify-center rounded-lg bg-[#0A66C2] transition-all hover:scale-105"
+                className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-lg bg-[#0A66C2] transition-all hover:scale-105"
                 aria-label="LinkedIn profile"
               >
-                <IconBrandLinkedin className="h-6 w-6 text-white" />
+                <IconBrandLinkedin className="h-5 w-5 md:h-6 md:w-6 text-white" />
               </a>
               <a
                 href={socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-14 w-14 items-center justify-center rounded-lg bg-linear-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] transition-all hover:scale-105"
+                className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-lg bg-linear-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] transition-all hover:scale-105"
                 aria-label="Instagram profile"
               >
-                <IconBrandInstagram className="h-6 w-6 text-white" />
+                <IconBrandInstagram className="h-5 w-5 md:h-6 md:w-6 text-white" />
+              </a>
+              <a
+                href={socials.discord}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-lg bg-[#5865F2] transition-all hover:scale-105"
+                aria-label="Join Discord Community"
+              >
+                <IconBrandDiscord className="h-5 w-5 md:h-6 md:w-6 text-white" />
               </a>
               <button
                 onClick={copyEmail}
-                className="flex h-14 w-14 items-center justify-center rounded-lg bg-linear-to-br from-blue-500 to-purple-500 transition-all hover:scale-105"
+                className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-lg bg-linear-to-br from-blue-500 to-purple-500 transition-all hover:scale-105"
                 aria-label="Copy email address"
               >
-                <IconMail className="h-6 w-6 text-white" />
+                <IconMail className="h-5 w-5 md:h-6 md:w-6 text-white" />
               </button>
             </div>
 
@@ -178,6 +201,15 @@ export default function Hero() {
                 aria-label="Instagram profile"
               >
                 <IconBrandInstagram className="h-5 w-5 text-white" />
+              </a>
+              <a
+                href={socials.discord}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#5865F2] transition-all hover:scale-105"
+                aria-label="Join Discord Community"
+              >
+                <IconBrandDiscord className="h-5 w-5 text-white" />
               </a>
               <button
                 onClick={copyEmail}
