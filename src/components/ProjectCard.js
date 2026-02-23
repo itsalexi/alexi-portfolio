@@ -80,11 +80,13 @@ export default function ProjectCard({
                 >
                   {tech.icon && (
                     <div className="relative h-4 w-4">
-                      <Image
+                      <img
                         src={tech.icon}
                         alt={tech.name}
-                        width={16}
-                        height={16}
+                        width="16"
+                        height="16"
+                        loading="lazy"
+                        decoding="async"
                         className="object-contain"
                       />
                     </div>
