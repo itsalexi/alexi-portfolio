@@ -183,3 +183,55 @@
     transform: translate(calc(-50% - 0.5rem));
   }
 }
+
+/* Preloader — prevent flash on revisit */
+.preloader-seen .preloader-overlay {
+  display: none !important;
+}
+
+.preloader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.preloader-overlay .loader-path {
+  fill: none;
+  stroke: url(#loaderGradient);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: drawAndErase 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes drawAndErase {
+  0% { stroke-dashoffset: 100; opacity: 1; }
+  40%, 45% { stroke-dashoffset: 0; opacity: 1; }
+  90% { stroke-dashoffset: -100; opacity: 1; }
+  91%, 100% { stroke-dashoffset: -100; opacity: 0; }
+}
+
+.loader-path {
+  fill: none;
+  stroke: url(#loaderGradient);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: drawLoader 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes drawLoader {
+  0% { stroke-dashoffset: 100; }
+  40%, 60% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -100; }
+}

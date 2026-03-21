@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PageTransition from "../components/PageTransition";
 import BackgroundEffects from "../components/BackgroundEffects";
+import { Preloader } from "../components/ui/preloader";
 import Script from "next/script";
 
 const inter = Inter({
@@ -93,8 +94,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(sessionStorage.getItem("preloader-seen"))document.documentElement.classList.add("preloader-seen")}catch(e){}`,
+          }}
+        />
         {/* Structured Data - Person Schema */}
         <Script
           id="person-schema"
@@ -199,6 +205,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${inter.variable} antialiased bg-black`}>
+        <Preloader />
         <BackgroundEffects />
         <div className="relative z-10">
           <Navbar />
