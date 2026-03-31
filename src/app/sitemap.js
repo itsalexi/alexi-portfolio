@@ -36,6 +36,12 @@ export default function sitemap() {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${baseUrl}/hackathons`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.65,
+    },
   ];
 
   // Dynamic project pages
@@ -86,5 +92,29 @@ export default function sitemap() {
       }));
   }
 
-  return [...staticPages, ...projectPages, ...talkPages, ...blogPages];
+  const hackathonsDirectory = path.join(
+    process.cwd(),
+    "src/content/hackathons"
+  );
+  let hackathonPages = [];
+
+  if (fs.existsSync(hackathonsDirectory)) {
+    const hackathonFiles = fs.readdirSync(hackathonsDirectory);
+    hackathonPages = hackathonFiles
+      .filter((file) => file.endsWith(".md"))
+      .map((file) => ({
+        url: `${baseUrl}/hackathons/${file.replace(".md", "")}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.6,
+      }));
+  }
+
+  return [
+    ...staticPages,
+    ...projectPages,
+    ...talkPages,
+    ...blogPages,
+    ...hackathonPages,
+  ];
 }

@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import HomeClient from "./HomeClient";
 import { calculateReadingTime } from "@/lib/reading-time";
+import { loadHackathonsForHome } from "@/lib/hackathons";
 
 export const metadata = {
   title: "Home",
@@ -99,12 +100,14 @@ export default function Home() {
   const talks = loadTalks();
   const featuredProjects = loadProjects();
   const recentBlogs = loadBlogs();
+  const hackathons = loadHackathonsForHome();
 
   return (
     <HomeClient
       talks={talks}
       featuredProjects={featuredProjects}
       recentBlogs={recentBlogs}
+      hackathons={hackathons}
     />
   );
 }

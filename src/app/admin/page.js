@@ -10,16 +10,32 @@ const MDEditor = dynamic(
 );
 
 export default function AdminPage() {
-  const [contentType, setContentType] = useState("projects"); // "projects", "talks", or "blogs"
+  const [contentType, setContentType] = useState("projects"); // projects | talks | blogs | hackathons
   const [projects, setProjects] = useState([]);
   const [talks, setTalks] = useState([]);
   const [blogs, setBlogs] = useState([]);
+  const [hackathons, setHackathons] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedTalk, setSelectedTalk] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const [selectedHackathon, setSelectedHackathon] = useState(null);
   const [projectSlug, setProjectSlug] = useState("");
   const [talkSlug, setTalkSlug] = useState("");
   const [blogSlug, setBlogSlug] = useState("");
+  const [hackathonSlug, setHackathonSlug] = useState("");
+  const [hackathonForm, setHackathonForm] = useState({
+    title: "",
+    date: "",
+    event: "",
+    result: "",
+    organizer: "",
+    image: "",
+    imageAlt: "",
+    order: 1,
+    link: "",
+    highlights: "",
+    images: "",
+  });
   const [content, setContent] = useState("");
   const [frontmatter, setFrontmatter] = useState({
     title: "",
@@ -69,6 +85,11 @@ export default function AdminPage() {
       .then((res) => res.json())
       .then((data) => setBlogs(data))
       .catch((err) => console.error(err));
+
+    fetch("/api/admin/hackathons")
+      .then((res) => res.json())
+      .then((data) => setHackathons(data))
+      .catch((err) => console.error(err));
   }, []);
 
   // Only allow in development
@@ -87,6 +108,7 @@ export default function AdminPage() {
     setProjectSlug(slug);
     setSelectedTalk(null);
     setSelectedBlog(null);
+    setSelectedHackathon(null);
     setFrontmatter(data.frontmatter);
     setContent(data.content);
   };
@@ -164,6 +186,7 @@ export default function AdminPage() {
     setTalkSlug(slug);
     setSelectedProject(null);
     setSelectedBlog(null);
+    setSelectedHackathon(null);
     setTalkData({
       title: data.title || "",
       event: data.event || "",
@@ -183,6 +206,7 @@ export default function AdminPage() {
     setBlogSlug(slug);
     setSelectedProject(null);
     setSelectedTalk(null);
+    setSelectedHackathon(null);
     setBlogData({
       title: data.title || "",
       date: data.date || "",
@@ -191,6 +215,30 @@ export default function AdminPage() {
       image: data.image || "",
       author: data.author || "Alexi Canamo",
       featured: data.featured || false,
+    });
+    setContent(data.content || "");
+  };
+
+  const loadHackathon = async (slug) => {
+    const res = await fetch(`/api/admin/hackathons/${slug}`);
+    const data = await res.json();
+    setSelectedHackathon(slug);
+    setHackathonSlug(slug);
+    setSelectedProject(null);
+    setSelectedTalk(null);
+    setSelectedBlog(null);
+    setHackathonForm({
+      title: data.title || "",
+      date: data.date || "",
+      event: data.event || "",
+      result: data.result || "",
+      organizer: data.organizer || "",
+      image: data.image || "",
+      imageAlt: data.imageAlt || "",
+      order: data.order ?? 1,
+      link: data.link || "",
+      highlights: data.highlights || "",
+      images: data.images || "",
     });
     setContent(data.content || "");
   };
@@ -247,6 +295,25 @@ export default function AdminPage() {
     }
   };
 
+  const saveHackathon = async () => {
+    await fetch(`/api/admin/hackathons/${selectedHackathon}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...hackathonForm,
+        content,
+        newSlug: hackathonSlug,
+      }),
+    });
+    alert("Saved!");
+    const res = await fetch("/api/admin/hackathons");
+    const data = await res.json();
+    setHackathons(data);
+    if (hackathonSlug !== selectedHackathon) {
+      setSelectedHackathon(hackathonSlug);
+    }
+  };
+
   const createNew = () => {
     if (contentType === "projects") {
       // Calculate next order number
@@ -259,6 +326,7 @@ export default function AdminPage() {
       setProjectSlug("new-project");
       setSelectedTalk(null);
       setSelectedBlog(null);
+      setSelectedHackathon(null);
       setFrontmatter({
         title: "",
         tagline: "",
@@ -273,6 +341,7 @@ export default function AdminPage() {
       setTalkSlug("new-talk");
       setSelectedProject(null);
       setSelectedBlog(null);
+      setSelectedHackathon(null);
       setTalkData({
         title: "",
         event: "",
@@ -288,6 +357,7 @@ export default function AdminPage() {
       setBlogSlug("new-blog");
       setSelectedProject(null);
       setSelectedTalk(null);
+      setSelectedHackathon(null);
       setBlogData({
         title: "",
         date: "",
@@ -298,6 +368,30 @@ export default function AdminPage() {
         featured: false,
       });
       setContent("## Introduction\n\nYour blog content here...");
+    } else if (contentType === "hackathons") {
+      const maxOrder =
+        hackathons.length > 0
+          ? Math.max(...hackathons.map((h) => h.order || 0))
+          : 0;
+      setSelectedHackathon("new");
+      setHackathonSlug("new-hackathon");
+      setSelectedProject(null);
+      setSelectedTalk(null);
+      setSelectedBlog(null);
+      setHackathonForm({
+        title: "",
+        date: "",
+        event: "",
+        result: "",
+        organizer: "",
+        image: "",
+        imageAlt: "",
+        order: maxOrder + 1,
+        link: "",
+        highlights: "",
+        images: "",
+      });
+      setContent("## Overview\n\nYour hackathon write-up here...");
     }
   };
 
@@ -436,6 +530,17 @@ export default function AdminPage() {
           >
             Blogs
           </button>
+          <button
+            type="button"
+            onClick={() => setContentType("hackathons")}
+            className={`px-6 py-2 rounded-lg font-semibold transition-colors ${
+              contentType === "hackathons"
+                ? "bg-blue-500 text-white"
+                : "bg-white/5 text-white/60 hover:bg-white/10"
+            }`}
+          >
+            Hackathons
+          </button>
         </div>
 
         <div className="grid md:grid-cols-4 gap-6">
@@ -451,7 +556,9 @@ export default function AdminPage() {
                 ? "Project"
                 : contentType === "talks"
                 ? "Talk"
-                : "Blog"}
+                : contentType === "blogs"
+                ? "Blog"
+                : "Hackathon"}
             </button>
 
             <div className="space-y-2">
@@ -547,7 +654,8 @@ export default function AdminPage() {
                       {talk}
                     </button>
                   ))
-                : blogs.map((blog) => (
+                : contentType === "blogs"
+                ? blogs.map((blog) => (
                     <button
                       key={blog}
                       type="button"
@@ -559,6 +667,23 @@ export default function AdminPage() {
                       }`}
                     >
                       {blog}
+                    </button>
+                  ))
+                : hackathons.map((h) => (
+                    <button
+                      key={h.slug}
+                      type="button"
+                      onClick={() => loadHackathon(h.slug)}
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                        selectedHackathon === h.slug
+                          ? "bg-white/20"
+                          : "bg-white/5 hover:bg-white/10"
+                      }`}
+                    >
+                      <div className="text-sm font-medium text-white">
+                        {h.title}
+                      </div>
+                      <div className="text-xs text-white/40">{h.slug}</div>
                     </button>
                   ))}
             </div>

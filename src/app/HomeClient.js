@@ -6,6 +6,7 @@ import ProjectCard from "../components/ProjectCard";
 import BlogCard from "../components/BlogCard";
 import ExperienceCard from "../components/ExperienceCard";
 import CompanyExperienceGroup from "../components/CompanyExperienceGroup";
+import HackathonCard from "../components/HackathonCard";
 import TalkItem from "../components/TalkItem";
 import ExperienceFilter from "../components/ExperienceFilter";
 import { Spotlight } from "../components/ui/spotlight";
@@ -20,7 +21,12 @@ import { badgeConfig } from "../config/badges";
 import { techStack } from "../lib/tech-stack";
 import { socials } from "../config/socials";
 
-export default function HomeClient({ talks, featuredProjects, recentBlogs }) {
+export default function HomeClient({
+  talks,
+  featuredProjects,
+  recentBlogs,
+  hackathons = [],
+}) {
   const [activeFilter, setActiveFilter] = useState("all");
 
   // Group experiences by company
@@ -211,6 +217,70 @@ export default function HomeClient({ talks, featuredProjects, recentBlogs }) {
             ))}
           </div>
         </section>
+
+        {hackathons.length > 0 && (
+          <section
+            id="hackathons"
+            aria-label="Hackathon wins"
+            className="py-20"
+          >
+            <div className="mb-8">
+              <div className="flex items-end justify-between gap-4 mb-4">
+                <div>
+                  <p className="text-blue-500 text-xs font-semibold uppercase tracking-wider mb-2">
+                    Competitions
+                  </p>
+                  <h2 className="text-3xl font-bold text-white">
+                    Hackathon wins
+                  </h2>
+                </div>
+                <a
+                  href="/hackathons"
+                  className="text-sm text-white/60 hover:text-white transition-colors flex items-center gap-2 group shrink-0"
+                >
+                  <span className="hidden sm:inline">View all</span>
+                  <span className="sm:hidden">All</span>
+                  <svg
+                    className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+              </div>
+              <p className="text-white/60 text-sm max-w-2xl text-pretty leading-relaxed">
+                Weekend builds and civic tech: shipping under pressure with a
+                team, then iterating on what stuck.
+              </p>
+            </div>
+            <div className="flex flex-col gap-8">
+              {hackathons.map((h) => (
+                <HackathonCard
+                  key={h.slug}
+                  slug={h.slug}
+                  href={`/hackathons/${h.slug}`}
+                  name={h.title}
+                  date={h.date}
+                  event={h.event}
+                  result={h.result}
+                  organizer={h.organizer}
+                  details={h.highlights}
+                  image={h.image}
+                  images={h.images}
+                  imageAlt={h.imageAlt}
+                />
+              ))}
+            </div>
+          </section>
+        )}
 
         <section
           id="experience"

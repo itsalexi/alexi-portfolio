@@ -1,6 +1,28 @@
 {
   "experiences": [
     {
+      "year": "2026",
+      "items": [
+        {
+          "type": "work",
+          "title": "Head of Product & Engineering",
+          "company": "Sip & Scale",
+          "duration": "Jan 2026 – Present",
+          "location": "Global",
+          "summary": "Product and engineering lead for Sip & Scale’s digital experience: a global Gen Z community of founders, investors, and creators, built around curated dinners in major tech hubs.",
+          "details": [
+            "Owned the marketing site, landing pages, and core web touchpoints end to end: narrative, discovery, and engagement.",
+            "Helped the community grow from Manila into international hubs."
+          ],
+          "skills": [
+            "Product Management",
+            "Engineering Leadership",
+            "Web Development"
+          ]
+        }
+      ]
+    },
+    {
       "year": "2025",
       "items": [
         {
@@ -9,11 +31,11 @@
           "company": "NextPay (YC W21)",
           "duration": "Sep 2025 – Present",
           "location": "Remote",
-          "summary": "Building marketing pages and customer dashboards with React, Next.js, and TypeScript",
+          "summary": "Marketing pages and customer dashboards with React, Next.js, and TypeScript.",
           "details": [
-            "Built a complete marketing landing page end to end, from responsive UI design to production deployment",
-            "Collaborating with a cross-functional team of 5+ engineers on a customer-facing dashboard",
-            "Developing scalable front-end components using React, Next.js, and TypeScript within an agile workflow"
+            "Shipped a full marketing landing page from responsive UI through production.",
+            "Collaborate with 5+ engineers on a customer-facing dashboard.",
+            "Build scalable front-end components in an agile workflow."
           ],
           "skills": ["Front-End Development", "Stakeholder Management", "Web Development"]
         },
@@ -21,13 +43,13 @@
           "type": "leadership",
           "title": "AVP for IT Skills & Development",
           "company": "Ateneo MISA",
-          "duration": "Jul 2025 – Present",
+          "duration": "Jul 2025 – Apr 2026",
           "location": "Quezon City, Philippines · On-site",
-          "summary": "Leading workshops for 20+ developers and building internal tools",
+          "summary": "Led workshops for 20+ developers and shipped internal tooling for the IT cluster.",
           "details": [
-            "Trains and guides officers and members to help them improve and stay active in the cluster",
-            "Organizes workshops and training sessions to build skills needed for projects",
-            "Handles and oversees projects related to the development of apps and digital tools"
+            "Coached officers and members to level up and stay active in the cluster.",
+            "Ran workshops and trainings aligned with project needs.",
+            "Oversaw app and internal tool projects end to end."
           ],
           "skills": ["Project Management", "Training and Development"]
         },
@@ -35,13 +57,13 @@
           "type": "leadership",
           "title": "Head of HR",
           "company": "SOSE Sanggu",
-          "duration": "Jun 2025 – Present",
+          "duration": "Jun 2025 – Apr 2026",
           "location": "Quezon City, Philippines · On-site",
-          "summary": "Leading recruitment, onboarding, and member formation initiatives",
+          "summary": "Owned recruitment, onboarding, and member formation for the organization.",
           "details": [
-            "Oversee member formation projects and internal initiatives",
-            "Lead recruitment and onboarding efforts for new members",
-            "Organize events that promote personal growth and team building"
+            "Drove member formation programs and internal initiatives.",
+            "Ran recruitment and onboarding for new members.",
+            "Organized events for growth and team cohesion."
           ],
           "skills": ["Project Management", "Human Capital Management", "Team Collaboration", "Communication"]
         },
@@ -49,13 +71,13 @@
           "type": "startup",
           "title": "Founder",
           "company": "One Big Match",
-          "duration": "May 2025 – Present",
+          "duration": "May 2025 – Dec 2025",
           "location": "National Capital Region, Philippines · On-site",
-          "summary": "Building a web app for org events, managing a team of 3, reaching out to orgs for early feedback",
+          "summary": "Founded a web app for org events and mixers; led a team of three and gathered early org feedback.",
           "details": [
-            "Leading product vision, backend development, and go-to-market planning for a web app built to make org events and mixers more fun and meaningful",
-            "Managing a small team of student designers and developers",
-            "Currently reaching out to orgs and communities for early interest and feedback ahead of launch"
+            "Set product direction, built backend pieces, and planned go-to-market for a tool aimed at better events and icebreakers.",
+            "Managed a small student design and engineering team.",
+            "Reached out to orgs and communities for pilots and feedback before launch."
           ],
           "skills": ["Project Management", "Leadership", "Operations Management", "Product Management", "Back-End Web Development"]
         },
