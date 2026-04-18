@@ -2,6 +2,29 @@
 const nextConfig = {
   /* config options here */
   reactCompiler: true,
+
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Link",
+            value: '</.well-known/api-catalog>; rel="api-catalog", </about>; rel="service-doc"',
+          },
+        ],
+      },
+      {
+        source: "/.well-known/api-catalog",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "application/linkset+json",
+          },
+        ],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

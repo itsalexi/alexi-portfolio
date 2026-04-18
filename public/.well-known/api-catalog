@@ -1,0 +1,9 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://alexi.life",
+      "service-doc": [{ "href": "https://alexi.life/about" }],
+      "type": "text/html"
+    }
+  ]
+}
