@@ -1,0 +1,12 @@
+{
+  "$schema": "https://agentskills.io/schema/index/v0.2.0.json",
+  "skills": [
+    {
+      "name": "portfolio",
+      "type": "website",
+      "description": "Alexi Cañamo's personal portfolio — CS student, builder, developer from the Philippines. Projects, about, and contact info.",
+      "url": "https://alexi.life",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ]
+}
