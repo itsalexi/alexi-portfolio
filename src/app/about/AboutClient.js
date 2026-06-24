@@ -71,9 +71,9 @@ const principles = [
 ];
 
 const bionote = [
-  "Alexi Cañamo is a 19-year-old Computer Science student at Ateneo de Manila University and a DOST Merit Scholar.",
-  "He has made student tools used around Ateneo, including the Enlistment Helper and QPI Calculator, and started One Big Match with friends.",
-  "He has also worked with teams at Bytespace, NextPay, Sip & Scale, Ateneo MISA, and TEDxAteneoDeManila.",
+  "Alexi Cañamo is a 19-year-old founder and product engineer in Manila, studying Computer Science at Ateneo de Manila University as a DOST Merit Scholar.",
+  "He builds useful things close to real people: tools for enlistment, grades, events, and teams trying to move faster.",
+  "His work includes Ateneo's QPI Calculator, Enlistment Helper, Hati, and One Big Match, plus projects with Bytespace, NextPay, Sip & Scale, Ateneo MISA, TEDxAteneoDeManila, and StartupQC.",
 ];
 
 const links = [
