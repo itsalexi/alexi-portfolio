@@ -35,15 +35,15 @@ const productOrder = ["Bytespace", "NextPay (YC W21)", "Sip & Scale"];
 const productCopy = {
   Bytespace: {
     role: "Product engineer",
-    line: "Shipped 8 Bot0 improvements in under a month, making agent workflows, memory, and integrations less fragile.",
+    line: "Building core Bot0 agent-platform work across workflows, memory, and integrations. Shipped 8 improvements in under a month.",
   },
   "NextPay (YC W21)": {
     role: "Software engineer intern",
-    line: "Cut manual processing by 75% across SME money-movement and onboarding workflows.",
+    line: "Shipping fintech dashboard and acquisition work for SMEs. Helped cut manual processing by 75%.",
   },
   "Sip & Scale": {
     role: "Product engineering",
-    line: "Own the systems supporting 1,000+ builders, 50+ events, and a founder network in 20+ cities.",
+    line: "Leading product engineering for a founder network across 20+ cities, 50+ events, and 1,000+ builders.",
   },
 };
 
@@ -71,22 +71,25 @@ const projectLabels = {
 
 const timelineCopy = {
   Bytespace:
-    "8 Bot0 improvements in under a month, plus 5 reliability fixes shipped in one week.",
+    "Core Bot0 platform work: 8 product improvements in under a month, plus 5 reliability upgrades in one week.",
   "Sip & Scale":
-    "Systems supporting 1,000+ builders, 50+ events, and 20+ cities.",
-  Crystal: "A shared team-memory experiment, currently a StartupQC finalist.",
+    "Product systems for 1,000+ builders, 50+ events, and 20+ cities.",
+  Crystal:
+    "StartupQC finalist exploring shared team memory and faster context recovery.",
   Hakot:
-    "1st runner-up out of 80+ participants after three pivots in 24 hours.",
-  SALBAR: "Top 5 out of 200+ teams, then selected for LGU incubation.",
+    "1st runner-up out of 80+ participants with an AI-assisted logistics marketplace.",
+  SALBAR:
+    "Top 5 of 200+ teams; offline-first emergency guidance selected for LGU incubation.",
   "NextPay (YC W21)":
-    "75% less manual processing across SME money-movement and onboarding flows.",
-  "Ateneo MISA":
-    "20+ devs trained and 75% faster check-ins across MISA events.",
-  "One Big Match": "4 event pilots, 80+ users, and a 10-person team.",
+    "YC-backed fintech dashboard work that cut manual SME processing by 75%.",
+  "Ateneo MISA": "20+ student devs trained; event check-ins made 75% faster.",
+  "One Big Match":
+    "10-person team, 4 live event pilots, and 80+ student users.",
   "You can just do things.":
-    "A campus talk on starting before the perfect plan exists.",
-  "Ateneo de Manila University": "BS Computer Science.",
-  TEDxAteneoDeManila: "A clean event site for TEDxAteneoDeManila.",
+    "First campus talk on building before the perfect plan exists.",
+  "Ateneo de Manila University":
+    "BS Computer Science, building alongside the degree.",
+  TEDxAteneoDeManila: "Led a 3-person team shipping the 2025 TEDx event site.",
 };
 
 function timelineLogoKey(entry) {

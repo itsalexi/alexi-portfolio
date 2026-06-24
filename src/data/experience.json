@@ -9,11 +9,11 @@
           "company": "Bytespace",
           "duration": "May 2026 – Present",
           "location": "San Francisco, CA · Remote",
-          "summary": "Shipped 8 Bot0 improvements in under a month, making agent workflows, memory, and integrations less fragile.",
+          "summary": "Building core Bot0 agent-platform work across workflows, memory, and integrations; shipped 8 product improvements in under a month.",
           "details": [
-            "Shipped 8 Bot0 improvements in under a month across agent workflows, memory, and integrations.",
-            "Released 5 integration and workflow reliability fixes in one week.",
-            "Reduced broken connection flows so users hit fewer setup failures in end-to-end automations."
+            "Shipped 8 product improvements across Bot0 agent workflows, memory, and integrations in under a month.",
+            "Delivered 5 integration and workflow reliability upgrades in one week.",
+            "Strengthened connection setup flows so users could run end-to-end automations with fewer failures."
           ],
           "skills": [
             "Product Engineering",
@@ -28,11 +28,11 @@
           "company": "Sip & Scale",
           "duration": "Jan 2026 – Present",
           "location": "Global",
-          "summary": "Own the systems supporting 1,000+ builders, 50+ events, and a founder network in 20+ cities.",
+          "summary": "Leading product engineering for a founder community across 20+ cities, 50+ events, and 1,000+ builders.",
           "details": [
-            "Own the technical roadmap for the marketing site and internal tools used across partnerships, operations, and community.",
-            "Built a site that ranks #1 for branded search and drove 600 unique page views.",
-            "Support a founder community spanning 1,000+ builders, 50+ events, and 20+ cities worldwide."
+            "Set the technical roadmap for the public site and internal tools used across partnerships, operations, and community.",
+            "Built a site that ranks #1 for branded search and reached 600 unique page views.",
+            "Turn founder-community operations into lightweight product systems for events, members, and partnerships."
           ],
           "skills": [
             "Technical Architecture",
@@ -52,12 +52,12 @@
           "company": "NextPay (YC W21)",
           "duration": "Sep 2025 – Present",
           "location": "Remote",
-          "summary": "Cut manual processing by 75% across SME money-movement and onboarding workflows.",
+          "summary": "Shipping SME dashboard and acquisition work for a YC-backed fintech; helped cut manual processing by 75%.",
           "details": [
             "Built and launched a production marketing site for acquisition experiments with the marketing team.",
             "With 5+ engineers, shipped SME dashboard features for money-movement and onboarding workflows.",
             "Cut manual processing by 75% across SME money-movement and onboarding workflows.",
-            "Built reusable front-end pieces for the product team."
+            "Turned repeated interface patterns into reusable front-end pieces for faster product work."
           ],
           "skills": [
             "Front-End Development",
@@ -71,11 +71,11 @@
           "company": "Ateneo MISA",
           "duration": "Jul 2025 – Apr 2026",
           "location": "Quezon City, Philippines · On-site",
-          "summary": "Trained 20+ developers through a 4-part workshop and made MISA event check-ins 75% faster.",
+          "summary": "Led developer training and internal tooling for a 550-member org: 20+ devs trained, check-ins 75% faster.",
           "details": [
-            "Led a 4-part web development workshop series for 20+ student developers.",
+            "Ran a 4-part web development workshop series for 20+ student developers.",
             "Built an internal registration system that made event check-ins 75% faster across MISA events.",
-            "Raised the org's capacity to ship technical projects through trainings and student-built tools."
+            "Helped more student developers move from tutorials into shipped org tools."
           ],
           "skills": ["Project Management", "Training and Development"]
         },
@@ -85,11 +85,11 @@
           "company": "SOSE Sanggu",
           "duration": "Jun 2025 – Apr 2026",
           "location": "Quezon City, Philippines · On-site",
-          "summary": "Owned recruitment, onboarding, and member formation for the organization.",
+          "summary": "Ran recruitment, onboarding, and member formation for SOSE Sanggu's HR function.",
           "details": [
-            "Drove member formation programs and internal initiatives.",
+            "Planned member formation programs and internal initiatives.",
             "Ran recruitment and onboarding for new members.",
-            "Organized events for growth and team cohesion."
+            "Coordinated internal events that kept the team connected through the year."
           ],
           "skills": [
             "Project Management",
@@ -104,11 +104,11 @@
           "company": "One Big Match",
           "duration": "May 2025 – Dec 2025",
           "location": "National Capital Region, Philippines · On-site",
-          "summary": "Led product, backend, and GTM for an events app piloted across 4 student events with 80+ users.",
+          "summary": "Built and launched an event-matching product across 4 pilots, coordinating a 10-person team and 80+ users.",
           "details": [
             "Coordinated a 10-person team across product, design, engineering, and outreach.",
-            "Ran 4 pilot events and supported 80+ users.",
-            "Led product direction, development, and outreach."
+            "Ran 4 live event pilots and supported 80+ student users.",
+            "Led product direction, backend development, and go-to-market outreach."
           ],
           "skills": [
             "Project Management",
@@ -124,10 +124,10 @@
           "company": "Computer Society of the Ateneo",
           "duration": "Jan 2025 – May 2025",
           "location": "On-site",
-          "summary": "Managed communications and follow-ups for Seniors' Send-Off.",
+          "summary": "Handled senior and alumni communications for Seniors' Send-Off X LoopBack 2025.",
           "details": [
             "Drafted and sent email updates to seniors and alumni for Seniors' Send-Off X LoopBack 2025.",
-            "Managed follow-ups so the event team could prepare on time."
+            "Managed follow-ups so the event team had the confirmations it needed before event day."
           ],
           "skills": [
             "Stakeholder Management",
@@ -145,7 +145,7 @@
           "company": "Ateneo de Manila University",
           "duration": "Aug 2024 – May 2028",
           "location": "Quezon City, Metro Manila",
-          "summary": "Studying BS Computer Science."
+          "summary": "BS Computer Science at Ateneo, building products and student tools alongside the degree."
         },
         {
           "type": "leadership",
@@ -153,10 +153,10 @@
           "company": "Computer Society of the Ateneo",
           "duration": "Sep 2024 – May 2025",
           "location": "Philippines",
-          "summary": "Built pages and interfaces for CompSAt projects.",
+          "summary": "Built React and Next.js interfaces for CompSAt projects with student developer teams.",
           "details": [
-            "Implemented pages for CompSAt projects.",
-            "Worked with fellow developers to make the projects easier to use."
+            "Implemented pages and interface flows for CompSAt projects.",
+            "Worked with fellow developers to make student-facing tools easier to use."
           ],
           "skills": [
             "Front-End Development",
@@ -172,11 +172,11 @@
           "company": "Computer Society of the Ateneo",
           "duration": "Dec 2024 – Feb 2025",
           "location": "On-site",
-          "summary": "Helped run logistics for Blue Hacks 2025.",
+          "summary": "Handled on-the-ground logistics for Blue Hacks 2025, from venue setup to event-day materials.",
           "details": [
             "Handled venue reservations, layout setup, food coordination, and event materials.",
             "Coordinated deliveries and setup for event day.",
-            "Worked with the logistics team through planning and event day."
+            "Worked with the logistics team from planning through event day."
           ],
           "skills": [
             "Event Management",
@@ -190,11 +190,11 @@
           "company": "TEDxAteneoDeManila",
           "duration": "Nov 2024 – May 2025",
           "location": "Quezon City, Philippines · Hybrid",
-          "summary": "Led a 3-person team building the TEDx event website.",
+          "summary": "Led a 3-person dev team shipping the TEDxAteneoDeManila 2025 website across desktop and mobile.",
           "details": [
             "Led a team of 3 developers to design and build the TEDxAteneoDeManila 2025 website.",
             "Matched the site layout and navigation to the event theme and TEDx brand standards.",
-            "Made the site work across desktop and mobile."
+            "Shipped a responsive site that made speakers, schedule, tickets, and event details easy to find."
           ],
           "skills": ["Front-End Development", "HTML", "Web Design"]
         }
