@@ -21,7 +21,7 @@ export default function RotatingTypewriter({
       if (display.length < full.length) {
         const id = setTimeout(
           () => setDisplay(full.slice(0, display.length + 1)),
-          typingSpeedMs
+          typingSpeedMs,
         );
         return () => clearTimeout(id);
       }
@@ -32,7 +32,7 @@ export default function RotatingTypewriter({
     if (display.length > 0) {
       const id = setTimeout(
         () => setDisplay(full.slice(0, display.length - 1)),
-        deletingSpeedMs
+        deletingSpeedMs,
       );
       return () => clearTimeout(id);
     }

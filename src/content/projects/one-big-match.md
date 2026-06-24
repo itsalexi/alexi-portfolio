@@ -2,17 +2,17 @@
 slug: one-big-match
 title: One Big Match
 tagline: >-
-  A matchmaking web app that mixes the fun of a party game with the flow of a
-  dating app, built to make group events more engaging.
+  A live matching room for events, built with phones, a host screen, and a
+  low-pressure way to get people talking.
 techStack:
   - nextjs
   - postgresql
   - nodejs
 liveUrl: 'https://onebigmatch.com'
 githubUrl: null
-image: /images/projects/one-big-match-featured.webp?v=1762319808399
+image: /images/projects/one-big-match-featured.webp?v=20260624
 featured: true
-order: 1
+order: 2
 ---
 #### **The Gist**
 
@@ -38,7 +38,7 @@ So we did. I started coding, JJ jumped right in with me, and Abby took on all th
 
 We got really into the process. The whole "Jackbox feel" was our north star, so building it as a web app with a real-time lobby was non-negotiable. We went with Next.js and React because we wanted the interface on your phone to feel instant and snappy.
 
-The part we obsessed over was the real time connection. We spent a ton of time getting the WebSockets right with our Node.js backend. We wanted that moment when the host sees everyone's little icons popping up on the main screen to feel seamless and alive. We used a solid PostgreSQL database with Prisma to handle all the data. It was a ton of work, but we came out of it with this really polished tool that we were genuinely proud to show people.
+The part we obsessed over was the real-time connection. We spent a lot of time getting the WebSockets right with our Node.js backend because the room needed to feel alive the moment people joined. PostgreSQL and Prisma handled the data underneath.
 
 ![image_2025-11-05_152811046.png](/images/projects/one-big-match-1762327691114.webp)
 
@@ -53,6 +53,6 @@ It was a tough pill to swallow. We realized we had fallen into a classic trap. W
 
 That’s what we're focused on now. The app is solid, the tech is there. But now we're doing the work we should have done at the start. We're trying to get it into the hands of anyone running an org or an event, not to sell them, but just to watch them use it and talk to them. We want to learn what they actually need.
 
-We have this powerful little engine we built. Now we're just trying to figure out who really needs a ride. It's a humbling process, but it feels like we’re finally on the right track.
+We built the engine first. Now we’re doing the slower work: finding the rooms where it actually belongs.
 
 ![IMG_7491.jpeg](/images/projects/one-big-match-1762328352877.webp)

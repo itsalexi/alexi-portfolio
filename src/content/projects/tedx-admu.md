@@ -2,29 +2,28 @@
 slug: tedx-admu
 title: TedXADMU Website
 tagline: >-
-  I co-led the development of the website for the big TEDx event on campus. Our
-  small team focused on making a clean, fast, and easy-to-use site to get people
-  excited and informed.
+  A fast event site for TEDxAteneoDeManilaU 2025, built with a small team for
+  speakers, schedules, tickets, and launch-day traffic.
 techStack:
   - nextjs
   - tailwind
 liveUrl: 'https://tedxateneodemanilau.com'
 githubUrl: null
-image: /images/projects/tedx-admu-featured.webp?v=1762344066028
+image: /images/projects/tedx-admu-featured.webp?v=20260624
 featured: false
 order: 5
 ---
 #### **The Gist**
 
-I worked with a small team to build the official website for TEDxAteneoDeManilaU 2025. Our main goal was to create a site that was easy to use, looked great, and captured the exciting feel of the event. It was a fantastic project that pushed us to deliver a really polished final product.
+I worked with a small team to build the official website for TEDxAteneoDeManilaU 2025. The site had to make the event easy to understand: speakers, schedule, tickets, and the story behind the theme.
 
 #### **The Goal**
 
-A TEDx website has to do a couple of things really well. It needs to get people excited for the event, but it also has to be super clear with all the important info, like who's speaking, the schedule, and how to get tickets. We wanted to build something that felt as professional and cool as the event itself, and that meant creating a seamless online experience for every visitor.
+A TEDx website needs to make the event feel worth attending without hiding the practical details. Who is speaking? When is it happening? How do you get tickets? Those questions had to be easy to answer.
 
 #### **Our Approach**
 
-JJ, Carl, and I teamed up to create a dynamic, user-friendly platform designed to showcase the event and provide a seamless experience for all visitors. As a team of three, we collaborated on everything, but my main focus was on helping to lead the technical development.
+JJ, Carl, and I built the site as a team of three. We collaborated on the flow and visuals, while my main focus was helping lead the technical development.
 
 ![image_2025-11-05_195838891.png](/images/projects/new-1762343918925.webp)
 
@@ -38,5 +37,4 @@ It was a very collaborative process. We were constantly sharing ideas and review
 
 #### **The Result**
 
-In the end, we launched a site we were all really proud of. It successfully served as the main hub for the event, providing all the necessary information in a clean and engaging way. It’s been a fun and challenging journey, and we’re thrilled with how it all came together.
-
+We launched the site as the main event hub. It held the important details, matched the event direction, and stayed fast across desktop and mobile.

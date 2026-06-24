@@ -1,229 +1,123 @@
 "use client";
 
-import Badge from "./ui/Badge";
-import { HoverBorderGradient } from "./ui/hover-border-gradient";
-import {
-  IconMail,
-  IconBrandGithub,
-  IconBrandLinkedin,
-  IconBrandInstagram,
-  IconBrandDiscord,
-} from "@tabler/icons-react";
-import Image from "next/image";
-import { toast, Toaster } from "sonner";
-import Typewriter from "typewriter-effect";
+import { IconArrowUpRight, IconCopy } from "@tabler/icons-react";
 import { motion } from "motion/react";
+import Image from "next/image";
+import { Toaster, toast } from "sonner";
 import { socials } from "../config/socials";
 
-export default function Hero() {
-  const copyEmail = () => {
-    navigator.clipboard.writeText(socials.email);
-    toast.success("Email copied to clipboard!");
-  };
+const heroLinks = [
+  { label: "Work", href: "/projects" },
+  { label: "Writing", href: "/blog" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Resume", href: socials.resume, external: true },
+];
+
+const container = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.09,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+function MagneticLink({ link }) {
   return (
-    <div className="relative w-full">
-      <Toaster position="bottom-center" richColors />
-      <div className="relative z-10 flex w-full flex-col items-start">
-        <motion.div
-          className="mb-2"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <Badge
-            className="bg-linear-to-r from-blue-500/10 to-purple-500/10 ring-blue-500/20 text-2xl"
-            aria-label="Intro badge"
-          >
-            <span className="bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Open to work!
-            </span>
-          </Badge>
+    <a
+      href={link.href}
+      target={link.external ? "_blank" : undefined}
+      rel={link.external ? "noopener noreferrer" : undefined}
+      className="tap-scale group inline-flex min-h-10 items-center gap-2 text-sm font-medium text-[var(--portfolio-ink-muted)] transition-[color,scale] duration-150 ease-out hover:text-[var(--portfolio-ink)]"
+    >
+      {link.label}
+      <IconArrowUpRight
+        className="h-3.5 w-3.5 transition-transform duration-200 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        stroke={1.8}
+      />
+    </a>
+  );
+}
+
+export default function Hero() {
+  const copyEmail = async () => {
+    await navigator.clipboard.writeText(socials.email);
+    toast.success("Email copied");
+  };
+
+  return (
+    <>
+      <Toaster position="bottom-center" richColors={false} />
+
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="visible"
+        className="relative flex min-h-[calc(58dvh-4rem)] w-full flex-col justify-center py-12 sm:py-16"
+      >
+        <motion.div variants={item} className="mb-10 flex items-center gap-4">
+          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-white/[0.035]">
+            <Image
+              src="/avatar.webp"
+              alt="Portrait of Alexi Canamo"
+              fill
+              priority
+              className="object-cover object-center opacity-88"
+              sizes="80px"
+            />
+          </div>
+          <div>
+            <p className="quiet-label mb-2">Alexi Canamo</p>
+            <p className="text-sm text-[var(--portfolio-ink-muted)]">
+              Manila / Ateneo / Bytespace
+            </p>
+          </div>
         </motion.div>
 
-        <div className="relative z-20 flex w-full flex-col gap-8 sm:gap-10">
-          <motion.div
-            className="flex items-start gap-5 sm:gap-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+        <motion.h1
+          variants={item}
+          className="text-[clamp(2.65rem,6vw,5.6rem)] font-semibold leading-[0.92] tracking-[-0.018em] text-[var(--portfolio-ink)]"
+        >
+          Hi, I’m Alexi.
+        </motion.h1>
+
+        <motion.p
+          variants={item}
+          className="mt-6 max-w-2xl text-[clamp(1.25rem,2.15vw,1.8rem)] font-medium leading-[1.2] tracking-[-0.018em] text-[var(--portfolio-ink)]"
+        >
+          I’m a 19-year-old founder and product engineer in Manila, currently at
+          Bytespace. I build tools for students, startups, and communities that
+          people actually use.
+        </motion.p>
+
+        <motion.div
+          variants={item}
+          className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3"
+        >
+          {heroLinks.map((link) => (
+            <MagneticLink key={link.label} link={link} />
+          ))}
+          <button
+            type="button"
+            onClick={copyEmail}
+            className="tap-scale group inline-flex min-h-10 items-center gap-2 text-sm text-[var(--portfolio-ink-muted)] transition-[color,scale] duration-150 ease-out hover:text-[var(--portfolio-ink)]"
           >
-            <div className="flex-1 min-w-0">
-              <h1 className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
-                Hey, I'm Alexi —
-              </h1>
-              <div className="mt-3 flex items-baseline">
-                <span className="text-2xl font-semibold text-white/80 sm:text-4xl md:text-5xl">
-                  a&nbsp;
-                </span>
-                <div className="text-2xl font-semibold text-white/90 sm:text-4xl md:text-5xl">
-                  <Typewriter
-                    options={{
-                      strings: [
-                        "software engineer.",
-                        "dreamer",
-                        "builder.",
-                        "student leader.",
-                      ],
-                      autoStart: true,
-                      loop: true,
-                      delay: 50,
-                      deleteSpeed: 30,
-                      cursor: "|",
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-full ring-2 ring-blue-500/30 ring-offset-2 ring-offset-black sm:h-32 sm:w-32 md:h-36 md:w-36">
-              <Image
-                src="/avatar.webp"
-                alt="Alexi avatar"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </motion.div>
-
-          <motion.p
-            className="max-w-2xl text-lg leading-relaxed text-white/70 sm:text-xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            CS student at Ateneo who likes building stuff. Teaching workshops
-            and creating tools that help thousands of students.
-          </motion.p>
-
-          <motion.div
-            className="flex w-full flex-wrap sm:flex-wrap lg:flex-nowrap items-center gap-3 sm:gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <div className="hidden sm:flex items-center gap-3 md:gap-4">
-              <a href={`mailto:${socials.email}`} aria-label="Connect with me">
-                <HoverBorderGradient
-                  as="div"
-                  containerClassName="rounded-full"
-                  className="bg-black text-white dark:bg-black flex items-center space-x-2 h-12 md:h-14 px-5 md:px-8 text-sm md:text-base font-medium"
-                >
-                  <IconMail className="h-4 w-4 md:h-5 md:w-5" />
-                  <span>Get in touch</span>
-                </HoverBorderGradient>
-              </a>
-              <a
-                href={socials.discord}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Join Discord Community"
-              >
-                <HoverBorderGradient
-                  as="div"
-                  containerClassName="rounded-full"
-                  className="bg-[#5865F2] text-white flex items-center space-x-2 h-12 md:h-14 px-5 md:px-8 text-sm md:text-base font-medium"
-                >
-                  <IconBrandDiscord className="h-4 w-4 md:h-5 md:w-5" />
-                  <span>Join my Discord</span>
-                </HoverBorderGradient>
-              </a>
-            </div>
-
-            <div className="hidden sm:flex lg:ml-auto items-center gap-2 md:gap-3 lg:border-l lg:border-white/10 lg:pl-8">
-              <a
-                href={socials.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-lg bg-[#24292e] transition-all hover:scale-105"
-                aria-label="GitHub profile"
-              >
-                <IconBrandGithub className="h-5 w-5 md:h-6 md:w-6 text-white" />
-              </a>
-              <a
-                href={socials.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-lg bg-[#0A66C2] transition-all hover:scale-105"
-                aria-label="LinkedIn profile"
-              >
-                <IconBrandLinkedin className="h-5 w-5 md:h-6 md:w-6 text-white" />
-              </a>
-              <a
-                href={socials.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-lg bg-linear-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] transition-all hover:scale-105"
-                aria-label="Instagram profile"
-              >
-                <IconBrandInstagram className="h-5 w-5 md:h-6 md:w-6 text-white" />
-              </a>
-              <a
-                href={socials.discord}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-lg bg-[#5865F2] transition-all hover:scale-105"
-                aria-label="Join Discord Community"
-              >
-                <IconBrandDiscord className="h-5 w-5 md:h-6 md:w-6 text-white" />
-              </a>
-              <button
-                onClick={copyEmail}
-                className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-lg bg-linear-to-br from-blue-500 to-purple-500 transition-all hover:scale-105"
-                aria-label="Copy email address"
-              >
-                <IconMail className="h-5 w-5 md:h-6 md:w-6 text-white" />
-              </button>
-            </div>
-
-            <div className="flex w-full items-center gap-3 sm:hidden">
-              <a
-                href={socials.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#24292e] transition-all hover:scale-105"
-                aria-label="GitHub profile"
-              >
-                <IconBrandGithub className="h-5 w-5 text-white" />
-              </a>
-              <a
-                href={socials.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0A66C2] transition-all hover:scale-105"
-                aria-label="LinkedIn profile"
-              >
-                <IconBrandLinkedin className="h-5 w-5 text-white" />
-              </a>
-              <a
-                href={socials.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] transition-all hover:scale-105"
-                aria-label="Instagram profile"
-              >
-                <IconBrandInstagram className="h-5 w-5 text-white" />
-              </a>
-              <a
-                href={socials.discord}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#5865F2] transition-all hover:scale-105"
-                aria-label="Join Discord Community"
-              >
-                <IconBrandDiscord className="h-5 w-5 text-white" />
-              </a>
-              <button
-                onClick={copyEmail}
-                className="flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-br from-blue-500 to-purple-500 transition-all hover:scale-105"
-                aria-label="Copy email address"
-              >
-                <IconMail className="h-5 w-5 text-white" />
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      <div className="absolute -top-24 left-1/2 z-0 h-72 w-[80vw] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(29,78,216,0.15),transparent)] blur-2xl" />
-    </div>
+            <IconCopy className="h-4 w-4" stroke={1.8} />
+            Copy email
+          </button>
+        </motion.div>
+      </motion.div>
+    </>
   );
 }

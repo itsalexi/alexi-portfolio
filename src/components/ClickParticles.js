@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useState } from "react";
 
 export default function ClickParticles() {
   const [particles, setParticles] = useState([]);
@@ -17,7 +17,7 @@ export default function ClickParticles() {
           angle: Math.random() * 360,
           velocity: 80 + Math.random() * 120,
           color: Math.random() * 60 + 200,
-        })
+        }),
       );
 
       setParticles((prev) => [...prev, ...newParticles]);

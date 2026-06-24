@@ -15,6 +15,7 @@ export const techStack = {
   },
   tailwind: {
     name: "Tailwind CSS",
+    shortName: "Tailwind",
     icon: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
   },
   typescript: {
@@ -25,10 +26,26 @@ export const techStack = {
     name: "JavaScript",
     icon: "https://cdn.simpleicons.org/javascript/F7DF1E",
   },
+  swiftui: {
+    name: "SwiftUI",
+    shortName: "Swift",
+    icon: "https://cdn.simpleicons.org/swift/F05138",
+  },
+  swiftdata: {
+    name: "SwiftData",
+    shortName: "Swift",
+    icon: "https://cdn.simpleicons.org/swift/F05138",
+  },
+  storekit: {
+    name: "StoreKit",
+    shortName: "iOS",
+    icon: "https://cdn.simpleicons.org/apple/FFFFFF",
+  },
 
   // Backend
   nodejs: {
     name: "Node.js",
+    shortName: "Node",
     icon: "https://cdn.simpleicons.org/nodedotjs/339933",
   },
   python: {
@@ -55,6 +72,7 @@ export const techStack = {
   // Databases
   postgresql: {
     name: "PostgreSQL",
+    shortName: "Postgres",
     icon: "https://cdn.simpleicons.org/postgresql/4169E1",
   },
   mongodb: {
@@ -97,6 +115,7 @@ export const techStack = {
   },
   cloudflare: {
     name: "Cloudflare Workers",
+    shortName: "Cloudflare",
     icon: "https://cdn.simpleicons.org/cloudflare/F38020",
   },
 
@@ -113,4 +132,33 @@ export const techStack = {
     name: "Supabase",
     icon: "https://cdn.simpleicons.org/supabase/3FCF8E",
   },
+  convex: {
+    name: "Convex",
+    icon: "https://cdn.simpleicons.org/convex/EE342F",
+  },
 };
+
+export function getTechLabel(tech) {
+  if (!tech) return "";
+  if (typeof tech !== "string") return tech.shortName || tech.name || "";
+
+  const config = techStack[tech];
+  return config?.shortName || config?.name || tech;
+}
+
+export function getProjectTechLabels(techList = [], { limit } = {}) {
+  const seen = new Set();
+  const labels = [];
+
+  techList.forEach((tech) => {
+    const label = getTechLabel(tech);
+    const key = label.toLowerCase();
+
+    if (!label || seen.has(key)) return;
+
+    seen.add(key);
+    labels.push(label);
+  });
+
+  return typeof limit === "number" ? labels.slice(0, limit) : labels;
+}

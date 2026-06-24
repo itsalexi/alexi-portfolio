@@ -5,17 +5,22 @@
       "items": [
         {
           "type": "work",
-          "title": "Product Engineer, Agent Skills, Memory, & Integrations",
+          "title": "Product Engineer",
           "company": "Bytespace",
           "duration": "May 2026 – Present",
           "location": "San Francisco, CA · Remote",
-          "summary": "Shipped high-leverage product improvements across agent workflows, memory, and integrations for Bot0.",
+          "summary": "Building product improvements for Bot0 with the Bytespace team.",
           "details": [
-            "Owned delivery of 8 Bot0 improvements in under a month across agent workflows, memory, and integrations.",
-            "Shipped 5 integration and workflow reliability improvements in a week, reducing broken connection flows.",
-            "Improved end-to-end automation reliability, making chat workflows more dependable for users."
+            "Shipped 8 Bot0 improvements in under a month.",
+            "Fixed connection issues that made setup less fragile.",
+            "Improved reliability for teams using Bot0 day to day."
           ],
-          "skills": ["Product Engineering", "AI Agents", "Integrations", "Workflow Automation"]
+          "skills": [
+            "Product Engineering",
+            "AI Agents",
+            "Integrations",
+            "Workflow Automation"
+          ]
         },
         {
           "type": "work",
@@ -23,12 +28,17 @@
           "company": "Sip & Scale",
           "duration": "Jan 2026 – Present",
           "location": "Global",
-          "summary": "Own engineering, architecture, and internal systems for Sip & Scale, a Gen Z founder community spanning 20+ cities, 50+ events, and 1,000+ builders worldwide.",
+          "summary": "Building the site and member tools for Sip & Scale, a founder community across 20+ cities.",
           "details": [
             "Built a site ranking #1 for branded search queries and driving 600 unique page views.",
-            "Owned the technical roadmap across the marketing site and internal systems supporting partnerships, operations, and community."
+            "Built tools that help the team run partnerships, events, and community work."
           ],
-          "skills": ["Technical Architecture", "Engineering Leadership", "SEO", "Web Development"]
+          "skills": [
+            "Technical Architecture",
+            "Engineering Leadership",
+            "SEO",
+            "Web Development"
+          ]
         }
       ]
     },
@@ -41,13 +51,17 @@
           "company": "NextPay (YC W21)",
           "duration": "Sep 2025 – Present",
           "location": "Remote",
-          "summary": "Built production marketing pages and SME dashboard workflows with React, Next.js, and TypeScript.",
+          "summary": "Built pages and dashboard improvements for small businesses using NextPay.",
           "details": [
             "Built and launched a production marketing site to accelerate acquisition experiments with the marketing team.",
-            "With 5+ engineers, shipped SME dashboard features that cut manual processing time by 75% on money-movement and onboarding workflows.",
-            "Built scalable front-end components in an agile product workflow."
+            "With 5+ engineers, shipped dashboard updates that cut manual processing time by 75%.",
+            "Built reusable front-end pieces for the product team."
           ],
-          "skills": ["Front-End Development", "Stakeholder Management", "Web Development"]
+          "skills": [
+            "Front-End Development",
+            "Stakeholder Management",
+            "Web Development"
+          ]
         },
         {
           "type": "leadership",
@@ -55,11 +69,11 @@
           "company": "Ateneo MISA",
           "duration": "Jul 2025 – Apr 2026",
           "location": "Quezon City, Philippines · On-site",
-          "summary": "Led workshops for 20+ student developers and built internal tooling for the IT cluster.",
+          "summary": "Led workshops for student developers and built tools for MISA events.",
           "details": [
             "Led a 4-part web development workshop series for 20+ student developers.",
             "Built an internal registration system that cut event check-in time by 75% across MISA events.",
-            "Oversaw technical trainings and internal tool projects for the IT cluster."
+            "Helped run technical trainings and student-built projects."
           ],
           "skills": ["Project Management", "Training and Development"]
         },
@@ -75,7 +89,12 @@
             "Ran recruitment and onboarding for new members.",
             "Organized events for growth and team cohesion."
           ],
-          "skills": ["Project Management", "Human Capital Management", "Team Collaboration", "Communication"]
+          "skills": [
+            "Project Management",
+            "Human Capital Management",
+            "Team Collaboration",
+            "Communication"
+          ]
         },
         {
           "type": "startup",
@@ -83,13 +102,19 @@
           "company": "One Big Match",
           "duration": "May 2025 – Dec 2025",
           "location": "National Capital Region, Philippines · On-site",
-          "summary": "Led product, backend, and GTM for an events web app piloted across student communities.",
+          "summary": "Built and piloted a student event matching app.",
           "details": [
             "Coordinated a 10-person team across product, design, and engineering.",
             "Ran 4 pilot events and supported 80+ users.",
-            "Led product direction, backend development, and go-to-market outreach."
+            "Led product direction, development, and outreach."
           ],
-          "skills": ["Project Management", "Leadership", "Operations Management", "Product Management", "Back-End Web Development"]
+          "skills": [
+            "Project Management",
+            "Leadership",
+            "Operations Management",
+            "Product Management",
+            "Back-End Web Development"
+          ]
         },
         {
           "type": "leadership",
@@ -97,12 +122,15 @@
           "company": "Computer Society of the Ateneo",
           "duration": "Jan 2025 – May 2025",
           "location": "On-site",
-          "summary": "Managed communications and follow-ups for Seniors' Send-Off event",
+          "summary": "Managed communications and follow-ups for Seniors' Send-Off.",
           "details": [
-            "Drafted and sent professional email communications to seniors and alumni for the Seniors' Send-Off X LoopBack 2025 event",
-            "Managed follow-ups to ensure timely responses and smooth event preparation"
+            "Drafted and sent email updates to seniors and alumni for Seniors' Send-Off X LoopBack 2025.",
+            "Managed follow-ups so the event team could prepare on time."
           ],
-          "skills": ["Stakeholder Management", "Event Planning and Coordination"]
+          "skills": [
+            "Stakeholder Management",
+            "Event Planning and Coordination"
+          ]
         }
       ]
     },
@@ -115,7 +143,7 @@
           "company": "Ateneo de Manila University",
           "duration": "Aug 2024 – May 2028",
           "location": "Quezon City, Metro Manila",
-          "summary": "Pursuing BS Computer Science degree"
+          "summary": "Studying BS Computer Science."
         },
         {
           "type": "leadership",
@@ -123,12 +151,18 @@
           "company": "Computer Society of the Ateneo",
           "duration": "Sep 2024 – May 2025",
           "location": "Philippines",
-          "summary": "Built user-friendly interfaces for CompSAt projects",
+          "summary": "Built pages and interfaces for CompSAt projects.",
           "details": [
-            "Implemented user-friendly interfaces for CompSAt projects, ensuring seamless navigation and visually appealing layouts",
-            "Worked with fellow developers to create intuitive digital experiences that align with organizational goals and standards"
+            "Implemented pages for CompSAt projects.",
+            "Worked with fellow developers to make the projects easier to use."
           ],
-          "skills": ["Front-End Development", "React.js", "Next.js", "Python", "Web Development"]
+          "skills": [
+            "Front-End Development",
+            "React.js",
+            "Next.js",
+            "Python",
+            "Web Development"
+          ]
         },
         {
           "type": "leadership",
@@ -136,13 +170,17 @@
           "company": "Computer Society of the Ateneo",
           "duration": "Dec 2024 – Feb 2025",
           "location": "On-site",
-          "summary": "Managed logistics for Blue Hacks 2025 hackathon",
+          "summary": "Helped run logistics for Blue Hacks 2025.",
           "details": [
-            "Managed logistics for Blue Hacks 2025, overseeing venue reservation, layout setup, food coordination, and event materials",
-            "Ensured smooth event execution by handling the timely delivery and arrangement of resources",
-            "Collaborated with team members to meet deadlines and maintain efficiency throughout the planning and event day"
+            "Handled venue reservations, layout setup, food coordination, and event materials.",
+            "Coordinated deliveries and setup for event day.",
+            "Worked with the logistics team through planning and event day."
           ],
-          "skills": ["Event Management", "Logistics Management", "Team Collaboration"]
+          "skills": [
+            "Event Management",
+            "Logistics Management",
+            "Team Collaboration"
+          ]
         },
         {
           "type": "leadership",
@@ -150,11 +188,11 @@
           "company": "TEDxAteneoDeManila",
           "duration": "Nov 2024 – May 2025",
           "location": "Quezon City, Philippines · Hybrid",
-          "summary": "Led team of 3 developers to build TEDx event website",
+          "summary": "Led a 3-person team building the TEDx event website.",
           "details": [
-            "Led a team of 3 developers to design and build the TEDxAteneoDeManila 2025 website, ensuring a seamless user experience",
-            "Aligned the site's layout and navigation with the event theme and TEDx brand standards",
-            "Ensured optimal performance and responsiveness across all devices"
+            "Led a team of 3 developers to design and build the TEDxAteneoDeManila 2025 website.",
+            "Matched the site layout and navigation to the event theme and TEDx brand standards.",
+            "Made the site work across desktop and mobile."
           ],
           "skills": ["Front-End Development", "HTML", "Web Design"]
         }

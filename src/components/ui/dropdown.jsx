@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { ChevronDown, Check } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { IconCheck, IconChevronDown } from "@tabler/icons-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 
 export function Dropdown({
   value,
@@ -13,7 +13,6 @@ export function Dropdown({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-
   const selectedOption = options.find((opt) => opt.value === value);
 
   useEffect(() => {
@@ -31,33 +30,39 @@ export function Dropdown({
     <div ref={dropdownRef} className="relative">
       <button
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full pl-12 pr-10 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all hover:bg-white/8 text-left flex items-center justify-between"
+        onClick={() => setIsOpen((open) => !open)}
+        className="tap-scale flex h-12 w-full items-center justify-between rounded-[12px] bg-white/[0.025] px-3 text-left text-sm text-[var(--portfolio-ink-muted)] shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition-[background-color,box-shadow,scale] duration-150 ease-out hover:bg-white/[0.04] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.13)]"
+        aria-expanded={isOpen}
       >
-        {Icon && (
-          <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
-        )}
-        <span className="text-white/90">
-          {selectedOption ? selectedOption.label : placeholder}
+        <span className="flex min-w-0 items-center gap-2.5">
+          {Icon ? (
+            <Icon className="h-4 w-4 shrink-0 text-[var(--portfolio-ink-faint)]" />
+          ) : null}
+          <span className="truncate">
+            {selectedOption ? selectedOption.label : placeholder}
+          </span>
         </span>
-        <ChevronDown
-          className={`w-4 h-4 text-white/40 transition-transform ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        />
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+          className="ml-3 shrink-0 text-[var(--portfolio-ink-faint)]"
+        >
+          <IconChevronDown className="h-4 w-4" stroke={1.8} />
+        </motion.span>
       </button>
 
-      <AnimatePresence>
-        {isOpen && (
+      <AnimatePresence initial={false}>
+        {isOpen ? (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.15 }}
-            className="absolute z-50 w-full mt-2 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl overflow-hidden"
+            initial={{ opacity: 0, y: -8, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -8, filter: "blur(4px)" }}
+            transition={{ duration: 0.16, ease: [0.2, 0, 0, 1] }}
+            className="absolute z-50 mt-2 max-h-[18rem] w-full overflow-y-auto rounded-[14px] bg-[var(--portfolio-surface-raised)] p-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.1),0_18px_42px_rgba(0,0,0,0.28)]"
           >
-            <div className="max-h-[300px] overflow-y-auto">
-              {options.map((option) => (
+            {options.map((option) => {
+              const selected = value === option.value;
+              return (
                 <button
                   key={option.value}
                   type="button"
@@ -65,21 +70,21 @@ export function Dropdown({
                     onChange(option.value);
                     setIsOpen(false);
                   }}
-                  className={`w-full px-4 py-3 text-left flex items-center justify-between transition-colors ${
-                    value === option.value
-                      ? "bg-blue-500/20 text-blue-400"
-                      : "text-white/80 hover:bg-white/5"
+                  className={`tap-scale flex min-h-10 w-full items-center justify-between rounded-[10px] px-3 text-left text-sm transition-[color,background-color,scale] duration-150 ease-out ${
+                    selected
+                      ? "bg-white/[0.07] text-[var(--portfolio-ink)]"
+                      : "text-[var(--portfolio-ink-muted)] hover:bg-white/[0.045] hover:text-[var(--portfolio-ink)]"
                   }`}
                 >
                   <span>{option.label}</span>
-                  {value === option.value && (
-                    <Check className="w-4 h-4 text-blue-400" />
-                  )}
+                  {selected ? (
+                    <IconCheck className="h-4 w-4" stroke={1.8} />
+                  ) : null}
                 </button>
-              ))}
-            </div>
+              );
+            })}
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );

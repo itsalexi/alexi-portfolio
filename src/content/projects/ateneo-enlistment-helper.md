@@ -2,24 +2,21 @@
 slug: ateneo-enlistment-helper
 title: Ateneo Enlistment Helper
 tagline: >-
-  A course scheduling platform to simplify the frustrating enlistment process
-  for Ateneo students. The tool features a visual schedule builder, course
-  search, and filtering, all powered by an automated web scraper that keeps
-  class data up-to-date. It has been used by hundreds of students with over
-  3,000 visits.
+  A visual schedule builder for Ateneo enlistment week, powered by scraped class
+  data and used by students planning around closed slots and messy timetables.
 techStack:
   - nextjs
   - python
 liveUrl: 'https://schedule.alexi.life'
 githubUrl: 'https://github.com/itsalexi/Ateneo-Enlistment'
-image: /images/projects/ateneo-enlistment-helper-featured.webp?v=1762343656588
+image: /images/projects/ateneo-enlistment-helper-featured.webp?v=20260624
 featured: false
 order: 4
 ---
 
 #### **The Gist**
 
-The Ateneo Enlistment Helper is a tool I made to fix the super frustrating process of planning class schedules. It's a web app that lets you search for courses, filter them however you want, and build your schedule visually. It started as a personal project, but it took off and has been used by hundreds of students with over 3,000 visits so far.
+The Ateneo Enlistment Helper is a web app for planning class schedules before enlistment. Students can search courses, filter sections, and build a visual timetable without living inside a spreadsheet.
 
 #### **Where It Came From**
 
@@ -36,7 +33,7 @@ The biggest challenge was actually getting the course data. The university’s s
 
 So, I built a web scraper. I wrote a script to browse the portal like a student would, grabbing all the important info like schedules, professors, and open slots. The problem was, this data changed constantly as people signed up for classes.
 
-To keep the Helper updated, I set up an automated job using GitHub Actions. It would re-run the scraper every few hours to pull the latest information. That was the key to making the whole tool reliable and actually useful.
+To keep the Helper updated, I set up a GitHub Actions job that re-ran the scraper every few hours. The tool only worked if students could trust the data.
 
 ![image_2025-11-05_194551939.png](/images/projects/new-1762343151965.webp)
 

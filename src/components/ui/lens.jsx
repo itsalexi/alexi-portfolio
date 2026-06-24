@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import React, { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export const Lens = ({
@@ -12,7 +12,7 @@ export const Lens = ({
 }) => {
   const [isHovering, setIsHovering] = useState(isStatic);
   const [mousePosition, setMousePosition] = useState(
-    isStatic ? position : { x: 100, y: 100 }
+    isStatic ? position : { x: 100, y: 100 },
   );
   const containerRef = useRef(null);
 

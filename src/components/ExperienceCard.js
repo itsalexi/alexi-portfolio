@@ -1,8 +1,8 @@
 "use client";
 
+import { IconChevronDown } from "@tabler/icons-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { GlowingEffect } from "./ui/glowing-effect";
 
 export default function ExperienceCard({
   badge,
@@ -12,93 +12,73 @@ export default function ExperienceCard({
   details,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const canExpand = Boolean(details?.length);
 
   return (
-    <motion.div
+    <motion.article
       layout
-      onClick={() => setIsExpanded(!isExpanded)}
-      className="group relative rounded-lg cursor-pointer"
-      whileHover={{ x: 2 }}
-      transition={{ duration: 0.15 }}
+      className="border-t border-white/[0.08]"
+      transition={{ type: "spring", duration: 0.34, bounce: 0 }}
     >
-      <GlowingEffect
-        disabled={false}
-        proximity={80}
-        spread={50}
-        borderWidth={2}
-        glow={true}
-        inactiveZone={0.01}
-      />
-      <motion.div
-        layout="position"
-        className="relative z-10 p-4 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] transition-all overflow-hidden"
+      <button
+        type="button"
+        onClick={() => canExpand && setIsExpanded((value) => !value)}
+        className="tap-scale block w-full py-5 text-left transition-[scale,background-color] duration-150 ease-out hover:bg-white/[0.018]"
+        aria-expanded={isExpanded}
       >
-        <div className="flex items-center gap-2 mb-1.5">
-          <span
-            className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide ${badge.className}`}
-          >
-            {badge.label}
-          </span>
-          <h4 className="text-white font-semibold text-sm md:text-base">
-            {title}
-          </h4>
-        </div>
-        <p className="text-white/50 text-xs mb-1.5">{company}</p>
-        <p className="text-white/70 text-xs md:text-sm leading-relaxed">
-          {summary}
-        </p>
-
-        <AnimatePresence>
-          {isExpanded && details && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden"
-            >
-              <div className="mt-3 pt-3 border-t border-white/[0.08]">
-                <ul className="space-y-2">
-                  {details.map((detail, index) => (
-                    <li
-                      key={index}
-                      className="flex gap-2 text-white/60 text-xs leading-relaxed"
-                    >
-                      <span className="text-white/30 mt-0.5 flex-shrink-0">
-                        •
-                      </span>
-                      <span>{detail}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {details && (
-          <div className="flex items-center gap-1.5 mt-3 text-[10px] text-white/30 group-hover:text-white/50 transition-colors">
-            <span className="uppercase tracking-wider font-medium">
-              {isExpanded ? "Less" : "More"}
-            </span>
-            <motion.svg
-              animate={{ rotate: isExpanded ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
-              className="w-3 h-3"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M19 9l-7 7-7-7"
-              />
-            </motion.svg>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="mb-3 flex flex-wrap items-center gap-2">
+              <span className="rounded-[8px] bg-white/[0.05] px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[var(--portfolio-ink-faint)]">
+                {badge.label}
+              </span>
+              <p className="text-xs text-[var(--portfolio-ink-faint)]">
+                {company}
+              </p>
+            </div>
+            <h4 className="text-lg font-medium leading-tight tracking-[-0.018em] text-[var(--portfolio-ink)]">
+              {title}
+            </h4>
+            <p className="mt-3 line-clamp-1 max-w-2xl text-sm leading-6 text-[var(--portfolio-ink-muted)]">
+              {summary}
+            </p>
           </div>
-        )}
-      </motion.div>
-    </motion.div>
+
+          {canExpand
+            ? <motion.span
+                animate={{ rotate: isExpanded ? 180 : 0 }}
+                transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-white/[0.035] text-[var(--portfolio-ink-faint)]"
+              >
+                <IconChevronDown className="h-4 w-4" stroke={1.8} />
+              </motion.span>
+            : null}
+        </div>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isExpanded && canExpand
+          ? <motion.div
+              initial={{ opacity: 0, y: -12, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              className="pb-5"
+            >
+              <ul className="space-y-3 border-t border-white/[0.08] pt-4">
+                {details.map((detail) => (
+                  <li
+                    key={detail}
+                    className="grid grid-cols-[0.75rem_1fr] gap-2 text-sm leading-6 text-[var(--portfolio-ink-muted)]"
+                  >
+                    <span className="mt-3 h-1 w-1 rounded-[2px] bg-[var(--portfolio-ink-faint)]" />
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          : null}
+      </AnimatePresence>
+    </motion.article>
   );
 }

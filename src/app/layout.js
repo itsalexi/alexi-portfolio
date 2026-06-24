@@ -1,14 +1,18 @@
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import PageTransition from "../components/PageTransition";
-import BackgroundEffects from "../components/BackgroundEffects";
-import { Preloader } from "../components/ui/preloader";
 import Script from "next/script";
+import BackgroundEffects from "../components/BackgroundEffects";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import PageTransition from "../components/PageTransition";
 
-const inter = Inter({
-  variable: "--font-inter",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -19,7 +23,7 @@ export const metadata = {
     template: "%s | Alexi Canamo",
   },
   description:
-    "Alexi Canamo is an 18-year-old software developer from the Philippines. Second-year Computer Science student at Ateneo de Manila University and DOST Merit Scholar. Building tools that help thousands of students.",
+    "Alexi Canamo is a 19-year-old CS student in Manila making student tools, small apps, and websites with friends.",
   keywords: [
     "Alexi Canamo",
     "software developer",
@@ -29,7 +33,7 @@ export const metadata = {
     "Ateneo",
     "ADMU",
     "portfolio",
-    "full-stack developer",
+    "student developer",
     "React",
     "Next.js",
     "JavaScript",
@@ -54,7 +58,7 @@ export const metadata = {
     url: "https://alexi.life",
     title: "Alexi Canamo",
     description:
-      "Alexi Canamo is an 18-year-old software developer from the Philippines. Second-year Computer Science student at Ateneo de Manila University and DOST Merit Scholar.",
+      "Alexi Canamo is a 19-year-old CS student in Manila making student tools, small apps, and websites with friends.",
     siteName: "Alexi Canamo",
     images: [
       {
@@ -70,7 +74,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Alexi Canamo",
     description:
-      "18-year-old software developer from the Philippines. CS student at Ateneo de Manila University. Building tools that help thousands of students.",
+      "19-year-old CS student in Manila making student tools, small apps, and websites with friends.",
     creator: "@alexicanamo",
     images: ["/og-image.png"],
   },
@@ -96,16 +100,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{if(sessionStorage.getItem("preloader-seen"))document.documentElement.classList.add("preloader-seen")}catch(e){}`,
-          }}
-        />
         {/* Structured Data - Person Schema */}
         <Script
           id="person-schema"
           type="application/ld+json"
           strategy="beforeInteractive"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD is serialized from local metadata.
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
@@ -116,7 +116,7 @@ export default function RootLayout({ children }) {
               image: "https://alexi.life/og-image.png",
               jobTitle: "Software Developer",
               description:
-                "18-year-old software developer from the Philippines. Computer Science student at Ateneo de Manila University and DOST Merit Scholar.",
+                "19-year-old Computer Science student in Manila making student tools, small apps, and websites with friends.",
               alumniOf: {
                 "@type": "CollegeOrUniversity",
                 name: "Ateneo de Manila University",
@@ -154,6 +154,7 @@ export default function RootLayout({ children }) {
           id="website-schema"
           type="application/ld+json"
           strategy="beforeInteractive"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD is serialized from local metadata.
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
@@ -161,7 +162,7 @@ export default function RootLayout({ children }) {
               name: "Alexi Canamo",
               url: "https://alexi.life",
               description:
-                "Portfolio website of Alexi Canamo, software developer and computer science student",
+                "Personal site of Alexi Canamo, a Computer Science student in Manila.",
               publisher: {
                 "@type": "Person",
                 name: "Alexi Canamo",
@@ -176,6 +177,7 @@ export default function RootLayout({ children }) {
           id="professional-schema"
           type="application/ld+json"
           strategy="beforeInteractive"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD is serialized from local metadata.
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
@@ -183,7 +185,7 @@ export default function RootLayout({ children }) {
               name: "Alexi Canamo - Software Development",
               image: "https://alexi.life/og-image.png",
               description:
-                "Software development services specializing in web applications, tools for students, and full-stack development",
+                "Student tools, small apps, and websites by Alexi Canamo.",
               url: "https://alexi.life",
               telephone: "",
               address: {
@@ -204,8 +206,9 @@ export default function RootLayout({ children }) {
           strategy="afterInteractive"
         />
       </head>
-      <body className={`${inter.variable} antialiased bg-black`}>
-        <Preloader />
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} bg-[var(--portfolio-bg)] font-sans antialiased`}
+      >
         <BackgroundEffects />
         <div className="relative z-10">
           <Navbar />

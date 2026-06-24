@@ -3,10 +3,9 @@ slug: nextpay-internship
 title: The Art of Failing Forward
 date: "Nov 16, 2025"
 excerpt: >-
-  I was failing my math class, but I was also shipping code at one of the
-  Philippines' most exciting fintech startups. This is the story of how a random
-  class project, a cold message, and one scary question led to the most chaotic
-  and incredible two months of my life.
+  I was struggling through math while shipping code at NextPay. A class paper,
+  a cold message, and one risky question turned into my first startup
+  internship.
 tags:
   - Personal
   - Startups

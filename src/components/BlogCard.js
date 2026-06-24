@@ -1,100 +1,65 @@
 "use client";
 
+import { IconArrowUpRight } from "@tabler/icons-react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import Link from "next/link";
-import { Calendar, Clock } from "lucide-react";
-import { normalizeEllipsis } from "../lib/text";
 
-export default function BlogCard({
-  slug,
-  title,
-  date,
-  excerpt,
-  tags,
-  image,
-  author,
-  readTime,
-}) {
+function cleanSrc(src) {
+  if (!src || typeof src !== "string") return "";
+  return src.split("?")[0];
+}
+
+export default function BlogCard({ slug, title, date, tags, readTime, image }) {
   return (
-    <Link href={`/blog/${slug}`} className="h-full block">
+    <Link href={`/blog/${slug}`} className="group block">
       <motion.article
-        className="group relative h-full rounded-xl bg-white/3 border border-white/8 hover:border-white/20 hover:bg-white/6 transition-all overflow-hidden flex flex-col"
-        whileHover={{ y: -4 }}
-        transition={{ duration: 0.2 }}
+        className="tap-scale grid gap-5 border-t border-white/[0.08] py-5 transition-[scale] duration-150 ease-out md:grid-cols-[1fr_13rem] md:items-center"
+        whileHover={{ x: 3 }}
+        transition={{ type: "spring", duration: 0.32, bounce: 0 }}
       >
-        {/* Featured Image */}
-        {image && (
-          <div className="relative w-full h-48 overflow-hidden flex-shrink-0">
-            <img
-              src={image}
-              alt={title}
-              className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+        <div className="min-w-0">
+          <div className="mb-4 flex items-center gap-3 font-mono text-[0.68rem] uppercase tracking-[0.13em] text-[var(--portfolio-ink-faint)]">
+            <span>{date}</span>
+            {readTime ? <span>{readTime}</span> : null}
+          </div>
+
+          <div className="flex items-start justify-between gap-4">
+            <h3 className="max-w-3xl text-[clamp(1.8rem,4vw,3.5rem)] font-semibold leading-[0.96] tracking-[-0.018em] text-[var(--portfolio-ink)]">
+              {title}
+            </h3>
+            <IconArrowUpRight
+              className="mt-1 h-5 w-5 shrink-0 text-[var(--portfolio-ink-faint)] transition-[color,transform] duration-200 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--portfolio-ink)]"
+              stroke={1.8}
             />
           </div>
-        )}
 
-        {/* Content */}
-        <div className="p-6 flex flex-col flex-1">
-          {/* Metadata */}
-          <div className="flex items-center gap-4 text-xs text-white/60 mb-3">
-            <div className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5" />
-              <span>{date}</span>
-            </div>
-            {readTime && (
-              <div className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" />
-                <span>{readTime}</span>
+          {tags?.length
+            ? <div className="mt-5 flex flex-wrap gap-x-3 gap-y-2">
+                {tags.slice(0, 3).map((tag) => (
+                  <span
+                    key={tag}
+                    className="font-mono text-[0.66rem] uppercase tracking-[0.13em] text-[var(--portfolio-ink-faint)]"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
-            )}
-          </div>
+            : null}
+        </div>
 
-          {/* Title */}
-          <h3
-            className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2 overflow-hidden"
-            style={{
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-            }}
-          >
-            {title}
-          </h3>
-
-          {/* Excerpt */}
-          {excerpt && (
-            <p
-              className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3 overflow-hidden text-ellipsis flex-grow"
-              style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: "vertical",
-              }}
-            >
-              {normalizeEllipsis(excerpt)}
-            </p>
-          )}
-
-          {/* Tags */}
-          {tags && tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-auto">
-              {tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Author */}
-          {author && (
-            <div className="mt-4 pt-4 border-t border-white/10">
-              <p className="text-xs text-white/50">By {author}</p>
-            </div>
-          )}
+        <div className="relative min-h-[11rem] overflow-hidden rounded-[16px] bg-white/[0.035] md:min-h-[9rem]">
+          {image
+            ? <Image
+                src={cleanSrc(image)}
+                alt={title}
+                fill
+                className="object-cover object-center opacity-78 transition-[scale,opacity] duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.035] group-hover:opacity-95"
+                sizes="(max-width: 768px) 100vw, 208px"
+              />
+            : <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-[0.16em] text-[var(--portfolio-ink-faint)]">
+                Note
+              </div>}
         </div>
       </motion.article>
     </Link>

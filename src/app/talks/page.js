@@ -1,19 +1,29 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
+import EditorialHeader from "@/components/EditorialHeader";
 import TalksClient from "./TalksClient";
 
 export const metadata = {
   title: "Talks & Workshops",
   description:
-    "Workshops and talks by Alexi Canamo on web development, React, Next.js, Git, and modern software development practices. Sharing knowledge with the tech community.",
+    "Talks and workshops by Alexi Canamo on building, Python, student tools, and starting before you feel ready.",
   openGraph: {
     title: "Talks & Workshops - Alexi Canamo",
-    description:
-      "Workshops and presentations on web development, React, Next.js, and software development best practices.",
+    description: "Student workshops and talks Alexi has helped run.",
     images: ["/og-image.png"],
   },
 };
+
+function TalksHeader() {
+  return (
+    <EditorialHeader
+      eyebrow="Teaching"
+      title="Talks and workshops."
+      body="A few sessions I’ve helped run for students learning to build."
+    />
+  );
+}
 
 // This is a server component - statically generated at build time
 export default function TalksPage() {
@@ -22,18 +32,13 @@ export default function TalksPage() {
   // Handle case where talks directory doesn't exist (empty state)
   if (!fs.existsSync(talksDirectory)) {
     return (
-      <main className="min-h-screen bg-transparent text-white pt-24">
-        <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="mb-12 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Talks & Workshops
-            </h1>
-            <p className="text-white/60 text-lg">
-              Sharing knowledge and empowering others through teaching
+      <main className="min-h-screen pt-20 sm:pt-28">
+        <div className="mx-auto max-w-[980px] px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
+          <TalksHeader />
+          <div className="border-y border-white/[0.08] py-12">
+            <p className="text-sm text-[var(--portfolio-ink-muted)]">
+              No talks yet.
             </p>
-          </div>
-          <div className="bg-white/5 rounded-lg p-12 text-center border border-white/10">
-            <p className="text-white/60">No talks yet. Check back soon!</p>
           </div>
         </div>
       </main>
@@ -63,25 +68,17 @@ export default function TalksPage() {
     });
 
   return (
-    <main className="min-h-screen bg-transparent text-white pt-24">
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Talks & Workshops
-          </h1>
-          <p className="text-white/60 text-lg">
-            Sharing knowledge and empowering others through teaching
-          </p>
-        </div>
+    <main className="min-h-screen pt-20 sm:pt-28">
+      <div className="mx-auto max-w-[980px] px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
+        <TalksHeader />
 
-        {talks.length > 0 ? (
-          <TalksClient talks={talks} />
-        ) : (
-          <div className="bg-white/5 rounded-lg p-12 text-center border border-white/10">
-            <p className="text-white/60">No talks yet. Check back soon!</p>
-          </div>
-        )}
+        {talks.length > 0
+          ? <TalksClient talks={talks} />
+          : <div className="border-y border-white/[0.08] py-12">
+              <p className="text-sm text-[var(--portfolio-ink-muted)]">
+                No talks yet.
+              </p>
+            </div>}
       </div>
     </main>
   );

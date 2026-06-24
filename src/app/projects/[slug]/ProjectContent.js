@@ -1,107 +1,102 @@
 "use client";
 
+import { IconBrandGithub, IconExternalLink } from "@tabler/icons-react";
 import ReactMarkdown from "react-markdown";
-import { ExternalLink, Github } from "lucide-react";
+import EditorialHeader from "@/components/EditorialHeader";
+import { getProjectTechLabels } from "@/lib/tech-stack";
 
 export default function ProjectContent({ project }) {
   return (
-    <div className="min-h-screen bg-transparent">
-      <div className="max-w-4xl mx-auto px-6 pt-24 pb-12">
-        {/* Featured Image */}
-        {project.image && (
-          <div className="mb-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-[400px] object-cover object-top"
-            />
+    <main className="min-h-screen pt-20 sm:pt-28">
+      <div className="mx-auto max-w-[980px] px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
+        <EditorialHeader
+          eyebrow="Project"
+          title={project.title}
+          body={project.tagline}
+          meta={getProjectTechLabels(project.techStack || [])}
+        />
+
+        {(project.liveUrl || project.githubUrl) && (
+          <div className="-mt-5 mb-10 flex flex-wrap gap-5">
+            {project.liveUrl
+              ? <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-link tap-scale inline-flex min-h-10 items-center gap-1.5 text-sm"
+                >
+                  Live site
+                  <IconExternalLink className="h-4 w-4" stroke={1.8} />
+                </a>
+              : null}
+            {project.githubUrl
+              ? <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-link tap-scale inline-flex min-h-10 items-center gap-1.5 text-sm"
+                >
+                  Code
+                  <IconBrandGithub className="h-4 w-4" stroke={1.8} />
+                </a>
+              : null}
           </div>
         )}
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
-            {project.title}
-          </h1>
-          <p className="text-lg text-white/60 mb-4">{project.tagline}</p>
+        {project.image
+          ? <div className="mb-12 overflow-hidden rounded-[18px] bg-white/[0.025] shadow-[var(--shadow-border)]">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="h-[20rem] w-full object-cover object-top opacity-88 md:h-[26rem]"
+              />
+            </div>
+          : null}
 
-          {/* Tech Stack & Links */}
-          <div className="flex flex-wrap items-center gap-3">
-            {project.techStack &&
-              project.techStack.map((tech, idx) => (
-                <span
-                  key={idx}
-                  className="px-2.5 py-1 rounded-md text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20"
-                >
-                  {tech}
-                </span>
-              ))}
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/10 hover:bg-white/20 text-white text-xs transition-colors ml-auto"
-              >
-                <ExternalLink className="w-3.5 h-3.5" />
-                <span>Live</span>
-              </a>
-            )}
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/10 hover:bg-white/20 text-white text-xs transition-colors"
-              >
-                <Github className="w-3.5 h-3.5" />
-                <span>Code</span>
-              </a>
-            )}
-          </div>
-        </div>
-
-        {/* Markdown Content */}
-        <article className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-headings:font-bold prose-h2:text-2xl prose-h2:mb-6 prose-h2:mt-12 prose-h2:pb-2 prose-h2:border-b prose-h2:border-white/10 prose-p:text-white/80 prose-p:leading-relaxed prose-p:text-base prose-ul:space-y-3 prose-li:text-white/80 prose-li:text-base prose-strong:text-white prose-strong:font-semibold prose-code:text-blue-400 prose-code:bg-blue-500/10 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:border prose-img:border-white/10 prose-img:shadow-2xl">
+        <article className="mx-auto max-w-[720px]">
           <ReactMarkdown
             components={{
               h2: ({ node, ...props }) => (
                 <h2
-                  className="text-2xl font-bold text-white mb-6 mt-12 pb-2 border-b border-white/10"
+                  className="mb-5 mt-12 border-t border-white/[0.08] pt-6 text-3xl font-semibold tracking-[-0.018em] text-[var(--portfolio-ink)]"
                   {...props}
                 />
               ),
               p: ({ node, ...props }) => (
                 <p
-                  className="text-white/80 leading-relaxed text-base mb-4"
+                  className="mb-5 text-base leading-8 text-[var(--portfolio-ink-muted)]"
                   {...props}
                 />
               ),
               ul: ({ node, ...props }) => (
-                <ul className="space-y-3 mb-6" {...props} />
+                <ul className="mb-7 space-y-3" {...props} />
               ),
               li: ({ node, ...props }) => (
                 <li
-                  className="text-white/80 text-base flex items-start gap-2"
+                  className="grid grid-cols-[0.75rem_1fr] gap-2 text-base leading-8 text-[var(--portfolio-ink-muted)]"
                   {...props}
                 >
-                  <span className="text-blue-400 mt-1">•</span>
+                  <span className="mt-3.5 h-1 w-1 rounded-[2px] bg-[var(--portfolio-ink-faint)]" />
                   <span>{props.children}</span>
                 </li>
               ),
               strong: ({ node, ...props }) => (
-                <strong className="text-white font-semibold" {...props} />
-              ),
-              code: ({ node, ...props }) => (
-                <code
-                  className="text-blue-400 bg-blue-500/10 px-2 py-1 rounded text-sm"
+                <strong
+                  className="font-medium text-[var(--portfolio-ink)]"
                   {...props}
                 />
               ),
+              code: ({ node, ...props }) => (
+                <code
+                  className="rounded-[6px] bg-white/[0.06] px-1.5 py-0.5 font-mono text-sm text-[var(--portfolio-warm)]"
+                  {...props}
+                />
+              ),
+              a: ({ node, ...props }) => <a className="text-link" {...props} />,
               img: ({ node, ...props }) => (
                 <img
                   {...props}
-                  className="w-full my-8 rounded-xl border border-white/10 shadow-2xl"
+                  className="my-8 w-full rounded-[16px]"
                   loading="lazy"
                   alt={props.alt || "Project image"}
                 />
@@ -112,6 +107,6 @@ export default function ProjectContent({ project }) {
           </ReactMarkdown>
         </article>
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
 import { motion } from "motion/react";
+import React, { useEffect, useRef, useState } from "react";
 
 export const TextHoverEffect = ({ text, duration }) => {
   const svgRef = useRef(null);
@@ -14,7 +14,7 @@ export const TextHoverEffect = ({ text, duration }) => {
     const checkMobile = () => {
       setIsMobile(
         window.matchMedia("(max-width: 768px)").matches ||
-          "ontouchstart" in window
+          "ontouchstart" in window,
       );
     };
 

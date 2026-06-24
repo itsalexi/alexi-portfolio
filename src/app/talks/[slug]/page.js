@@ -1,7 +1,7 @@
-import { use } from "react";
 import fs from "fs";
-import path from "path";
 import matter from "gray-matter";
+import path from "path";
+import { use } from "react";
 import TalkContent from "./TalkContent";
 
 // Generate metadata for each talk

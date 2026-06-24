@@ -23,7 +23,7 @@ highlights:
 
 ## What happened
 
-While we didn’t win the crown, we still gained something far more profound.
+We didn’t win the crown, but the project kept moving after the hackathon.
 
 From **200+ teams**, we made it to the **Top 5 finalists** of the first Naga Mayoral Hackathon. Along the way, we built **SALBAR**—an offline-first emergency health protocol designed to work when the internet, power, and “smart city” systems fail.
 
@@ -41,4 +41,4 @@ SALBAR is built around the idea that emergency health guidance has to stay usabl
 
 The project was also flagged for **post-hackathon incubation** toward **LGU deployment**—turning a hackathon prototype into something the city can run when it matters most.
 
-This is just the beginning.
+The next step is seeing what it would take for an LGU to actually use it.

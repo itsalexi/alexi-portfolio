@@ -4,7 +4,7 @@ import HackathonCard from "@/components/HackathonCard";
 
 export default function HackathonsClient({ hackathons }) {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="grid gap-4">
       {hackathons.map((h) => (
         <HackathonCard
           key={h.slug}

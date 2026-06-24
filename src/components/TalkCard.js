@@ -1,8 +1,9 @@
 "use client";
 
+import { IconArrowUpRight } from "@tabler/icons-react";
 import { motion } from "motion/react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function TalkCard({
   slug,
@@ -10,62 +11,64 @@ export default function TalkCard({
   event,
   date,
   location,
-  description,
   topics,
   image,
 }) {
   return (
-    <Link href={`/talks/${slug}`} className="block">
-      <motion.div
-        className="group relative p-4 rounded-lg bg-white/3 border border-white/8 hover:border-white/20 hover:bg-white/6 transition-all cursor-pointer"
-        whileHover={{ y: -4 }}
-        transition={{ duration: 0.2 }}
+    <Link href={`/talks/${slug}`} className="group block">
+      <motion.article
+        className="tap-scale grid gap-5 border-t border-white/[0.08] py-5 transition-[scale] duration-150 ease-out md:grid-cols-[13rem_1fr] md:items-center"
+        whileHover={{ x: 3 }}
+        transition={{ type: "spring", duration: 0.32, bounce: 0 }}
       >
-        <div className="relative flex gap-4">
-          {/* Content Section */}
-          <div className="flex-1">
-            <div className="flex items-start justify-between gap-3 mb-2">
-              <h4 className="text-white font-semibold text-sm md:text-base">
-                {title}
-              </h4>
-            </div>
-            <p className="text-white/70 text-xs font-medium mb-1">
-              {event} • {date}
-            </p>
-            {location && (
-              <p className="text-white/50 text-xs mb-2">{location}</p>
-            )}
-            <p className="text-white/70 text-xs md:text-sm leading-relaxed mb-3">
-              {description}
-            </p>
-            {topics && topics.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
-                {topics.map((topic, index) => (
+        <div className="relative min-h-[11rem] overflow-hidden rounded-[16px] bg-white/[0.035] md:min-h-[9rem]">
+          {image
+            ? <Image
+                src={image}
+                alt={title}
+                fill
+                className="object-cover object-top opacity-78 transition-[scale,opacity] duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.035] group-hover:opacity-95"
+                sizes="(max-width: 768px) 100vw, 208px"
+              />
+            : <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-[0.16em] text-[var(--portfolio-ink-faint)]">
+                Talk
+              </div>}
+        </div>
+
+        <div className="min-w-0">
+          <div className="mb-4 flex items-center gap-3 font-mono text-[0.68rem] uppercase tracking-[0.13em] text-[var(--portfolio-ink-faint)]">
+            <span>{date}</span>
+            {location ? <span>{location}</span> : null}
+          </div>
+
+          <div className="flex items-start justify-between gap-4">
+            <h3 className="max-w-3xl text-[clamp(1.8rem,4vw,3.5rem)] font-semibold leading-[0.96] tracking-[-0.018em] text-[var(--portfolio-ink)]">
+              {title}
+            </h3>
+            <IconArrowUpRight
+              className="mt-1 h-5 w-5 shrink-0 text-[var(--portfolio-ink-faint)] transition-[color,transform] duration-200 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--portfolio-ink)]"
+              stroke={1.8}
+            />
+          </div>
+
+          <p className="mt-3 text-sm text-[var(--portfolio-ink-muted)]">
+            {event}
+          </p>
+
+          {topics?.length
+            ? <div className="mt-5 flex flex-wrap gap-x-3 gap-y-2">
+                {topics.slice(0, 3).map((topic) => (
                   <span
-                    key={index}
-                    className="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20"
+                    key={topic}
+                    className="font-mono text-[0.66rem] uppercase tracking-[0.13em] text-[var(--portfolio-ink-faint)]"
                   >
                     {topic}
                   </span>
                 ))}
               </div>
-            )}
-          </div>
-
-          {/* Image Section */}
-          {image && (
-            <div className="relative w-48 h-32 md:w-64 md:h-40 flex-shrink-0 rounded-lg overflow-hidden bg-white/5">
-              <Image
-                src={image}
-                alt={title}
-                fill
-                className="object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                sizes="(max-width: 768px) 192px, 256px"
-              />
-            </div>
-          )}
+            : null}
         </div>
-      </motion.div>
+      </motion.article>
     </Link>
   );
 }

@@ -1,25 +1,25 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { IconArrowLeft, IconChevronDown } from "@tabler/icons-react";
+import { motion } from "motion/react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
+import { socials } from "../config/socials";
 import {
-  Navbar,
-  NavBody,
   MobileNav,
   MobileNavHeader,
   MobileNavMenu,
   MobileNavToggle,
+  NavBody,
+  Navbar,
   NavbarButton,
 } from "./ui/resizable-navbar";
-import Link from "next/link";
-import { ArrowLeft, ChevronDown } from "lucide-react";
-import { motion } from "motion/react";
-import { cn } from "@/lib/utils";
-import { socials } from "../config/socials";
 
 const STORIES_LINKS = [
+  { name: "Writing", link: "/blog" },
   { name: "Talks", link: "/talks" },
-  { name: "Blog", link: "/blog" },
   { name: "Hackathons", link: "/hackathons" },
 ];
 
@@ -31,8 +31,13 @@ const TOP_LINKS = [
 function pathMatchesStories(pathname) {
   if (!pathname) return false;
   return STORIES_LINKS.some(
-    (item) => pathname === item.link || pathname.startsWith(`${item.link}/`)
+    (item) => pathname === item.link || pathname.startsWith(`${item.link}/`),
   );
+}
+
+function isActive(pathname, link) {
+  if (!pathname) return false;
+  return pathname === link || pathname.startsWith(`${link}/`);
 }
 
 export default function PortfolioNavbar() {
@@ -50,10 +55,10 @@ export default function PortfolioNavbar() {
     pathname?.startsWith("/talks/") ||
     pathname?.startsWith("/blog/") ||
     pathname?.startsWith("/hackathons/");
-
   const storiesActive = pathMatchesStories(pathname);
 
   useEffect(() => {
+    if (!pathname) return;
     if (typeof window !== "undefined" && document.referrer) {
       try {
         const referrerUrl = new URL(document.referrer);
@@ -61,72 +66,78 @@ export default function PortfolioNavbar() {
         if (referrerUrl.origin === currentUrl.origin) {
           setReferrer(referrerUrl.pathname);
         }
-      } catch (e) {
-        // ignore
+      } catch {
+        setReferrer(null);
       }
     }
   }, [pathname]);
 
   useEffect(() => {
+    if (!pathname) return;
+    setIsOpen(false);
     setStoriesOpen(false);
     setMobileStoriesOpen(false);
   }, [pathname]);
 
   useEffect(() => {
     if (!storiesOpen) return;
-    const close = (e) => {
-      if (storiesRef.current && !storiesRef.current.contains(e.target)) {
+
+    const close = (event) => {
+      if (storiesRef.current && !storiesRef.current.contains(event.target)) {
         setStoriesOpen(false);
       }
     };
+
     document.addEventListener("click", close);
     return () => document.removeEventListener("click", close);
   }, [storiesOpen]);
 
-  const handleNavClick = (e, link) => {
-    e.preventDefault();
+  const handleNavClick = (event, link) => {
+    event.preventDefault();
     setIsOpen(false);
     setStoriesOpen(false);
     router.push(link);
   };
 
-  const handleBackClick = (e) => {
-    e.preventDefault();
+  const handleBackClick = (event) => {
+    event.preventDefault();
     setIsOpen(false);
+
     if (referrer === "/") {
       router.push("/", { scroll: false });
-    } else {
-      router.back();
+      return;
     }
+
+    router.back();
   };
 
   const navPillClass =
-    "relative px-4 py-2 text-sm font-medium text-neutral-600 dark:text-neutral-300";
+    "tap-scale relative flex h-9 items-center px-3 text-sm text-[var(--portfolio-ink-muted)] transition-[color,scale] duration-150 ease-out hover:text-[var(--portfolio-ink)]";
 
   return (
     <Navbar className="fixed top-4">
-      <NavBody>
-        <div className="relative z-20 flex items-center gap-4">
+      <NavBody className="max-w-[940px]">
+        <div className="relative z-20 flex min-w-0 items-center gap-2">
           <Link
             href="/"
-            className="flex items-center space-x-2 px-2 py-1 text-sm font-semibold text-black dark:text-white"
+            className="tap-scale flex h-10 items-center rounded-full px-3 text-sm font-semibold tracking-[-0.018em] text-[var(--portfolio-ink)] transition-[background-color,color,scale] duration-150 ease-out hover:bg-white/[0.05] hover:text-white"
+            aria-label="Alexi Canamo home"
           >
-            <span className="text-lg">Alexi</span>
+            Alexi
           </Link>
 
-          {isDetailPage && (
-            <button
-              type="button"
-              onClick={handleBackClick}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors text-neutral-600 dark:text-neutral-300 text-sm"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="font-medium">Back</span>
-            </button>
-          )}
+          {isDetailPage
+            ? <button
+                type="button"
+                onClick={handleBackClick}
+                className="tap-scale hidden h-9 items-center gap-1.5 rounded-full px-3 text-sm text-[var(--portfolio-ink-muted)] transition-[background-color,color,scale] duration-150 ease-out hover:bg-white/[0.05] hover:text-[var(--portfolio-ink)] sm:flex"
+              >
+                <IconArrowLeft className="h-4 w-4" stroke={1.8} />
+                Back
+              </button>
+            : null}
         </div>
 
-        {/* Center nav: Projects | Stories ▾ | About */}
         <motion.div
           onMouseLeave={() => setHoveredIdx(null)}
           className="absolute inset-0 z-10 hidden flex-1 flex-row items-center justify-center gap-0 lg:flex"
@@ -134,16 +145,20 @@ export default function PortfolioNavbar() {
           <a
             href={TOP_LINKS[0].link}
             onMouseEnter={() => setHoveredIdx(0)}
-            onClick={(e) => handleNavClick(e, TOP_LINKS[0].link)}
-            className={navPillClass}
-          >
-            {hoveredIdx === 0 && (
-              <motion.div
-                layoutId="navHover"
-                className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              />
+            onClick={(event) => handleNavClick(event, TOP_LINKS[0].link)}
+            className={cn(
+              navPillClass,
+              isActive(pathname, TOP_LINKS[0].link) &&
+                "text-[var(--portfolio-ink)]",
             )}
+          >
+            {hoveredIdx === 0
+              ? <motion.span
+                  layoutId="navHover"
+                  className="absolute inset-0 rounded-full bg-white/[0.07]"
+                  transition={{ type: "spring", duration: 0.38, bounce: 0 }}
+                />
+              : null}
             <span className="relative z-20">{TOP_LINKS[0].name}</span>
           </a>
 
@@ -153,84 +168,88 @@ export default function PortfolioNavbar() {
               aria-expanded={storiesOpen}
               aria-haspopup="menu"
               onMouseEnter={() => setHoveredIdx(1)}
-              onClick={() => setStoriesOpen((o) => !o)}
+              onClick={() => setStoriesOpen((open) => !open)}
               className={cn(
                 navPillClass,
-                "inline-flex items-center gap-1",
-                (storiesActive || storiesOpen) && "text-neutral-900 dark:text-white"
+                "gap-1",
+                (storiesActive || storiesOpen) && "text-[var(--portfolio-ink)]",
               )}
             >
-              {hoveredIdx === 1 && (
-                <motion.div
-                  layoutId="navHover"
-                  className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
+              {hoveredIdx === 1 || storiesOpen
+                ? <motion.span
+                    layoutId="navHover"
+                    className="absolute inset-0 rounded-full bg-white/[0.07]"
+                    transition={{ type: "spring", duration: 0.38, bounce: 0 }}
+                  />
+                : null}
               <span className="relative z-20">Stories</span>
-              <ChevronDown
+              <IconChevronDown
                 className={cn(
-                  "relative z-20 h-4 w-4 opacity-70 transition-transform",
-                  storiesOpen && "rotate-180"
+                  "relative z-20 h-3.5 w-3.5 opacity-70 transition-transform duration-200 ease-[var(--ease-out-expo)]",
+                  storiesOpen ? "rotate-180" : "",
                 )}
+                stroke={1.8}
               />
             </button>
 
-            {storiesOpen && (
-              <div
-                role="menu"
-                className="absolute left-1/2 top-[calc(100%+0.5rem)] z-[70] min-w-[11rem] -translate-x-1/2 rounded-xl border border-neutral-200/80 bg-white py-1.5 shadow-lg dark:border-neutral-800 dark:bg-neutral-950"
-              >
-                {STORIES_LINKS.map((item) => (
-                  <a
-                    key={item.link}
-                    role="menuitem"
-                    href={item.link}
-                    onClick={(e) => handleNavClick(e, item.link)}
-                    className={cn(
-                      "block px-4 py-2.5 text-sm text-neutral-700 transition-colors hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800",
-                      pathname === item.link ||
-                        pathname?.startsWith(`${item.link}/`)
-                        ? "bg-neutral-50 font-medium dark:bg-neutral-900"
-                        : ""
-                    )}
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            )}
+            {storiesOpen
+              ? <motion.div
+                  role="menu"
+                  initial={{ opacity: 0, y: -8, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -8, filter: "blur(4px)" }}
+                  transition={{ duration: 0.18, ease: [0.2, 0, 0, 1] }}
+                  className="absolute left-1/2 top-[calc(100%+0.65rem)] z-[70] min-w-44 -translate-x-1/2 rounded-[16px] bg-[rgba(17,17,15,0.94)] p-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.1),0_18px_50px_rgba(0,0,0,0.34)] backdrop-blur-xl"
+                >
+                  {STORIES_LINKS.map((item) => (
+                    <a
+                      key={item.link}
+                      role="menuitem"
+                      href={item.link}
+                      onClick={(event) => handleNavClick(event, item.link)}
+                      className={cn(
+                        "tap-scale flex h-10 items-center rounded-[11px] px-3 text-sm text-[var(--portfolio-ink-muted)] transition-[background-color,color,scale] duration-150 ease-out hover:bg-white/[0.055] hover:text-[var(--portfolio-ink)]",
+                        isActive(pathname, item.link) &&
+                          "text-[var(--portfolio-ink)]",
+                      )}
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </motion.div>
+              : null}
           </div>
 
           <a
             href={TOP_LINKS[1].link}
             onMouseEnter={() => setHoveredIdx(2)}
-            onClick={(e) => handleNavClick(e, TOP_LINKS[1].link)}
-            className={navPillClass}
-          >
-            {hoveredIdx === 2 && (
-              <motion.div
-                layoutId="navHover"
-                className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              />
+            onClick={(event) => handleNavClick(event, TOP_LINKS[1].link)}
+            className={cn(
+              navPillClass,
+              isActive(pathname, TOP_LINKS[1].link) &&
+                "text-[var(--portfolio-ink)]",
             )}
+          >
+            {hoveredIdx === 2
+              ? <motion.span
+                  layoutId="navHover"
+                  className="absolute inset-0 rounded-full bg-white/[0.07]"
+                  transition={{ type: "spring", duration: 0.38, bounce: 0 }}
+                />
+              : null}
             <span className="relative z-20">{TOP_LINKS[1].name}</span>
           </a>
         </motion.div>
 
-        <div className="relative z-20 flex items-center gap-2">
-          <NavbarButton
-            variant="secondary"
-            href={`mailto:${socials.email}`}
-            className="text-sm"
-          >
+        <div className="relative z-20 hidden items-center gap-1 lg:flex">
+          <NavbarButton as={Link} variant="secondary" href="/contact">
             Contact
           </NavbarButton>
           <NavbarButton
             variant="dark"
             href={socials.resume}
-            className="text-sm"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Resume
           </NavbarButton>
@@ -239,38 +258,38 @@ export default function PortfolioNavbar() {
 
       <MobileNav>
         <MobileNavHeader>
-          <div className="relative z-20 flex items-center gap-3">
+          <div className="relative z-20 flex min-w-0 items-center gap-2">
             <Link
               href="/"
-              className="flex items-center space-x-2 px-2 py-1 text-sm font-semibold text-black dark:text-white"
+              className="tap-scale flex h-10 items-center rounded-full px-3 text-sm font-semibold tracking-[-0.018em] text-[var(--portfolio-ink)]"
+              aria-label="Alexi Canamo home"
             >
-              <span className="text-lg">Alexi</span>
+              Alexi
             </Link>
 
-            {isDetailPage && (
-              <button
-                type="button"
-                onClick={handleBackClick}
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 text-xs"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span className="font-medium">Back</span>
-              </button>
-            )}
+            {isDetailPage
+              ? <button
+                  type="button"
+                  onClick={handleBackClick}
+                  className="tap-scale flex h-9 items-center gap-1.5 rounded-full px-3 text-sm text-[var(--portfolio-ink-muted)] transition-[background-color,color,scale] duration-150 ease-out hover:bg-white/[0.05] hover:text-[var(--portfolio-ink)]"
+                >
+                  <IconArrowLeft className="h-4 w-4" stroke={1.8} />
+                  Back
+                </button>
+              : null}
           </div>
-          <div className="flex items-center gap-2">
-            <MobileNavToggle
-              isOpen={isOpen}
-              onClick={() => setIsOpen(!isOpen)}
-            />
-          </div>
+
+          <MobileNavToggle
+            isOpen={isOpen}
+            onClick={() => setIsOpen((open) => !open)}
+          />
         </MobileNavHeader>
 
-        <MobileNavMenu isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <MobileNavMenu isOpen={isOpen}>
           <a
             href={TOP_LINKS[0].link}
-            className="text-neutral-600 dark:text-neutral-300"
-            onClick={(e) => handleNavClick(e, TOP_LINKS[0].link)}
+            className="text-[var(--portfolio-ink-muted)]"
+            onClick={(event) => handleNavClick(event, TOP_LINKS[0].link)}
           >
             {TOP_LINKS[0].name}
           </a>
@@ -278,53 +297,56 @@ export default function PortfolioNavbar() {
           <div className="flex w-full flex-col gap-1">
             <button
               type="button"
-              onClick={() => setMobileStoriesOpen((o) => !o)}
-              className="flex w-full items-center justify-between text-left text-neutral-600 dark:text-neutral-300"
+              onClick={() => setMobileStoriesOpen((open) => !open)}
+              className="flex min-h-10 w-full items-center justify-between text-left text-[var(--portfolio-ink-muted)]"
             >
               <span>Stories</span>
-              <ChevronDown
+              <IconChevronDown
                 className={cn(
-                  "h-4 w-4 transition-transform",
-                  mobileStoriesOpen && "rotate-180"
+                  "h-4 w-4 transition-transform duration-200 ease-[var(--ease-out-expo)]",
+                  mobileStoriesOpen ? "rotate-180" : "",
                 )}
+                stroke={1.8}
               />
             </button>
-            {mobileStoriesOpen && (
-              <div className="ml-3 flex flex-col gap-3 border-l border-neutral-200 pl-3 dark:border-neutral-700">
-                {STORIES_LINKS.map((item) => (
-                  <a
-                    key={item.link}
-                    href={item.link}
-                    className="text-sm text-neutral-500 dark:text-neutral-400"
-                    onClick={(e) => handleNavClick(e, item.link)}
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            )}
+
+            {mobileStoriesOpen
+              ? <div className="ml-3 flex flex-col gap-3 border-l border-white/[0.08] pl-3">
+                  {STORIES_LINKS.map((item) => (
+                    <a
+                      key={item.link}
+                      href={item.link}
+                      className="text-sm text-[var(--portfolio-ink-faint)]"
+                      onClick={(event) => handleNavClick(event, item.link)}
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              : null}
           </div>
 
           <a
             href={TOP_LINKS[1].link}
-            className="text-neutral-600 dark:text-neutral-300"
-            onClick={(e) => handleNavClick(e, TOP_LINKS[1].link)}
+            className="text-[var(--portfolio-ink-muted)]"
+            onClick={(event) => handleNavClick(event, TOP_LINKS[1].link)}
           >
             {TOP_LINKS[1].name}
           </a>
 
           <a
-            href={`mailto:${socials.email}`}
-            className="text-neutral-600 dark:text-neutral-300"
-            onClick={() => setIsOpen(false)}
+            href="/contact"
+            className="text-[var(--portfolio-ink-muted)]"
+            onClick={(event) => handleNavClick(event, "/contact")}
           >
             Contact
           </a>
+
           <a
             href={socials.resume}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-neutral-600 dark:text-neutral-300"
+            className="text-[var(--portfolio-ink-muted)]"
             onClick={() => setIsOpen(false)}
           >
             Resume

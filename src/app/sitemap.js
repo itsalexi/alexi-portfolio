@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 export default function sitemap() {
   const baseUrl = "https://alexi.life";
@@ -17,6 +17,12 @@ export default function sitemap() {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.75,
     },
     {
       url: `${baseUrl}/projects`,
@@ -94,7 +100,7 @@ export default function sitemap() {
 
   const hackathonsDirectory = path.join(
     process.cwd(),
-    "src/content/hackathons"
+    "src/content/hackathons",
   );
   let hackathonPages = [];
 

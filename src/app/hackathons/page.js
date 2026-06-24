@@ -1,38 +1,43 @@
+import EditorialHeader from "@/components/EditorialHeader";
 import { loadAllHackathons } from "@/lib/hackathons";
 import HackathonsClient from "./HackathonsClient";
 
 export const metadata = {
   title: "Hackathons",
   description:
-    "Hackathon builds and competition highlights — civic tech, logistics, and weekend shipping with teams.",
+    "Hackathon projects by Alexi Canamo, from logistics ideas to offline emergency tools.",
   openGraph: {
     title: "Hackathons - Alexi Canamo",
-    description:
-      "Hackathon projects, placements, and write-ups with photo carousels.",
+    description: "Weekend projects, team photos, and notes from the build.",
     images: ["/og-image.png"],
   },
 };
+
+function HackathonsHeader() {
+  return (
+    <EditorialHeader
+      eyebrow="Competitions"
+      title="Hackathon weekends."
+      body="Things built with friends, usually on too little sleep."
+    />
+  );
+}
 
 export default function HackathonsPage() {
   const hackathons = loadAllHackathons();
 
   return (
-    <main className="min-h-screen bg-transparent text-white pt-24">
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="mb-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Hackathons</h1>
-          <p className="text-white/60 text-lg">
-            Weekend builds, civic tech, and shipping under pressure with a team
-          </p>
-        </div>
+    <main className="min-h-screen pt-20 sm:pt-28">
+      <div className="mx-auto max-w-[980px] px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
+        <HackathonsHeader />
 
-        {hackathons.length > 0 ? (
-          <HackathonsClient hackathons={hackathons} />
-        ) : (
-          <div className="bg-white/5 rounded-lg p-12 text-center border border-white/10">
-            <p className="text-white/60">No hackathons yet. Check back soon!</p>
-          </div>
-        )}
+        {hackathons.length > 0
+          ? <HackathonsClient hackathons={hackathons} />
+          : <div className="border-y border-white/[0.08] py-12">
+              <p className="text-sm text-[var(--portfolio-ink-muted)]">
+                No hackathons yet.
+              </p>
+            </div>}
       </div>
     </main>
   );

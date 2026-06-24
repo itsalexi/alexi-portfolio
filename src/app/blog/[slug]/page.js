@@ -1,9 +1,9 @@
-import { use } from "react";
 import fs from "fs";
-import path from "path";
 import matter from "gray-matter";
-import BlogContent from "./BlogContent";
+import path from "path";
+import { use } from "react";
 import { calculateReadingTime } from "@/lib/reading-time";
+import BlogContent from "./BlogContent";
 
 // Generate static params for all blogs
 export async function generateStaticParams() {

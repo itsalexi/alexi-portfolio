@@ -2,21 +2,21 @@
 slug: ateneo-qpi-calculator
 title: Ateneo QPI Calculator
 tagline: >-
-  A web app that helps Ateneo students track their grades, predict their QPI,
-  and plan ahead throughout the semester.
+  A what-if grade planner for Ateneo students who want to see where their QPI
+  could land before finals week.
 techStack:
   - nextjs
   - python
 liveUrl: null
 githubUrl: null
-image: /images/projects/new-blog-featured.webp?v=1762331481272
+image: /images/projects/ateneo-qpi-calculator-featured.webp?v=20260624
 featured: true
 order: 3
 ---
 
 #### **So, here's the deal.**
 
-I built a web app for Ateneo students to track and calculate their QPI. It's designed to make it easy to predict your grades and see where you stand anytime during the semester. It saves your courses and can auto-fill them based on your degree program. It started as a tool to make my own life easier, and it seems to have helped a lot of other students too.
+I built a web app for Ateneo students to track grades and test QPI scenarios during the semester. It saves your courses, can auto-fill them by degree program, and answers the question everyone asks before finals: what do I still need?
 
 
 #### **It started with the "what-if" game.**
@@ -49,8 +49,6 @@ I saw it was getting thousands of user sessions. It was cool to see that this pe
 #### **It was a good reminder.**
 
 This project was a good reminder that if you have a small, recurring frustration in your own workflow, chances are a lot of other people feel the same way. I just wanted a better way to plan and predict my grades, and it turned out that was a problem a lot of us were looking to solve.
-
-
 
 
 

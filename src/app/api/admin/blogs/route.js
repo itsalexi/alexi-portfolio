@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import fs from "fs";
+import { NextResponse } from "next/server";
 import path from "path";
 
 export async function GET() {
@@ -7,18 +7,17 @@ export async function GET() {
   if (process.env.NODE_ENV === "production") {
     return NextResponse.json({ error: "Not available" }, { status: 403 });
   }
-  
+
   const blogsDirectory = path.join(process.cwd(), "src/content/blogs");
-  
+
   if (!fs.existsSync(blogsDirectory)) {
     fs.mkdirSync(blogsDirectory, { recursive: true });
   }
-  
+
   const files = fs.readdirSync(blogsDirectory);
   const blogs = files
-    .filter(file => file.endsWith(".md"))
-    .map(file => file.replace(".md", ""));
-  
+    .filter((file) => file.endsWith(".md"))
+    .map((file) => file.replace(".md", ""));
+
   return NextResponse.json(blogs);
 }
-

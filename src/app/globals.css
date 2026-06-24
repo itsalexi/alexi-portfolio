@@ -47,21 +47,35 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --radius: 0.5rem;
+  --portfolio-bg: #080807;
+  --portfolio-bg-soft: #0d0d0c;
+  --portfolio-surface: #11110f;
+  --portfolio-surface-raised: #161512;
+  --portfolio-ink: #f4f1ea;
+  --portfolio-ink-muted: rgba(244, 241, 234, 0.66);
+  --portfolio-ink-faint: rgba(244, 241, 234, 0.42);
+  --portfolio-line: rgba(255, 255, 255, 0.09);
+  --portfolio-line-strong: rgba(255, 255, 255, 0.16);
+  --portfolio-warm: #d7c6a7;
+  --shadow-border: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-border-hover:
+    0 0 0 1px rgba(255, 255, 255, 0.14), 0 16px 40px rgba(0, 0, 0, 0.18);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --background: oklch(0.115 0.003 90);
+  --foreground: oklch(0.94 0.01 85);
+  --card: oklch(0.16 0.004 90);
+  --card-foreground: oklch(0.94 0.01 85);
+  --popover: oklch(0.16 0.004 90);
+  --popover-foreground: oklch(0.94 0.01 85);
+  --primary: oklch(0.86 0.03 80);
+  --primary-foreground: oklch(0.12 0.003 90);
+  --secondary: oklch(0.2 0.004 90);
+  --secondary-foreground: oklch(0.88 0.01 85);
+  --muted: oklch(0.2 0.004 90);
+  --muted-foreground: oklch(0.68 0.01 85);
+  --accent: oklch(0.24 0.006 90);
+  --accent-foreground: oklch(0.92 0.01 85);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
@@ -82,20 +96,20 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: oklch(0.115 0.003 90);
+  --foreground: oklch(0.94 0.01 85);
+  --card: oklch(0.16 0.004 90);
+  --card-foreground: oklch(0.94 0.01 85);
+  --popover: oklch(0.16 0.004 90);
+  --popover-foreground: oklch(0.94 0.01 85);
+  --primary: oklch(0.86 0.03 80);
+  --primary-foreground: oklch(0.12 0.003 90);
+  --secondary: oklch(0.2 0.004 90);
+  --secondary-foreground: oklch(0.88 0.01 85);
+  --muted: oklch(0.2 0.004 90);
+  --muted-foreground: oklch(0.68 0.01 85);
+  --accent: oklch(0.24 0.006 90);
+  --accent-foreground: oklch(0.92 0.01 85);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
@@ -119,8 +133,93 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--portfolio-bg);
+  }
   body {
     @apply bg-background text-foreground;
+    color: var(--portfolio-ink);
+    background: var(--portfolio-bg);
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  blockquote,
+  figcaption {
+    text-wrap: pretty;
+  }
+  img {
+    outline: 1px solid rgba(255, 255, 255, 0.1);
+    outline-offset: -1px;
+  }
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible {
+    outline: 2px solid rgba(215, 198, 167, 0.72);
+    outline-offset: 4px;
+  }
+  ::selection {
+    color: #080807;
+    background: var(--portfolio-warm);
+  }
+}
+
+@layer components {
+  .surface-border {
+    box-shadow: var(--shadow-border);
+    transition-property: box-shadow, background-color, transform;
+    transition-duration: 220ms;
+    transition-timing-function: var(--ease-out-expo);
+  }
+
+  .surface-border:hover {
+    box-shadow: var(--shadow-border-hover);
+  }
+
+  .tap-scale {
+    transition-property: scale, transform;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+  }
+
+  .tap-scale:active {
+    scale: 0.96;
+  }
+
+  .text-link {
+    position: relative;
+    color: var(--portfolio-ink);
+    text-decoration-line: underline;
+    text-decoration-color: rgba(244, 241, 234, 0.22);
+    text-underline-offset: 0.24em;
+    transition-property: color, text-decoration-color, opacity;
+    transition-duration: 180ms;
+    transition-timing-function: ease-out;
+  }
+
+  .text-link:hover {
+    color: #fffaf0;
+    text-decoration-color: rgba(244, 241, 234, 0.72);
+  }
+
+  .quiet-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--portfolio-ink-faint);
   }
 }
 
@@ -150,15 +249,19 @@
 }
 
 .animate-meteor-effect {
-  animation: meteor 5s linear infinite;
+  animation: meteor 5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 @keyframes aurora {
   from {
-    background-position: 50% 50%, 50% 50%;
+    background-position:
+      50% 50%,
+      50% 50%;
   }
   to {
-    background-position: 350% 50%, 350% 50%;
+    background-position:
+      350% 50%,
+      350% 50%;
   }
 }
 
@@ -175,63 +278,11 @@
 }
 
 .animate-sparkle {
-  animation: sparkle 3s ease-in-out infinite;
+  animation: sparkle 3s var(--ease-out-expo) infinite;
 }
 
 @keyframes scroll {
   to {
     transform: translate(calc(-50% - 0.5rem));
   }
-}
-
-/* Preloader — prevent flash on revisit */
-.preloader-seen .preloader-overlay {
-  display: none !important;
-}
-
-.preloader-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #000;
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-}
-
-.preloader-overlay .loader-path {
-  fill: none;
-  stroke: url(#loaderGradient);
-  stroke-width: 4.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-  animation: drawAndErase 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes drawAndErase {
-  0% { stroke-dashoffset: 100; opacity: 1; }
-  40%, 45% { stroke-dashoffset: 0; opacity: 1; }
-  90% { stroke-dashoffset: -100; opacity: 1; }
-  91%, 100% { stroke-dashoffset: -100; opacity: 0; }
-}
-
-.loader-path {
-  fill: none;
-  stroke: url(#loaderGradient);
-  stroke-width: 4.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-  animation: drawLoader 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes drawLoader {
-  0% { stroke-dashoffset: 100; }
-  40%, 60% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: -100; }
 }

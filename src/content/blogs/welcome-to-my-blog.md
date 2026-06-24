@@ -3,11 +3,8 @@ slug: welcome-to-my-blog
 title: Hi I'm Alexi
 date: 'May 29, 2025'
 excerpt: >-
-  Hi there. I’m Alexi, a Computer Science student who enjoys building things,
-  tinkering with code, and sometimes stumbling into bugs I probably wasn’t
-  supposed to find. I’ve been meaning to start a blog for a while now, mostly to
-  have a space where I can share the things I’m learning, building, and
-  occasionally breaking (in good faith, of course).
+  A short hello and a place for projects, bug writeups, college reflections, and
+  things I am learning while building.
 tags:
   - Meta
   - Personal
@@ -16,14 +13,14 @@ author: Alexi Canamo
 readTime: 2 min read
 featured: false
 ---
-Hi there. I’m **Alexi**, a Computer Science student who enjoys building things, tinkering with code, and sometimes stumbling into bugs I probably wasn’t supposed to find. I’ve been meaning to start a blog for a while now, mostly to have a space where I can share the things I’m learning, building, and occasionally breaking (in good faith, of course).
+Hi there. I’m **Alexi**, a Computer Science student who likes building small tools, tinkering with code, and sometimes finding bugs I probably was not supposed to find. I wanted a place for the parts that do not fit neatly into a project card.
 
 Here’s what you can expect to see here:
 
 - Projects I’m working on, whether it’s a tool to help students or just something random I thought would be fun to build
 - Stories from finding bugs or vulnerabilities, and what happens after reporting them
 - Writeups and walkthroughs that I hope can help someone else out there
-- Some personal reflections too — things I’m figuring out as I go through college and tech life
+- Personal reflections from college, org work, and tech life
 
 If you’re curious, here are a few projects I’ve worked on so far:
 

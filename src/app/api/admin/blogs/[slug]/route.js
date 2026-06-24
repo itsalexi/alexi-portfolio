@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
 import fs from "fs";
-import path from "path";
 import matter from "gray-matter";
+import { NextResponse } from "next/server";
+import path from "path";
 import { calculateReadingTime } from "@/lib/reading-time";
 
 export async function GET(request, { params }) {
@@ -59,7 +59,9 @@ export async function POST(request, { params }) {
   const readTime = calculateReadingTime(blogData.content);
 
   // Determine final slug
-  const finalSlug = newSlug || (slug === "new" ? blogData.title.toLowerCase().replace(/\s+/g, "-") : slug);
+  const finalSlug =
+    newSlug ||
+    (slug === "new" ? blogData.title.toLowerCase().replace(/\s+/g, "-") : slug);
 
   // Build markdown file
   const fileContent = matter.stringify(blogData.content, {

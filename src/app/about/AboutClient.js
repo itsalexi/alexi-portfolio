@@ -1,603 +1,441 @@
 "use client";
 
-import { motion } from "motion/react";
-import Image from "next/image";
-import { TextHoverEffect } from "../../components/ui/text-hover-effect";
-import { InfiniteMovingCards } from "../../components/ui/infinite-moving-cards";
-import BackgroundEffects from "../../components/BackgroundEffects";
 import {
-  IconMapPin,
-  IconSchool,
-  IconCake,
-  IconStar,
-  IconCode,
-  IconHeart,
-  IconBrandGithub,
-  IconBrandLinkedin,
-  IconBrandInstagram,
-  IconBrandDiscord,
-  IconMail,
+  IconArrowLeft,
+  IconArrowRight,
+  IconArrowUpRight,
 } from "@tabler/icons-react";
+import { motion, useReducedMotion } from "motion/react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { socials } from "../../config/socials";
+
+const reveal = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 16, filter: "blur(5px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.62, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+const lifeImages = [
+  "/images/about/image (12).webp",
+  "/images/about/image (1).webp",
+  "/images/about/image (2).webp",
+  "/images/about/image (3).webp",
+  "/images/about/image (4).webp",
+  "/images/about/image (5).webp",
+  "/images/about/image (6).webp",
+  "/images/about/image (7).webp",
+  "/images/about/image (8).webp",
+  "/images/about/image (9).webp",
+  "/images/about/image (10).webp",
+  "/images/about/image (11).webp",
+];
+
+const introFacts = [
+  "19 / Manila",
+  "CS @ Ateneo",
+  "Product engineer @ Bytespace",
+];
+
+const story = [
+  "I was 7 when I first saw my aunts and uncles working on a Visual Basic project. They had three radio buttons, and clicking one changed a picture on screen. To me, that felt like magic.",
+  "My family showed me how to make websites with Wix, so I started making pages about games and toys I liked. Soon after, I made a little web browser called IcyFox. It was basically my Firefox copy, but I made seven versions because each one taught me something.",
+  "During the pandemic, The Odin Project helped me understand what I had been copying. I built a calculator, a sketchpad, rock-paper-scissors, and a lot of half-finished things that made the basics stick.",
+  "Now I’m at Ateneo studying Computer Science. The work still starts the same way: a messy enlistment week, a grade what-if, a room full of strangers, a receipt nobody wants to split by hand.",
+];
+
+const principles = [
+  {
+    title: "Code for others",
+    body: [
+      "Ateneo talks a lot about being a person for others. That clicked for me through software. I like when the work is close to someone’s day: a student planning classes, an org checking people in, a team trying to move a little faster.",
+      "The QPI Calculator and Enlistment Helper were small tools, but the thank-yous during finals and enlistment week stuck with me.",
+    ],
+  },
+  {
+    title: "We can just do things",
+    body: [
+      "If something should exist, I’d rather try making a rough first version than keep talking about it forever.",
+      "A lot of attempts are messy or too early, but starting usually teaches me what the next version should be.",
+    ],
+  },
+];
+
+const bionote = [
+  "Alexi Cañamo is a 19-year-old Computer Science student at Ateneo de Manila University and a DOST Merit Scholar.",
+  "He has made student tools used around Ateneo, including the Enlistment Helper and QPI Calculator, and started One Big Match with friends.",
+  "He has also worked with teams at Bytespace, NextPay, Sip & Scale, Ateneo MISA, and TEDxAteneoDeManila.",
+];
+
+const links = [
+  { name: "GitHub", href: socials.github },
+  { name: "LinkedIn", href: socials.linkedin },
+  { name: "Instagram", href: socials.instagram },
+  { name: "Discord", href: socials.discord },
+];
+
+function Section({ eyebrow, title, body, children, className = "" }) {
+  return (
+    <motion.section
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-96px" }}
+      className={`py-10 sm:py-14 ${className}`}
+    >
+      <motion.div variants={item} className="mb-8">
+        <p className="quiet-label mb-3">{eyebrow}</p>
+        <h2 className="max-w-3xl text-balance text-[clamp(2.1rem,4.6vw,4.1rem)] font-semibold leading-[0.9] tracking-[-0.018em] text-[var(--portfolio-ink)]">
+          {title}
+        </h2>
+        {body
+          ? <p className="mt-5 max-w-xl text-pretty text-sm leading-6 text-[var(--portfolio-ink-muted)] sm:text-base">
+              {body}
+            </p>
+          : null}
+      </motion.div>
+      {children}
+    </motion.section>
+  );
+}
+
+function TextLink({ href, children, external = false }) {
+  const externalProps = external
+    ? { target: "_blank", rel: "noopener noreferrer" }
+    : {};
+
+  return (
+    <a
+      href={href}
+      {...externalProps}
+      className="text-link tap-scale group inline-flex min-h-10 items-center gap-2 text-sm"
+    >
+      {children}
+      <IconArrowUpRight
+        className="h-3.5 w-3.5 transition-transform duration-200 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        stroke={1.8}
+      />
+    </a>
+  );
+}
+
+function PhotoCarousel() {
+  const railRef = useRef(null);
+  const dragRef = useRef({ active: false, startX: 0, scrollLeft: 0 });
+  const [isPaused, setIsPaused] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const carouselImages = [0, 1].flatMap((copy) =>
+    lifeImages.map((photo, photoIndex) => ({
+      id: `${copy}-${photo}`,
+      src: photo,
+      altIndex: photoIndex + 1,
+      isDuplicate: copy === 1,
+    })),
+  );
+
+  useEffect(() => {
+    let frame = 0;
+
+    const tick = () => {
+      const rail = railRef.current;
+
+      if (rail && !prefersReducedMotion && !isPaused && !isDragging) {
+        const halfway = rail.scrollWidth / 2;
+        rail.scrollLeft += 0.42;
+
+        if (rail.scrollLeft >= halfway) {
+          rail.scrollLeft -= halfway;
+        }
+      }
+
+      frame = window.requestAnimationFrame(tick);
+    };
+
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [isPaused, isDragging, prefersReducedMotion]);
+
+  const scroll = (direction) => {
+    setIsPaused(true);
+    railRef.current?.scrollBy({
+      left: direction * 340,
+      behavior: "smooth",
+    });
+    window.setTimeout(() => setIsPaused(false), 1200);
+  };
+
+  const startDrag = (event) => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    rail.setPointerCapture(event.pointerId);
+    dragRef.current = {
+      active: true,
+      startX: event.clientX,
+      scrollLeft: rail.scrollLeft,
+    };
+    setIsDragging(true);
+    setIsPaused(true);
+  };
+
+  const moveDrag = (event) => {
+    const rail = railRef.current;
+    if (!rail || !dragRef.current.active) return;
+
+    const delta = event.clientX - dragRef.current.startX;
+    rail.scrollLeft = dragRef.current.scrollLeft - delta;
+  };
+
+  const stopDrag = () => {
+    if (!dragRef.current.active) return;
+
+    dragRef.current.active = false;
+    setIsDragging(false);
+    window.setTimeout(() => setIsPaused(false), 900);
+  };
+
+  return (
+    <motion.div variants={item}>
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <p className="quiet-label">Camera roll</p>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => scroll(-1)}
+            className="tap-scale flex h-10 w-10 items-center justify-center rounded-[12px] bg-white/[0.035] text-[var(--portfolio-ink-muted)] transition-[background-color,color,scale] duration-150 ease-out hover:bg-white/[0.06] hover:text-[var(--portfolio-ink)]"
+            aria-label="Scroll photos left"
+          >
+            <IconArrowLeft className="h-4 w-4" stroke={1.8} />
+          </button>
+          <button
+            type="button"
+            onClick={() => scroll(1)}
+            className="tap-scale flex h-10 w-10 items-center justify-center rounded-[12px] bg-white/[0.035] text-[var(--portfolio-ink-muted)] transition-[background-color,color,scale] duration-150 ease-out hover:bg-white/[0.06] hover:text-[var(--portfolio-ink)]"
+            aria-label="Scroll photos right"
+          >
+            <IconArrowRight className="h-4 w-4" stroke={1.8} />
+          </button>
+        </div>
+      </div>
+
+      <div className="relative">
+        <section
+          ref={railRef}
+          aria-label="Moving camera roll"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => {
+            if (!dragRef.current.active) setIsPaused(false);
+          }}
+          onPointerDown={startDrag}
+          onPointerMove={moveDrag}
+          onPointerUp={stopDrag}
+          onPointerCancel={stopDrag}
+          className={`flex select-none gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+            isDragging ? "cursor-grabbing" : "cursor-grab"
+          }`}
+        >
+          {carouselImages.map((photo) => {
+            return (
+              <figure
+                key={photo.id}
+                aria-hidden={photo.isDuplicate}
+                className="group w-44 shrink-0 sm:w-52"
+              >
+                <div className="relative h-56 overflow-hidden rounded-[16px] bg-white/[0.035] shadow-[0_0_0_1px_rgba(255,255,255,0.08)] sm:h-64">
+                  <Image
+                    src={photo.src}
+                    alt={
+                      photo.isDuplicate
+                        ? ""
+                        : `Alexi camera roll ${photo.altIndex}`
+                    }
+                    fill
+                    draggable={false}
+                    className="object-cover object-center opacity-84 transition-[opacity,scale] duration-300 ease-[var(--ease-out-expo)] group-hover:scale-[1.015] group-hover:opacity-100"
+                    sizes="(max-width: 640px) 176px, 208px"
+                  />
+                </div>
+              </figure>
+            );
+          })}
+        </section>
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[var(--portfolio-bg)] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[var(--portfolio-bg)] to-transparent" />
+      </div>
+    </motion.div>
+  );
+}
 
 export default function AboutClient() {
   return (
-    <>
-      <BackgroundEffects />
-
-      <div className="relative min-h-screen text-white">
-        {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center px-6 pt-24">
-          <div className="max-w-6xl mx-auto w-full">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              {/* Left - Profile */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6 }}
-                className="space-y-6"
-              >
-                <div className="relative aspect-square rounded-2xl overflow-hidden max-w-md mx-auto md:mx-0">
-                  <Image
-                    src="/avatar.webp"
-                    alt="Alexi Roth Luis Cañamo"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-
-                <div className="space-y-3 text-white/60">
-                  <div className="flex items-center gap-2">
-                    <IconCake className="w-4 h-4" />
-                    <span>18 years old</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <IconSchool className="w-4 h-4" />
-                    <span>CS @ ADMU</span>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Right - Intro */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.15 }}
-                className="space-y-6"
-              >
-                <div>
-                  <h1 className="text-5xl md:text-6xl font-bold mb-4">
-                    Hey, I'm Alexi! 👋
-                  </h1>
-                  <div className="h-1 w-20 bg-blue-500 rounded-full mb-6" />
-                </div>
-
-                <div className="space-y-4 text-lg text-white/70 leading-relaxed">
-                  <p>
-                    I'm an 18-year-old developer from Manila who's been obsessed
-                    with code since I was 7. What started as curiosity watching
-                    my aunts and uncles work on projects turned into a
-                    full-blown passion.
-                  </p>
-                  <p>
-                    Now I'm a CS sophomore at Ateneo, building things that
-                    actually help people. My philosophy is simple:{" "}
-                    <span className="text-pink-400 font-semibold">
-                      "code for others"
-                    </span>
-                    .
-                  </p>
-                  <p>
-                    I believe{" "}
-                    <span className="text-yellow-400 font-semibold">
-                      "we can just do things"
-                    </span>{" "}
-                    — no permission needed. Just build, ship, and make an
-                    impact.
-                  </p>
-                  <p className="text-white/60 text-base pt-4">
-                    When I'm not coding: playing games 🎮, going out with my
-                    friends 🌟, and exploring new ideas 💡
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Life in Motion - Infinite Scroll */}
-        <section className="relative py-24 px-6 overflow-hidden">
-          <div className="max-w-7xl mx-auto mb-12 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Life in Motion
-              </h2>
-              <div className="h-1 w-20 bg-blue-500 rounded-full mb-4 mx-auto" />
-              <p className="text-white/60 text-lg">
-                Coffee, code, cameras, and everything in between
-              </p>
-            </motion.div>
-          </div>
-
-          <div className="flex justify-center">
-            <InfiniteMovingCards
-              items={[
-                <div
-                  key="1"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (1).webp"
-                    alt="Life moment 1"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-                <div
-                  key="2"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (2).webp"
-                    alt="Life moment 2"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-                <div
-                  key="3"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (3).webp"
-                    alt="Life moment 3"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-                <div
-                  key="4"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (4).webp"
-                    alt="Life moment 4"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-                <div
-                  key="5"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (5).webp"
-                    alt="Life moment 5"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-                <div
-                  key="6"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (6).webp"
-                    alt="Life moment 6"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-                <div
-                  key="7"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (7).webp"
-                    alt="Life moment 7"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-                <div
-                  key="8"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (8).webp"
-                    alt="Life moment 8"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-                <div
-                  key="9"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (9).webp"
-                    alt="Life moment 9"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-                <div
-                  key="10"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (10).webp"
-                    alt="Life moment 10"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-                <div
-                  key="11"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (11).webp"
-                    alt="Life moment 11"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-                <div
-                  key="12"
-                  className="relative w-[450px] h-[500px] rounded-xl overflow-hidden"
-                >
-                  <Image
-                    src="/images/about/image (12).webp"
-                    alt="Life moment 12"
-                    fill
-                    className="object-cover"
-                  />
-                </div>,
-              ]}
-              direction="left"
-              speed="slow"
+    <main className="mx-auto min-h-screen max-w-[1040px] px-5 pt-24 sm:px-8 sm:pt-28 lg:px-10">
+      <motion.section
+        variants={reveal}
+        initial="hidden"
+        animate="visible"
+        className="grid gap-10 py-10 sm:grid-cols-[17rem_1fr] sm:items-center sm:py-14 md:min-h-[calc(66dvh-4rem)] md:grid-cols-[19rem_1fr]"
+      >
+        <motion.div
+          variants={item}
+          className="order-2 max-w-[17rem] space-y-4 sm:order-none sm:max-w-none"
+        >
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] bg-white/[0.035]">
+            <Image
+              src="/avatar.webp"
+              alt="Portrait of Alexi Canamo"
+              fill
+              priority
+              className="object-cover object-center opacity-88 transition-opacity duration-300 ease-[var(--ease-out-expo)] hover:opacity-100"
+              sizes="(max-width: 640px) 288px, 360px"
             />
           </div>
-        </section>
 
-        {/* My Story */}
-        <section className="relative py-24 px-6">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="mb-12 text-center"
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                How It Started
-              </h2>
-              <div className="h-1 w-20 bg-blue-500 rounded-full mb-4 mx-auto" />
-              <p className="text-white/60 text-lg">The origin story</p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-12 items-start">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="space-y-6 text-lg text-white/70 leading-relaxed"
-              >
-                <p>
-                  I was{" "}
-                  <span className="text-white font-semibold">7 years old</span>{" "}
-                  when I first saw my aunts and uncles working on a{" "}
-                  <span className="text-white font-semibold">Visual Basic</span>{" "}
-                  project. They had these three radio buttons, and when you
-                  clicked one, a picture would change on screen. To
-                  seven-year-old me, it looked like magic.
-                </p>
-
-                <p>
-                  My family showed me how to make websites with{" "}
-                  <span className="text-white font-semibold">Wix</span>, and I
-                  immediately started creating sites about my favorite games and
-                  toys. Soon I was building a web browser called{" "}
-                  <span className="text-white font-semibold">IcyFox</span>{" "}
-                  (yeah, I basically copied Firefox). I made{" "}
-                  <span className="text-white font-semibold">
-                    seven versions
-                  </span>
-                  , each one slightly better.
-                </p>
-
-                <p>
-                  During the pandemic, I discovered{" "}
-                  <span className="text-white font-semibold">
-                    The Odin Project
-                  </span>{" "}
-                  and finally learned to actually understand code instead of
-                  just copying it. Built a calculator, sketchpad,
-                  rock-paper-scissors — each one taught me something new.
-                </p>
-
-                <p>
-                  Now I'm at{" "}
-                  <span className="text-white font-semibold">Ateneo</span> as a{" "}
-                  <span className="text-white font-semibold">
-                    DOST Merit Scholar
-                  </span>
-                  , building tools that thousands of students use — the{" "}
-                  <span className="text-white font-semibold">
-                    Enlistment Helper
-                  </span>
-                  ,{" "}
-                  <span className="text-white font-semibold">
-                    QPI Calculator
-                  </span>
-                  , and{" "}
-                  <span className="text-white font-semibold">
-                    One Big Match
-                  </span>
-                  . Currently serving as{" "}
-                  <span className="text-white font-semibold">AVP at MISA</span>{" "}
-                  while interning at{" "}
-                  <span className="text-white font-semibold">NextPay</span>.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true }}
-                className="relative aspect-square rounded-2xl overflow-hidden border-2 border-white/10"
-              >
-                <Image
-                  src="/images/about/baby.webp"
-                  alt="Baby Alexi"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 to-transparent p-4">
-                  <p className="text-white/80 text-sm">
-                    Where it all started ✨
-                  </p>
-                </div>
-              </motion.div>
-            </div>
+          <div className="grid gap-1.5 text-sm leading-5 text-[var(--portfolio-ink-muted)] sm:max-w-[15rem]">
+            {introFacts.map((fact) => (
+              <p key={fact}>{fact}</p>
+            ))}
           </div>
-        </section>
+        </motion.div>
 
-        {/* Philosophy */}
-        <section className="relative py-24 px-6">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="mb-16 text-center"
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Why I Build Things
-              </h2>
-              <div className="h-1 w-20 bg-blue-500 rounded-full mb-4 mx-auto" />
-              <p className="text-white/60 text-lg">The philosophy</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="space-y-8"
-            >
-              <div>
-                <div className="space-y-6 text-lg text-white/70 leading-relaxed">
-                  <div className="pl-6 border-l-2 border-pink-500">
-                    <p className="text-pink-400 font-semibold text-xl mb-3">
-                      "Coding for others"
-                    </p>
-                    <p>
-                      At Ateneo, they teach the Jesuit idea of being a "person
-                      for others." That's when it clicked. I don't build for my
-                      portfolio or to pad my resume. I build because students
-                      need better tools, communities need better platforms, and
-                      real problems need real solutions.
-                    </p>
-                    <p>
-                      The "thank yous" from students using the QPI calculator
-                      during finals week, seeing the Enlistment Helper actually
-                      help people get into classes they need. These weren't
-                      super big new inventions, but they were small ways to
-                      help, using code. And that became my biggest motivation.
-                    </p>
-                  </div>
-
-                  <div className="pl-6 border-l-2 border-blue-500">
-                    <p className="text-blue-400 font-semibold text-xl mb-3">
-                      "We can just do things"
-                    </p>
-                    <p>
-                      I believe in human agency. See a problem? Build the
-                      solution. Have an idea? Ship it. The gap between "this
-                      should exist" and "I made this exist" is just action. No
-                      gatekeepers, no waiting for permission. We can just do
-                      things.
-                    </p>
-                    <p>
-                      My advice is simple: Start. Even if you feel like you're
-                      starting late, it's never too late if it's something you
-                      really want to try. It's going to be hard. There will be
-                      moments when you're stuck on a problem you can't fix. But
-                      if it's something you're passionate about, it'll be worth
-                      it.
-                    </p>
-                  </div>
-
-                  <p>
-                    Here's what keeps me going: it's not the technical
-                    challenges (though those are fun). It's knowing that
-                    something I built is making someone's day a little easier.
-                    That feeling of making a difference, however small, is way
-                    more satisfying than solving any coding problem.
-                  </p>
-
-                  <p className="text-white font-semibold text-xl pt-4">
-                    I code for others. And that's a pretty powerful reason to
-                    code.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Bionote */}
-        <section className="relative py-24 px-6">
-          <div className="max-w-3xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12"
-            >
-              <div className="space-y-6">
-                <div className="space-y-4 text-white/70 leading-relaxed">
-                  <p>
-                    <span className="text-white font-semibold text-xl">
-                      Alexi Cañamo
-                    </span>{" "}
-                    discovered a love for coding at 7, watching his aunts and
-                    uncles work on a Visual Basic project.
-                  </p>
-                  <p>
-                    From building seven versions of a browser called IcyFox to
-                    surviving tutorial hell during the pandemic with The Odin
-                    Project, Alexi learned that the best way to understand code
-                    is to build things that actually help people.
-                  </p>
-                  <p>
-                    Now a 2nd-year CS student at Ateneo and DOST Merit Scholar,
-                    he's built tools used by thousands — the{" "}
-                    <span className="text-white font-semibold">
-                      Ateneo Enlistment Helper
-                    </span>{" "}
-                    and{" "}
-                    <span className="text-white font-semibold">
-                      QPI Calculator
-                    </span>
-                    . He founded{" "}
-                    <span className="text-white font-semibold">
-                      One Big Match
-                    </span>
-                    , a matchmaking app for seamless event icebreakers, because
-                    networking shouldn't be awkward.
-                  </p>
-                  <p>
-                    As AVP for Skills and Development at MISA and a Software
-                    Engineering Intern at NextPay (a Filipino fintech startup),
-                    Alexi's mission is simple: build things that solve real
-                    problems, ship fast, and make an impact.
-                  </p>
-                </div>
-
-                <div className="pt-6 border-t border-white/10">
-                  <p className="text-white/60 text-sm mb-4">Connect with me</p>
-                  <div className="grid grid-cols-2 sm:flex gap-3">
-                    <a
-                      href={socials.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
-                    >
-                      <IconBrandGithub className="w-5 h-5 flex-shrink-0" />
-                      <span className="text-sm whitespace-nowrap">GitHub</span>
-                    </a>
-                    <a
-                      href={socials.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
-                    >
-                      <IconBrandLinkedin className="w-5 h-5 flex-shrink-0" />
-                      <span className="text-sm whitespace-nowrap">
-                        LinkedIn
-                      </span>
-                    </a>
-                    <a
-                      href={socials.instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
-                    >
-                      <IconBrandInstagram className="w-5 h-5 flex-shrink-0" />
-                      <span className="text-sm whitespace-nowrap">
-                        Instagram
-                      </span>
-                    </a>
-                    <a
-                      href={socials.discord}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
-                    >
-                      <IconBrandDiscord className="w-5 h-5 flex-shrink-0" />
-                      <span className="text-sm whitespace-nowrap">
-                        Discord
-                      </span>
-                    </a>
-                    <a
-                      href={`mailto:${socials.email}`}
-                      className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all duration-300 text-white/70 hover:text-white"
-                    >
-                      <IconMail className="w-5 h-5 flex-shrink-0" />
-                      <span className="text-sm whitespace-nowrap">Email</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Big CTA with TextHoverEffect */}
-        <section className="relative py-8 md:py-32 px-6 overflow-visible">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center relative z-10"
+        <div className="order-1 sm:order-none">
+          <motion.p variants={item} className="quiet-label mb-4">
+            About
+          </motion.p>
+          <motion.h1
+            variants={item}
+            className="max-w-4xl text-balance text-[clamp(3.25rem,7.2vw,6.4rem)] font-semibold leading-[0.86] tracking-[-0.018em] text-[var(--portfolio-ink)]"
           >
-            <div className="h-64 w-full flex items-center justify-center mb-8">
-              <div className="w-full">
-                <TextHoverEffect text="ALEXI" />
-              </div>
-            </div>
-
-            <p className="text-white/60 text-xl mb-8 max-w-2xl mx-auto">
-              Got an idea? Want to collaborate on something cool?
-              <br />
-              <span className="text-white">Let's make it happen.</span>
-            </p>
-
-            <a
-              href={`mailto:${socials.email}`}
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-black bg-white rounded-lg hover:bg-white/90 transition-all duration-300 hover:scale-105"
-            >
-              Get in Touch
-            </a>
+            Hey, I’m Alexi.
+          </motion.h1>
+          <motion.p
+            variants={item}
+            className="mt-7 max-w-2xl text-pretty text-[clamp(1.15rem,2vw,1.6rem)] font-medium leading-[1.2] tracking-[-0.018em] text-[var(--portfolio-ink)]"
+          >
+            I’m a 19-year-old founder and product engineer in Manila. I like
+            finding the small moments where people work around bad tools, then
+            building something better with friends.
+          </motion.p>
+          <motion.div variants={item} className="mt-8 flex flex-wrap gap-5">
+            <TextLink href="/projects">See the work</TextLink>
+            <TextLink href={`mailto:${socials.email}`}>Send a note</TextLink>
           </motion.div>
-        </section>
-      </div>
-    </>
+        </div>
+      </motion.section>
+
+      <Section
+        eyebrow="Life"
+        title="Coffee, code, cameras, friends."
+        body="Small pieces outside the projects."
+      >
+        <PhotoCarousel />
+      </Section>
+
+      <Section
+        eyebrow="Origin"
+        title="The first hook was a picture changing on screen."
+      >
+        <motion.div
+          variants={reveal}
+          className="grid gap-8 md:grid-cols-[1fr_17rem]"
+        >
+          <div className="grid gap-5">
+            {story.map((paragraph) => (
+              <motion.p
+                key={paragraph}
+                variants={item}
+                className="text-base leading-7 text-[var(--portfolio-ink-muted)] sm:text-lg sm:leading-8"
+              >
+                {paragraph}
+              </motion.p>
+            ))}
+          </div>
+
+          <motion.div
+            variants={item}
+            className="relative aspect-[4/5] overflow-hidden rounded-[18px] bg-white/[0.035] md:mt-1"
+          >
+            <Image
+              src="/images/about/baby.webp"
+              alt="Alexi as a child"
+              fill
+              className="object-cover object-center opacity-84"
+              sizes="(max-width: 768px) 100vw, 272px"
+            />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent" />
+            <p className="quiet-label absolute bottom-4 left-4 text-white/70">
+              Where it started
+            </p>
+          </motion.div>
+        </motion.div>
+      </Section>
+
+      <Section eyebrow="Why" title="Two ideas I keep coming back to.">
+        <motion.div variants={reveal} className="grid gap-8 md:grid-cols-2">
+          {principles.map((principle) => (
+            <motion.div
+              key={principle.title}
+              variants={item}
+              className="grid gap-4"
+            >
+              <h3 className="text-2xl font-semibold leading-none tracking-[-0.018em] text-[var(--portfolio-ink)]">
+                {principle.title}
+              </h3>
+              <div className="grid gap-4">
+                {principle.body.map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className="max-w-2xl text-base leading-7 text-[var(--portfolio-ink-muted)]"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </Section>
+
+      <Section eyebrow="Bio" title="The short version.">
+        <motion.div
+          variants={item}
+          className="grid gap-7 py-2 md:grid-cols-[1fr_0.7fr]"
+        >
+          <div className="grid gap-4">
+            {bionote.map((paragraph) => (
+              <p
+                key={paragraph}
+                className="max-w-2xl text-base leading-7 text-[var(--portfolio-ink-muted)]"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-5 md:items-end md:justify-between md:text-right">
+            <TextLink href={`mailto:${socials.email}`}>Send a note</TextLink>
+            <nav
+              aria-label="Social links"
+              className="flex flex-wrap gap-x-4 gap-y-1 md:justify-end"
+            >
+              {links.map((link) => (
+                <TextLink key={link.name} href={link.href} external>
+                  {link.name}
+                </TextLink>
+              ))}
+            </nav>
+          </div>
+        </motion.div>
+      </Section>
+    </main>
   );
 }

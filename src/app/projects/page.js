@@ -1,19 +1,30 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
+import EditorialHeader from "@/components/EditorialHeader";
 import ProjectsClient from "./ProjectsClient";
 
 export const metadata = {
   title: "Projects",
   description:
-    "Portfolio of software projects by Alexi Canamo including Enlistment Helper, QPI Calculator, One Big Match, and more tools used by thousands of Ateneo students.",
+    "Projects by Alexi Canamo, including Hati, Axie UI, Enlistment Helper, QPI Calculator, One Big Match, and event tools.",
   openGraph: {
     title: "Projects - Alexi Canamo",
     description:
-      "Browse my portfolio of web applications and tools including Enlistment Helper, QPI Calculator, and One Big Match - helping thousands of students.",
+      "Campus tools, small apps, event sites, and experiments by Alexi Canamo.",
     images: ["/og-image.png"],
   },
 };
+
+function ProjectsHeader() {
+  return (
+    <EditorialHeader
+      eyebrow="Projects"
+      title="Things I’ve built."
+      body="Campus tools, small apps, event sites, and experiments. Search by name or filter by stack."
+    />
+  );
+}
 
 // This is a server component - statically generated at build time
 export default function ProjectsPage() {
@@ -22,16 +33,13 @@ export default function ProjectsPage() {
   // Handle case where projects directory doesn't exist (empty state)
   if (!fs.existsSync(projectsDirectory)) {
     return (
-      <main className="min-h-screen bg-transparent text-white pt-24">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="mb-12 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Projects</h1>
-            <p className="text-white/60 text-lg">
-              Building solutions that solve real problems and create value
+      <main className="min-h-screen pt-20 sm:pt-28">
+        <div className="mx-auto max-w-[980px] px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
+          <ProjectsHeader />
+          <div className="border-y border-white/[0.08] py-12">
+            <p className="text-sm text-[var(--portfolio-ink-muted)]">
+              No projects yet.
             </p>
-          </div>
-          <div className="bg-white/5 rounded-lg p-12 text-center border border-white/10">
-            <p className="text-white/60">No projects yet. Check back soon!</p>
           </div>
         </div>
       </main>
@@ -63,23 +71,17 @@ export default function ProjectsPage() {
     });
 
   return (
-    <main className="min-h-screen bg-transparent text-white pt-24">
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Projects</h1>
-          <p className="text-white/60 text-lg">
-            Building solutions that solve real problems and create value
-          </p>
-        </div>
+    <main className="min-h-screen pt-20 sm:pt-28">
+      <div className="mx-auto max-w-[980px] px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
+        <ProjectsHeader />
 
-        {projects.length > 0 ? (
-          <ProjectsClient projects={projects} />
-        ) : (
-          <div className="bg-white/5 rounded-lg p-12 text-center border border-white/10">
-            <p className="text-white/60">No projects yet. Check back soon!</p>
-          </div>
-        )}
+        {projects.length > 0
+          ? <ProjectsClient projects={projects} />
+          : <div className="border-y border-white/[0.08] py-12">
+              <p className="text-sm text-[var(--portfolio-ink-muted)]">
+                No projects yet.
+              </p>
+            </div>}
       </div>
     </main>
   );

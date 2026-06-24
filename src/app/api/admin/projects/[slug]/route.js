@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
 import fs from "fs";
-import path from "path";
 import matter from "gray-matter";
+import { NextResponse } from "next/server";
+import path from "path";
 
 export async function GET(request, { params }) {
   // Only allow in development

@@ -1,6 +1,8 @@
 "use client";
 
+import { IconExternalLink } from "@tabler/icons-react";
 import ReactMarkdown from "react-markdown";
+import EditorialHeader from "@/components/EditorialHeader";
 import Carousel from "../../../components/ui/carousel";
 
 export default function TalkContent({ talk }) {
@@ -11,112 +13,73 @@ export default function TalkContent({ talk }) {
     })) || [];
 
   return (
-    <div className="min-h-screen bg-transparent">
-      <div className="max-w-6xl mx-auto px-6 pt-24 pb-12">
-        {/* Carousel */}
-        {slideData.length > 0 && (
-          <div className="relative w-full mb-12 overflow-hidden min-h-[60vmin]">
-            <Carousel slides={slideData} />
-          </div>
-        )}
+    <main className="min-h-screen pt-20 sm:pt-28">
+      <div className="mx-auto max-w-[980px] px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
+        <EditorialHeader
+          eyebrow="Talk"
+          title={talk.title}
+          body={talk.shortDescription}
+          meta={[talk.event, talk.date, ...(talk.topics || [])]}
+        />
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-3">
-            {talk.title}
-          </h1>
-          <p className="text-white/60 text-sm md:text-base">
-            {talk.event} • {talk.date}
-          </p>
-        </div>
+        {slideData.length > 0
+          ? <Carousel className="mb-12" fit="contain" slides={slideData} />
+          : null}
 
-        {/* Topics */}
-        {talk.topics && talk.topics.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-8">
-            {talk.topics.map((topic, index) => (
-              <span
-                key={index}
-                className="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20"
-              >
-                {topic}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Short Description */}
-        {talk.shortDescription && (
-          <div className="mb-8">
-            <p className="text-white/80 text-lg leading-relaxed">
-              {talk.shortDescription}
-            </p>
-          </div>
-        )}
-
-        {/* Full Description (Markdown) */}
-        <article className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-headings:font-bold prose-h2:text-2xl prose-h2:mb-6 prose-h2:mt-12 prose-h2:pb-2 prose-h2:border-b prose-h2:border-white/10 prose-p:text-white/80 prose-p:leading-relaxed prose-p:text-base prose-ul:space-y-3 prose-li:text-white/80 prose-li:text-base prose-strong:text-white prose-strong:font-semibold prose-code:text-blue-400 prose-code:bg-blue-500/10 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:border prose-img:border-white/10 prose-img:shadow-2xl mb-12">
+        <article className="mx-auto max-w-[720px]">
           <ReactMarkdown
             components={{
               h2: ({ node, ...props }) => (
                 <h2
-                  className="text-2xl font-bold text-white mb-6 mt-12 pb-2 border-b border-white/10"
+                  className="mb-5 mt-12 border-t border-white/[0.08] pt-6 text-3xl font-semibold tracking-[-0.018em] text-[var(--portfolio-ink)]"
                   {...props}
                 />
               ),
               p: ({ node, ...props }) => (
                 <p
-                  className="text-white/80 leading-relaxed text-base mb-4"
+                  className="mb-5 text-base leading-8 text-[var(--portfolio-ink-muted)]"
                   {...props}
                 />
               ),
               ul: ({ node, ...props }) => (
-                <ul className="space-y-3 mb-6" {...props} />
+                <ul className="mb-7 space-y-3" {...props} />
               ),
               li: ({ node, ...props }) => (
                 <li
-                  className="text-white/80 text-base flex items-start gap-2"
+                  className="grid grid-cols-[0.75rem_1fr] gap-2 text-base leading-8 text-[var(--portfolio-ink-muted)]"
                   {...props}
                 >
-                  <span className="text-blue-400 mt-1">•</span>
+                  <span className="mt-3.5 h-1 w-1 rounded-[2px] bg-[var(--portfolio-ink-faint)]" />
                   <span>{props.children}</span>
                 </li>
               ),
               strong: ({ node, ...props }) => (
-                <strong className="text-white font-semibold" {...props} />
+                <strong
+                  className="font-medium text-[var(--portfolio-ink)]"
+                  {...props}
+                />
               ),
+              a: ({ node, ...props }) => <a className="text-link" {...props} />,
             }}
           >
             {talk.fullDescription}
           </ReactMarkdown>
         </article>
 
-        {/* Link Button */}
-        {talk.link && (
-          <div>
-            <a
-              href={talk.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold text-sm transition-all hover:scale-105"
-            >
-              View Details
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+        {talk.link
+          ? <div className="mx-auto max-w-[720px]">
+              <a
+                href={talk.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-link tap-scale mt-10 inline-flex min-h-10 items-center gap-1.5 text-sm"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-            </a>
-          </div>
-        )}
+                View details
+                <IconExternalLink className="h-4 w-4" stroke={1.8} />
+              </a>
+            </div>
+          : null}
       </div>
-    </div>
+    </main>
   );
 }

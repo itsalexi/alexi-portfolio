@@ -2,10 +2,8 @@
 slug: portfolio-website
 title: Portfolio Website
 tagline: >-
-  The very site you're on now. This is the third major iteration of my
-  portfolio, designed to find the perfect balance between the creative vibe of
-  my first site and the clean, structured feel of my second. It's a minimal and
-  modern showcase for my work.
+  The current version of this site: quieter, more editorial, and built to hold
+  projects, writing, talks, and the parts between them.
 techStack:
   - nextjs
   - react
@@ -19,7 +17,7 @@ order: 6
 
 #### **The Gist**
 
-This site has been through a few major phases. Looking back at the old versions is a cool way to see how my style and skills have changed over time. Each one was a snapshot of where I was in my journey as a developer.
+This site has been through a few major phases. Looking back at the old versions is a good way to see how my taste has changed over time.
 
 #### **Version 1.0: The Lofi Era (3-4 Years Ago)**
 
@@ -45,4 +43,4 @@ That brings us here. This current site is my effort to blend the unique personal
 
 I focused on a minimal design with strong typography and a refined color palette to let the work speak for itself. It’s direct, confident, and feels like the right balance between expressing my style and showcasing my skills.
 
-Each iteration was a learning process. It's been a journey of figuring out not just how to build things, but how to best tell my own story online.
+Each version taught me something about the work and how I want to present it online.

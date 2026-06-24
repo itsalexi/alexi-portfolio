@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import fs from "fs";
+import { NextResponse } from "next/server";
 import path from "path";
 import sharp from "sharp";
 
@@ -28,10 +28,13 @@ export async function POST(request) {
     // Generate filename
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    
+
     const timestamp = Date.now();
-    const baseName = file.name.replace(/\.[^/.]+$/, "").replace(/\s+/g, "-").toLowerCase();
-    const filename = isFeatured 
+    const baseName = file.name
+      .replace(/\.[^/.]+$/, "")
+      .replace(/\s+/g, "-")
+      .toLowerCase();
+    const filename = isFeatured
       ? `${project}-featured.webp`
       : `${project}-${timestamp}.webp`;
     const filepath = path.join(uploadDir, filename);
@@ -39,14 +42,14 @@ export async function POST(request) {
     // Convert to WebP and optimize
     await sharp(buffer)
       .webp({ quality: 85 })
-      .resize(1920, 1080, { 
-        fit: 'inside',
-        withoutEnlargement: true 
+      .resize(1920, 1080, {
+        fit: "inside",
+        withoutEnlargement: true,
       })
       .toFile(filepath);
 
     // Return URL with cache-busting timestamp for featured images
-    const url = isFeatured 
+    const url = isFeatured
       ? `/images/projects/${filename}?v=${timestamp}`
       : `/images/projects/${filename}`;
     return NextResponse.json({ url, filename });

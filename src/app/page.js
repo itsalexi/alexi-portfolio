@@ -1,18 +1,18 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
-import HomeClient from "./HomeClient";
-import { calculateReadingTime } from "@/lib/reading-time";
 import { loadHackathonsForHome } from "@/lib/hackathons";
+import { calculateReadingTime } from "@/lib/reading-time";
+import HomeClient from "./HomeClient";
 
 export const metadata = {
   title: "Home",
   description:
-    "18-year-old software developer from Manila, Philippines. Computer Science sophomore at Ateneo de Manila University and DOST Merit Scholar. Building tools like Enlistment Helper, QPI Calculator, and One Big Match that help thousands of students.",
+    "Alexi Canamo is a 19-year-old CS student in Manila making student tools, small apps, and websites with friends.",
   openGraph: {
     title: "Alexi Canamo",
     description:
-      "Building tools that help thousands of students. CS student at Ateneo, DOST Scholar, AVP at MISA, intern at NextPay.",
+      "CS student at Ateneo making student tools, small apps, and websites with friends.",
     images: ["/og-image.png"],
   },
 };
@@ -53,7 +53,6 @@ function loadProjects() {
       const { data: frontmatter } = matter(fileContents);
       return frontmatter;
     })
-    .filter((project) => project.featured === true)
     .sort((a, b) => {
       // Sort by order field (lower numbers first), then by title if order is not set
       const orderA = a.order ?? 999;

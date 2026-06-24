@@ -1,18 +1,17 @@
 "use client";
-import { IconArrowNarrowRight } from "@tabler/icons-react";
-import { useState, useId, useEffect } from "react";
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
-const CarouselControl = ({ type, title, handleClick }) => {
+const CarouselControl = ({ title, handleClick, children }) => {
   return (
     <button
       type="button"
-      className={`w-10 h-10 flex items-center mx-2 justify-center bg-neutral-200 dark:bg-neutral-800 border-3 border-transparent rounded-full focus:border-[#6D64F7] focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200 ${
-        type === "previous" ? "rotate-180" : ""
-      }`}
+      className="tap-scale flex h-9 w-9 items-center justify-center rounded-[10px] bg-black/35 text-white/72 shadow-[0_0_0_1px_rgba(255,255,255,0.12)] backdrop-blur-md transition-[background-color,color,scale] duration-150 ease-out hover:bg-white/[0.14] hover:text-white"
       title={title}
       onClick={handleClick}
     >
-      <IconArrowNarrowRight className="text-neutral-600 dark:text-neutral-200" />
+      {children}
     </button>
   );
 };
@@ -21,14 +20,17 @@ const CarouselControl = ({ type, title, handleClick }) => {
  * Track width = n × parent width; each slide = 1/n of track;
  * translate by (100/n)% of track per index so exactly one slide fits the viewport.
  */
-export default function Carousel({ slides }) {
+export default function Carousel({ slides, fit = "cover", className = "" }) {
   const [current, setCurrent] = useState(0);
-  const id = useId();
   const n = slides?.length || 0;
 
   const slidesKey = slides.map((s) => s.src).join("|");
 
   useEffect(() => {
+    if (slidesKey.length === 0) {
+      setCurrent(0);
+      return;
+    }
     setCurrent(0);
   }, [slidesKey]);
 
@@ -44,57 +46,83 @@ export default function Carousel({ slides }) {
 
   if (!n) return null;
 
-  const slidePct = 100 / n;
-
   return (
-    <>
-      <div
-        className="relative mx-auto w-full max-w-[90vw] overflow-hidden md:max-w-5xl min-h-[50vmin] md:min-h-[55vmin]"
-        aria-labelledby={`carousel-heading-${id}`}
-      >
+    <figure
+      className={cn(
+        "relative overflow-hidden rounded-[18px] bg-white/[0.025] shadow-[var(--shadow-border)]",
+        className,
+      )}
+    >
+      <div className="relative aspect-[16/10] w-full overflow-hidden">
         <div
-          className="flex h-[50vmin] w-full transition-transform duration-1000 ease-in-out md:h-[55vmin]"
+          className="flex h-full w-full transition-transform duration-700 ease-[var(--ease-out-expo)]"
           style={{
             width: `${n * 100}%`,
-            transform: `translateX(-${current * slidePct}%)`,
+            transform: `translateX(-${(current * 100) / n}%)`,
           }}
         >
           {slides.map((slide, index) => (
             <div
               key={`${slide.src}-${index}`}
-              role="button"
-              tabIndex={0}
-              onClick={() => index !== current && setCurrent(index)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ")
-                  index !== current && setCurrent(index);
-              }}
-              className="h-full shrink-0 cursor-pointer overflow-hidden rounded-[1%] bg-[#1D1F2F] px-[3vmin] box-border outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60"
-              style={{ width: `${slidePct}%` }}
+              className="relative h-full shrink-0 overflow-hidden bg-white/[0.025]"
+              style={{ width: `${100 / n}%` }}
             >
               <img
                 src={slide.src}
                 alt={slide.title}
-                className="h-full w-full rounded-[1%] object-cover object-center"
+                className="h-full w-full object-center"
+                style={{ objectFit: fit }}
                 loading={index === 0 ? "eager" : "lazy"}
                 decoding="async"
               />
             </div>
           ))}
         </div>
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/70 via-black/18 to-transparent px-4 pb-4 pt-16">
+          <figcaption className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-white/64">
+            {String(current + 1).padStart(2, "0")} /{" "}
+            {String(n).padStart(2, "0")}
+          </figcaption>
+
+          {n > 1 ? (
+            <div className="pointer-events-auto flex items-center gap-3">
+              <div className="hidden items-center gap-1.5 sm:flex">
+                {slides.map((slide, index) => (
+                  <button
+                    key={`${slide.src}-dot`}
+                    type="button"
+                    aria-label={`Show slide ${index + 1}`}
+                    aria-current={index === current}
+                    onClick={() => setCurrent(index)}
+                    className={cn(
+                      "tap-scale h-1.5 rounded-full transition-[background-color,width,scale] duration-200 ease-[var(--ease-out-expo)]",
+                      index === current
+                        ? "w-6 bg-white/78"
+                        : "w-1.5 bg-white/32 hover:bg-white/56",
+                    )}
+                  />
+                ))}
+              </div>
+
+              <div className="flex gap-2">
+                <CarouselControl
+                  title="Go to previous slide"
+                  handleClick={handlePreviousClick}
+                >
+                  <IconArrowLeft className="h-4 w-4" stroke={1.8} />
+                </CarouselControl>
+                <CarouselControl
+                  title="Go to next slide"
+                  handleClick={handleNextClick}
+                >
+                  <IconArrowRight className="h-4 w-4" stroke={1.8} />
+                </CarouselControl>
+              </div>
+            </div>
+          ) : null}
+        </div>
       </div>
-      <div className="flex justify-center w-full mt-6 relative z-50">
-        <CarouselControl
-          type="previous"
-          title="Go to previous slide"
-          handleClick={handlePreviousClick}
-        />
-        <CarouselControl
-          type="next"
-          title="Go to next slide"
-          handleClick={handleNextClick}
-        />
-      </div>
-    </>
+    </figure>
   );
 }

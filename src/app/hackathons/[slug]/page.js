@@ -1,7 +1,7 @@
-import { use } from "react";
-import HackathonContent from "./HackathonContent";
-import { getHackathonBySlug, getHackathonsDirectory } from "@/lib/hackathons";
 import fs from "fs";
+import { use } from "react";
+import { getHackathonBySlug, getHackathonsDirectory } from "@/lib/hackathons";
+import HackathonContent from "./HackathonContent";
 
 export async function generateStaticParams() {
   const dir = getHackathonsDirectory();
@@ -23,8 +23,7 @@ export async function generateMetadata({ params }) {
   const description =
     hackathon.highlights?.[0] ||
     `${hackathon.title} — ${hackathon.event} (${hackathon.result})`;
-  const ogImage =
-    hackathon.images?.[0] || hackathon.image || "/og-image.png";
+  const ogImage = hackathon.images?.[0] || hackathon.image || "/og-image.png";
 
   return {
     title: `Hackathon | ${hackathon.title}`,

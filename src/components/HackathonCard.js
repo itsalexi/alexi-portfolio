@@ -1,16 +1,11 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { IconArrowUpRight } from "@tabler/icons-react";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "motion/react";
-import {
-  IconChevronLeft,
-  IconChevronRight,
-  IconArrowRight,
-  IconTrophy,
-} from "@tabler/icons-react";
-import { GlowingEffect } from "./ui/glowing-effect";
+import { useMemo } from "react";
+import CompanyLogo from "./CompanyLogo";
 
 function cleanSrc(url) {
   if (!url || typeof url !== "string") return "";
@@ -18,13 +13,11 @@ function cleanSrc(url) {
 }
 
 export default function HackathonCard({
-  slug,
   name,
   date,
   event,
   result,
   organizer,
-  details,
   image,
   images,
   imageAlt,
@@ -38,176 +31,63 @@ export default function HackathonCard({
     return [];
   }, [images, image]);
 
-  const [idx, setIdx] = useState(0);
-  const [imageFailed, setImageFailed] = useState(false);
+  const currentSrc = gallery[0] || "";
+  const showOrganizerLogo = organizer === "StartupQC";
 
-  useEffect(() => {
-    setIdx(0);
-    setImageFailed(false);
-  }, [gallery.join("|")]);
+  const article = (
+    <motion.article
+      className="tap-scale group grid gap-5 border-t border-white/[0.08] py-5 transition-[scale] duration-150 ease-out md:grid-cols-[13rem_1fr] md:items-center"
+      whileHover={{ x: 3 }}
+      transition={{ type: "spring", duration: 0.32, bounce: 0 }}
+    >
+      <div className="relative min-h-[11rem] overflow-hidden rounded-[16px] bg-white/[0.035] md:min-h-[9rem]">
+        {currentSrc
+          ? <Image
+              src={currentSrc}
+              alt={imageAlt || name}
+              fill
+              className="object-cover object-center opacity-78 transition-[scale,opacity] duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.035] group-hover:opacity-95"
+              sizes="(max-width: 768px) 100vw, 208px"
+              unoptimized={currentSrc.startsWith("/images/hackathons/")}
+            />
+          : <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-[0.16em] text-[var(--portfolio-ink-faint)]">
+              Build
+            </div>}
+      </div>
 
-  const hasGallery = gallery.length > 0;
-  const hasImage = hasGallery && !imageFailed;
-  const currentSrc = gallery[idx] || "";
-  const showControls = gallery.length > 1;
+      <div className="min-w-0">
+        <div className="mb-4 flex items-center gap-3 font-mono text-[0.68rem] uppercase tracking-[0.13em] text-[var(--portfolio-ink-faint)]">
+          {showOrganizerLogo
+            ? <CompanyLogo company={organizer} size="xs" aria-hidden={false} />
+            : null}
+          <span>{date}</span>
+          {organizer ? <span>{organizer}</span> : null}
+        </div>
 
-  const goPrev = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIdx((i) => (i - 1 + gallery.length) % gallery.length);
-  };
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="max-w-3xl text-[clamp(1.9rem,4.2vw,3.8rem)] font-semibold leading-[0.94] tracking-[-0.018em] text-[var(--portfolio-ink)]">
+            {name}
+          </h3>
+          {href
+            ? <IconArrowUpRight
+                className="mt-1 h-5 w-5 shrink-0 text-[var(--portfolio-ink-faint)] transition-[color,transform] duration-200 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--portfolio-ink)]"
+                stroke={1.8}
+              />
+            : null}
+        </div>
 
-  const goNext = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIdx((i) => (i + 1) % gallery.length);
-  };
+        <p className="mt-3 text-sm text-[var(--portfolio-ink-muted)]">
+          {[result, event].filter(Boolean).join(" / ")}
+        </p>
+      </div>
+    </motion.article>
+  );
 
-  const altForSlide = (i) =>
-    gallery.length > 1
-      ? `${imageAlt || name || "Hackathon"} — photo ${i + 1}`
-      : imageAlt || `${name || "Hackathon"} — ${event || ""}`;
+  if (!href) return article;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45 }}
-      viewport={{ once: true, margin: "-40px" }}
-      className="group relative rounded-xl"
-    >
-      <GlowingEffect
-        disabled={false}
-        proximity={80}
-        spread={50}
-        borderWidth={2}
-        glow={true}
-        inactiveZone={0.01}
-      />
-      <div className="relative z-10 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03]">
-        <div className="grid gap-0 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:items-stretch">
-          <div className="relative aspect-[4/3] w-full bg-white/[0.04] md:aspect-auto md:min-h-[220px]">
-            {hasImage ? (
-              <div className="relative h-full min-h-[200px] w-full">
-                <Image
-                  key={`${slug || name || "card"}-${idx}-${currentSrc}`}
-                  src={currentSrc}
-                  alt={altForSlide(idx)}
-                  fill
-                  className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority={idx === 0}
-                  unoptimized={currentSrc.startsWith("/images/hackathons/")}
-                  onError={() => setImageFailed(true)}
-                />
-
-                {showControls && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={goPrev}
-                      className="absolute left-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
-                      aria-label="Previous photo"
-                    >
-                      <IconChevronLeft className="h-5 w-5" stroke={2} />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={goNext}
-                      className="absolute right-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
-                      aria-label="Next photo"
-                    >
-                      <IconChevronRight className="h-5 w-5" stroke={2} />
-                    </button>
-                    <div
-                      className="absolute bottom-3 left-0 right-0 z-20 flex justify-center gap-1.5 px-4"
-                      role="tablist"
-                      aria-label="Photo selection"
-                    >
-                      {gallery.map((_, i) => (
-                        <button
-                          key={i}
-                          type="button"
-                          role="tab"
-                          aria-selected={i === idx}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setIdx(i);
-                          }}
-                          className={`h-1.5 rounded-full transition-all ${
-                            i === idx
-                              ? "w-6 bg-white"
-                              : "w-1.5 bg-white/40 hover:bg-white/60"
-                          }`}
-                          aria-label={`Show photo ${i + 1}`}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
-            ) : (
-              <div className="flex h-full min-h-[200px] flex-col items-center justify-center gap-3 p-8 text-white/35">
-                <IconTrophy className="h-14 w-14" stroke={1.25} />
-                <p className="text-center text-xs font-medium uppercase tracking-wider">
-                  {imageFailed ? "Photo failed to load" : "Add photo"}
-                  <br />
-                  <span className="text-white/25 normal-case tracking-normal">
-                    {currentSrc ||
-                      (gallery.length
-                        ? "Check image paths"
-                        : "Add `images` in hackathon markdown frontmatter")}
-                  </span>
-                </p>
-              </div>
-            )}
-          </div>
-
-          <div className="flex flex-col justify-center p-5 md:p-6">
-            <div className="mb-3 flex flex-wrap items-center gap-2">
-              <span className="rounded bg-amber-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-400">
-                Hackathon
-              </span>
-              <span className="text-white/40 text-xs">{date}</span>
-            </div>
-            <h3 className="text-lg font-bold tracking-tight text-white md:text-xl">
-              {name}
-            </h3>
-            <p className="mt-1.5 text-sm leading-snug text-white/55 text-pretty">
-              {event}
-            </p>
-            <div className="mt-3 space-y-0.5">
-              <p className="text-sm font-semibold text-blue-400">{result}</p>
-              {organizer ? (
-                <p className="text-xs text-white/45">{organizer}</p>
-              ) : null}
-            </div>
-            {details?.length > 0 && (
-              <ul className="mt-4 space-y-2.5 border-t border-white/[0.08] pt-4">
-                {details.map((line, i) => (
-                  <li
-                    key={i}
-                    className="flex gap-2.5 text-xs leading-relaxed text-white/65 md:text-sm"
-                  >
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-blue-400/50" />
-                    <span className="text-pretty">{line}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {href ? (
-              <Link
-                href={href}
-                className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
-              >
-                View write-up
-                <IconArrowRight className="h-4 w-4" stroke={2} />
-              </Link>
-            ) : null}
-          </div>
-        </div>
-      </div>
-    </motion.div>
+    <Link href={href} className="block">
+      {article}
+    </Link>
   );
 }

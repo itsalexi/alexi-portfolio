@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 
 export default function SkillModal({ isOpen, onClose, skill }) {
   if (!skill) return null;
@@ -36,9 +36,12 @@ export default function SkillModal({ isOpen, onClose, skill }) {
               </button>
 
               {/* Icon */}
-              <div className="flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br mb-6" style={{
-                backgroundImage: skill.gradient
-              }}>
+              <div
+                className="flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br mb-6"
+                style={{
+                  backgroundImage: skill.gradient,
+                }}
+              >
                 {skill.icon}
               </div>
 
@@ -48,18 +51,21 @@ export default function SkillModal({ isOpen, onClose, skill }) {
               </h3>
 
               {/* Short description */}
-              <p className="text-white/60 text-sm mb-6">
-                {skill.description}
-              </p>
+              <p className="text-white/60 text-sm mb-6">{skill.description}</p>
 
               {/* Detailed content */}
               <div className="space-y-6">
                 {skill.details.map((section, idx) => (
                   <div key={idx}>
-                    <h4 className="text-white font-semibold mb-3">{section.title}</h4>
+                    <h4 className="text-white font-semibold mb-3">
+                      {section.title}
+                    </h4>
                     <ul className="space-y-2">
                       {section.items.map((item, itemIdx) => (
-                        <li key={itemIdx} className="text-white/70 text-sm flex items-start gap-2">
+                        <li
+                          key={itemIdx}
+                          className="text-white/70 text-sm flex items-start gap-2"
+                        >
                           <span className="text-blue-400 mt-1">•</span>
                           <span>{item}</span>
                         </li>

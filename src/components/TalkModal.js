@@ -1,9 +1,18 @@
 "use client";
 
-import { motion, AnimatePresence } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect } from "react";
 
-export default function TalkModal({ isOpen, onClose, title, event, date, description, topics, images }) {
+export default function TalkModal({
+  isOpen,
+  onClose,
+  title,
+  event,
+  date,
+  description,
+  topics,
+  images,
+}) {
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
@@ -49,7 +58,12 @@ export default function TalkModal({ isOpen, onClose, title, event, date, descrip
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
 
@@ -90,7 +104,10 @@ export default function TalkModal({ isOpen, onClose, title, event, date, descrip
                 {images && images.length > 0 && (
                   <div className="grid gap-4 md:grid-cols-2">
                     {images.map((image, index) => (
-                      <div key={index} className="rounded-lg overflow-hidden border border-white/10">
+                      <div
+                        key={index}
+                        className="rounded-lg overflow-hidden border border-white/10"
+                      >
                         <img
                           src={image}
                           alt={`${title} screenshot ${index + 1}`}
