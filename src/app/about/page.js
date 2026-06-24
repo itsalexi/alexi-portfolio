@@ -1,16 +1,12 @@
+import { createMetadata } from "@/lib/seo";
 import AboutClient from "./AboutClient";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "About",
   description:
-    "About Alexi Canamo: a 19-year-old founder and product engineer in Manila building tools for students, startups, and communities.",
-  openGraph: {
-    title: "About - Alexi Canamo",
-    description:
-      "A personal profile of Alexi Canamo, from early curiosity with code to building tools for students, startups, and communities.",
-    images: ["/og-image.png"],
-  },
-};
+    "About Alexi Canamo, a 19-year-old founder and product engineer in Manila building tools for students, startups, and communities.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return <AboutClient />;

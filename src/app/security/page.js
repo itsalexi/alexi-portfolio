@@ -1,4 +1,13 @@
 import EditorialHeader from "@/components/EditorialHeader";
+import { createMetadata } from "@/lib/seo";
+
+export const metadata = createMetadata({
+  title: "Security Research",
+  description:
+    "Responsible disclosures and security notes by Alexi Canamo, published only when there is something worth sharing.",
+  path: "/security",
+  noIndex: true,
+});
 
 export default function SecurityPage() {
   return (

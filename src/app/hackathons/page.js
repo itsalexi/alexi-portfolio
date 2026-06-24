@@ -1,17 +1,14 @@
 import EditorialHeader from "@/components/EditorialHeader";
 import { loadAllHackathons } from "@/lib/hackathons";
+import { createMetadata } from "@/lib/seo";
 import HackathonsClient from "./HackathonsClient";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "Hackathons",
   description:
-    "Hackathon projects by Alexi Canamo, from logistics ideas to offline emergency tools.",
-  openGraph: {
-    title: "Hackathons - Alexi Canamo",
-    description: "Weekend projects, team photos, and notes from the build.",
-    images: ["/og-image.png"],
-  },
-};
+    "Hackathon and competition projects by Alexi Canamo, from logistics marketplaces to offline emergency tools.",
+  path: "/hackathons",
+});
 
 function HackathonsHeader() {
   return (

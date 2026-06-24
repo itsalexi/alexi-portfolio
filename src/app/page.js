@@ -3,19 +3,15 @@ import path from "node:path";
 import matter from "gray-matter";
 import { loadHackathonsForHome } from "@/lib/hackathons";
 import { calculateReadingTime } from "@/lib/reading-time";
+import { createMetadata, siteConfig } from "@/lib/seo";
 import HomeClient from "./HomeClient";
 
-export const metadata = {
-  title: "Home",
-  description:
-    "Alexi Canamo is a 19-year-old CS student in Manila making student tools, small apps, and websites with friends.",
-  openGraph: {
-    title: "Alexi Canamo",
-    description:
-      "CS student at Ateneo making student tools, small apps, and websites with friends.",
-    images: ["/og-image.png"],
-  },
-};
+export const metadata = createMetadata({
+  title: siteConfig.title,
+  description: siteConfig.description,
+  path: "/",
+  absoluteTitle: true,
+});
 
 function loadTalks() {
   const talksDirectory = path.join(process.cwd(), "src/content/talks");

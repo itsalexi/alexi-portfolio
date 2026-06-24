@@ -3,19 +3,15 @@ import path from "node:path";
 import matter from "gray-matter";
 import EditorialHeader from "@/components/EditorialHeader";
 import { calculateReadingTime } from "@/lib/reading-time";
+import { createMetadata } from "@/lib/seo";
 import BlogClient from "./BlogClient";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "Blog",
   description:
     "Notes by Alexi Canamo on school, work, bugs, and projects he is figuring out.",
-  openGraph: {
-    title: "Blog - Alexi Canamo",
-    description:
-      "Notes from projects, classes, internships, and the parts that do not fit neatly into a portfolio card.",
-    images: ["/og-image.png"],
-  },
-};
+  path: "/blog",
+});
 
 function BlogHeader() {
   return (

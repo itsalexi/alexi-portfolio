@@ -1,7 +1,8 @@
-import fs from "fs";
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
-import path from "path";
 import { use } from "react";
+import { createMetadata, dateToIso } from "@/lib/seo";
 import TalkContent from "./TalkContent";
 
 // Generate metadata for each talk
@@ -18,33 +19,24 @@ export async function generateMetadata({ params }) {
 
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data: frontmatter } = matter(fileContents);
+  const stats = fs.statSync(filePath);
+  const description =
+    frontmatter.shortDescription ||
+    `${frontmatter.title} by Alexi Canamo at ${frontmatter.event}.`;
+  const image =
+    frontmatter.images && frontmatter.images.length > 0
+      ? frontmatter.images[0]
+      : "/og-image.png";
 
-  return {
-    title: `Talk | ${frontmatter.title}`,
-    description:
-      frontmatter.shortDescription ||
-      `${frontmatter.title} - Workshop/Talk by Alexi Canamo at ${frontmatter.event}`,
-    openGraph: {
-      title: `Talk | ${frontmatter.title}`,
-      description:
-        frontmatter.shortDescription || `Workshop/Talk at ${frontmatter.event}`,
-      images:
-        frontmatter.images && frontmatter.images.length > 0
-          ? [frontmatter.images[0]]
-          : ["/og-image.png"],
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `Talk | ${frontmatter.title}`,
-      description:
-        frontmatter.shortDescription || `Workshop/Talk at ${frontmatter.event}`,
-      images:
-        frontmatter.images && frontmatter.images.length > 0
-          ? [frontmatter.images[0]]
-          : ["/og-image.png"],
-    },
-  };
+  return createMetadata({
+    title: frontmatter.title,
+    description,
+    path: `/talks/${slug}`,
+    image,
+    type: "article",
+    publishedTime: dateToIso(frontmatter.date),
+    modifiedTime: stats.mtime.toISOString(),
+  });
 }
 
 // Generate static params for all talks

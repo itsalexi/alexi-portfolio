@@ -5,6 +5,7 @@ import BackgroundEffects from "../components/BackgroundEffects";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import PageTransition from "../components/PageTransition";
+import { siteConfig } from "../lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,15 +18,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://alexi.life"),
+  metadataBase: new URL(siteConfig.url),
+  applicationName: siteConfig.name,
   title: {
-    default: "Alexi Canamo",
-    template: "%s | Alexi Canamo",
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "Alexi Canamo is a 19-year-old CS student in Manila making student tools, small apps, and websites with friends.",
+  description: siteConfig.description,
   keywords: [
     "Alexi Canamo",
+    "Alexi Canamo portfolio",
+    "Alexi Canamo software engineer",
+    "founder",
+    "product engineer",
     "software developer",
     "web developer",
     "Philippines",
@@ -40,13 +45,19 @@ export const metadata = {
     "DOST Scholar",
     "MISA",
     "NextPay",
+    "Bytespace",
+    "Sip & Scale",
+    "Hati app",
     "Enlistment Helper",
     "QPI Calculator",
     "One Big Match",
+    "SALBAR",
+    "Hakot",
   ],
-  authors: [{ name: "Alexi Canamo", url: "https://alexi.life" }],
-  creator: "Alexi Canamo",
-  publisher: "Alexi Canamo",
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "technology",
   formatDetection: {
     email: false,
     address: false,
@@ -55,28 +66,26 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://alexi.life",
-    title: "Alexi Canamo",
-    description:
-      "Alexi Canamo is a 19-year-old CS student in Manila making student tools, small apps, and websites with friends.",
-    siteName: "Alexi Canamo",
+    url: siteConfig.url,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
     images: [
       {
-        url: "/og-image.png",
+        url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Alexi Canamo - Software Developer",
+        alt: "Alexi Canamo - Founder and Product Engineer",
         type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alexi Canamo",
-    description:
-      "19-year-old CS student in Manila making student tools, small apps, and websites with friends.",
-    creator: "@alexicanamo",
-    images: ["/og-image.png"],
+    title: siteConfig.title,
+    description: siteConfig.description,
+    creator: siteConfig.twitterHandle,
+    images: [siteConfig.ogImage],
   },
   robots: {
     index: true,
@@ -110,13 +119,12 @@ export default function RootLayout({ children }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              name: "Alexi Canamo",
+              name: siteConfig.name,
               alternateName: "Alexi Roth Luis Cañamo",
-              url: "https://alexi.life",
-              image: "https://alexi.life/og-image.png",
-              jobTitle: "Software Developer",
-              description:
-                "19-year-old Computer Science student in Manila making student tools, small apps, and websites with friends.",
+              url: siteConfig.url,
+              image: `${siteConfig.url}${siteConfig.ogImage}`,
+              jobTitle: "Founder and Product Engineer",
+              description: siteConfig.description,
               alumniOf: {
                 "@type": "CollegeOrUniversity",
                 name: "Ateneo de Manila University",
@@ -124,6 +132,7 @@ export default function RootLayout({ children }) {
               },
               knowsAbout: [
                 "Software Development",
+                "Product Engineering",
                 "Web Development",
                 "React",
                 "Next.js",
@@ -132,7 +141,8 @@ export default function RootLayout({ children }) {
                 "Node.js",
                 "Python",
                 "PostgreSQL",
-                "MongoDB",
+                "AI Agents",
+                "iOS Development",
               ],
               sameAs: [
                 "https://github.com/itsalexi",
@@ -159,13 +169,12 @@ export default function RootLayout({ children }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              name: "Alexi Canamo",
-              url: "https://alexi.life",
-              description:
-                "Personal site of Alexi Canamo, a Computer Science student in Manila.",
+              name: siteConfig.name,
+              url: siteConfig.url,
+              description: siteConfig.description,
               publisher: {
                 "@type": "Person",
-                name: "Alexi Canamo",
+                name: siteConfig.name,
               },
               inLanguage: "en-US",
             }),
@@ -182,11 +191,11 @@ export default function RootLayout({ children }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ProfessionalService",
-              name: "Alexi Canamo - Software Development",
-              image: "https://alexi.life/og-image.png",
+              name: "Alexi Canamo - Product Engineering",
+              image: `${siteConfig.url}${siteConfig.ogImage}`,
               description:
-                "Student tools, small apps, and websites by Alexi Canamo.",
-              url: "https://alexi.life",
+                "Student tools, startup software, and community products by Alexi Canamo.",
+              url: siteConfig.url,
               telephone: "",
               address: {
                 "@type": "PostalAddress",

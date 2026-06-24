@@ -2,18 +2,15 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import EditorialHeader from "@/components/EditorialHeader";
+import { createMetadata } from "@/lib/seo";
 import TalksClient from "./TalksClient";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "Talks & Workshops",
   description:
     "Talks and workshops by Alexi Canamo on building, Python, student tools, and starting before you feel ready.",
-  openGraph: {
-    title: "Talks & Workshops - Alexi Canamo",
-    description: "Student workshops and talks Alexi has helped run.",
-    images: ["/og-image.png"],
-  },
-};
+  path: "/talks",
+});
 
 function TalksHeader() {
   return (

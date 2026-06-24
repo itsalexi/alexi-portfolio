@@ -1,7 +1,8 @@
-import fs from "fs";
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
-import path from "path";
 import { use } from "react";
+import { createMetadata } from "@/lib/seo";
 import ProjectContent from "./ProjectContent";
 
 // Generate metadata for each project
@@ -18,28 +19,20 @@ export async function generateMetadata({ params }) {
 
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data: frontmatter } = matter(fileContents);
+  const stats = fs.statSync(filePath);
 
-  return {
-    title: `Project | ${frontmatter.title}`,
+  return createMetadata({
+    title: frontmatter.title,
     description:
+      frontmatter.tagline ||
       frontmatter.shortDescription ||
       frontmatter.description ||
-      `${frontmatter.title} - Project by Alexi Canamo`,
-    openGraph: {
-      title: `Project | ${frontmatter.title}`,
-      description:
-        frontmatter.shortDescription || frontmatter.description || "",
-      images: frontmatter.image ? [frontmatter.image] : ["/og-image.png"],
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `Project | ${frontmatter.title}`,
-      description:
-        frontmatter.shortDescription || frontmatter.description || "",
-      images: frontmatter.image ? [frontmatter.image] : ["/og-image.png"],
-    },
-  };
+      `${frontmatter.title} is a project by Alexi Canamo.`,
+    path: `/projects/${slug}`,
+    image: frontmatter.image || "/og-image.png",
+    type: "article",
+    modifiedTime: stats.mtime.toISOString(),
+  });
 }
 
 // Generate static params for all projects

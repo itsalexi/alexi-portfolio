@@ -1,126 +1,53 @@
 import fs from "node:fs";
 import path from "node:path";
+import { siteConfig } from "@/lib/seo";
+
+function fileModifiedAt(relativePath) {
+  const filePath = path.join(process.cwd(), relativePath);
+  if (!fs.existsSync(filePath)) return new Date();
+  return fs.statSync(filePath).mtime;
+}
+
+function staticPage(route, filePath, priority, changeFrequency = "monthly") {
+  return {
+    url: `${siteConfig.url}${route}`,
+    lastModified: fileModifiedAt(filePath),
+    changeFrequency,
+    priority,
+  };
+}
+
+function contentPages(contentDir, routePrefix, priority) {
+  const directory = path.join(process.cwd(), contentDir);
+  if (!fs.existsSync(directory)) return [];
+
+  return fs
+    .readdirSync(directory)
+    .filter((file) => file.endsWith(".md"))
+    .map((file) => {
+      const slug = file.replace(".md", "");
+      const filePath = path.join(directory, file);
+      return {
+        url: `${siteConfig.url}${routePrefix}/${slug}`,
+        lastModified: fs.statSync(filePath).mtime,
+        changeFrequency: "monthly",
+        priority,
+      };
+    });
+}
 
 export default function sitemap() {
-  const baseUrl = "https://alexi.life";
-
-  // Static pages
-  const staticPages = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.75,
-    },
-    {
-      url: `${baseUrl}/projects`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/talks`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/hackathons`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.65,
-    },
-  ];
-
-  // Dynamic project pages
-  const projectsDirectory = path.join(process.cwd(), "src/content/projects");
-  let projectPages = [];
-
-  if (fs.existsSync(projectsDirectory)) {
-    const projectFiles = fs.readdirSync(projectsDirectory);
-    projectPages = projectFiles
-      .filter((file) => file.endsWith(".md"))
-      .map((file) => ({
-        url: `${baseUrl}/projects/${file.replace(".md", "")}`,
-        lastModified: new Date(),
-        changeFrequency: "monthly",
-        priority: 0.7,
-      }));
-  }
-
-  // Dynamic talk pages
-  const talksDirectory = path.join(process.cwd(), "src/content/talks");
-  let talkPages = [];
-
-  if (fs.existsSync(talksDirectory)) {
-    const talkFiles = fs.readdirSync(talksDirectory);
-    talkPages = talkFiles
-      .filter((file) => file.endsWith(".md"))
-      .map((file) => ({
-        url: `${baseUrl}/talks/${file.replace(".md", "")}`,
-        lastModified: new Date(),
-        changeFrequency: "monthly",
-        priority: 0.6,
-      }));
-  }
-
-  // Dynamic blog pages
-  const blogsDirectory = path.join(process.cwd(), "src/content/blogs");
-  let blogPages = [];
-
-  if (fs.existsSync(blogsDirectory)) {
-    const blogFiles = fs.readdirSync(blogsDirectory);
-    blogPages = blogFiles
-      .filter((file) => file.endsWith(".md"))
-      .map((file) => ({
-        url: `${baseUrl}/blog/${file.replace(".md", "")}`,
-        lastModified: new Date(),
-        changeFrequency: "monthly",
-        priority: 0.6,
-      }));
-  }
-
-  const hackathonsDirectory = path.join(
-    process.cwd(),
-    "src/content/hackathons",
-  );
-  let hackathonPages = [];
-
-  if (fs.existsSync(hackathonsDirectory)) {
-    const hackathonFiles = fs.readdirSync(hackathonsDirectory);
-    hackathonPages = hackathonFiles
-      .filter((file) => file.endsWith(".md"))
-      .map((file) => ({
-        url: `${baseUrl}/hackathons/${file.replace(".md", "")}`,
-        lastModified: new Date(),
-        changeFrequency: "monthly",
-        priority: 0.6,
-      }));
-  }
-
   return [
-    ...staticPages,
-    ...projectPages,
-    ...talkPages,
-    ...blogPages,
-    ...hackathonPages,
+    staticPage("/", "src/app/page.js", 1, "weekly"),
+    staticPage("/about", "src/app/about/page.js", 0.8),
+    staticPage("/projects", "src/app/projects/page.js", 0.9, "weekly"),
+    staticPage("/blog", "src/app/blog/page.js", 0.8, "weekly"),
+    staticPage("/talks", "src/app/talks/page.js", 0.7),
+    staticPage("/hackathons", "src/app/hackathons/page.js", 0.7),
+    staticPage("/contact", "src/app/contact/page.js", 0.6),
+    ...contentPages("src/content/projects", "/projects", 0.75),
+    ...contentPages("src/content/blogs", "/blog", 0.65),
+    ...contentPages("src/content/talks", "/talks", 0.6),
+    ...contentPages("src/content/hackathons", "/hackathons", 0.65),
   ];
 }

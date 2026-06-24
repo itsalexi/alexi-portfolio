@@ -2,19 +2,15 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import EditorialHeader from "@/components/EditorialHeader";
+import { createMetadata } from "@/lib/seo";
 import ProjectsClient from "./ProjectsClient";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "Projects",
   description:
-    "Projects by Alexi Canamo, including Hati, Axie UI, Enlistment Helper, QPI Calculator, One Big Match, and event tools.",
-  openGraph: {
-    title: "Projects - Alexi Canamo",
-    description:
-      "Campus tools, small apps, event sites, and experiments by Alexi Canamo.",
-    images: ["/og-image.png"],
-  },
-};
+    "Projects by Alexi Canamo, including Hati, One Big Match, the Ateneo QPI Calculator, Enlistment Helper, and event tools.",
+  path: "/projects",
+});
 
 function ProjectsHeader() {
   return (

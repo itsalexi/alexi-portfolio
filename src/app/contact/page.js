@@ -1,17 +1,13 @@
 import ContactCanvas from "@/components/ContactCanvas";
 import EditorialHeader from "@/components/EditorialHeader";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata = {
+export const metadata = createMetadata({
   title: "Contact",
   description:
     "Email Alexi Canamo about projects, talks, student tools, events, or a quick hello.",
-  openGraph: {
-    title: "Contact - Alexi Canamo",
-    description:
-      "Email Alexi Canamo about projects, talks, student tools, events, or a quick hello.",
-    images: ["/og-image.png"],
-  },
-};
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

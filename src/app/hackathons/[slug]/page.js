@@ -1,6 +1,7 @@
-import fs from "fs";
+import fs from "node:fs";
 import { use } from "react";
 import { getHackathonBySlug, getHackathonsDirectory } from "@/lib/hackathons";
+import { createMetadata, dateToIso } from "@/lib/seo";
 import HackathonContent from "./HackathonContent";
 
 export async function generateStaticParams() {
@@ -24,23 +25,18 @@ export async function generateMetadata({ params }) {
     hackathon.highlights?.[0] ||
     `${hackathon.title} — ${hackathon.event} (${hackathon.result})`;
   const ogImage = hackathon.images?.[0] || hackathon.image || "/og-image.png";
+  const filePath = `${getHackathonsDirectory()}/${slug}.md`;
+  const stats = fs.existsSync(filePath) ? fs.statSync(filePath) : null;
 
-  return {
-    title: `Hackathon | ${hackathon.title}`,
+  return createMetadata({
+    title: hackathon.title,
     description,
-    openGraph: {
-      title: `Hackathon | ${hackathon.title}`,
-      description,
-      images: [ogImage],
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `Hackathon | ${hackathon.title}`,
-      description,
-      images: [ogImage],
-    },
-  };
+    path: `/hackathons/${slug}`,
+    image: ogImage,
+    type: "article",
+    publishedTime: dateToIso(hackathon.date),
+    modifiedTime: stats?.mtime.toISOString(),
+  });
 }
 
 export default function HackathonDetailPage({ params }) {

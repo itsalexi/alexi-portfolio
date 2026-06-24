@@ -1,8 +1,9 @@
-import fs from "fs";
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
-import path from "path";
 import { use } from "react";
 import { calculateReadingTime } from "@/lib/reading-time";
+import { createMetadata, dateToIso } from "@/lib/seo";
 import BlogContent from "./BlogContent";
 
 // Generate static params for all blogs
@@ -37,25 +38,17 @@ export async function generateMetadata({ params }) {
 
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data: frontmatter } = matter(fileContents);
+  const stats = fs.statSync(filePath);
 
-  return {
-    title: `Blog | ${frontmatter.title}`,
-    description: frontmatter.excerpt || "Blog post by Alexi Canamo",
-    openGraph: {
-      title: `Blog | ${frontmatter.title}`,
-      description: frontmatter.excerpt || "Blog post by Alexi Canamo",
-      images: frontmatter.image ? [frontmatter.image] : ["/og-image.png"],
-      type: "article",
-      publishedTime: frontmatter.date,
-      authors: ["Alexi Canamo"],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `Blog | ${frontmatter.title}`,
-      description: frontmatter.excerpt || "Blog post by Alexi Canamo",
-      images: frontmatter.image ? [frontmatter.image] : ["/og-image.png"],
-    },
-  };
+  return createMetadata({
+    title: frontmatter.title,
+    description: frontmatter.excerpt || "Blog post by Alexi Canamo.",
+    path: `/blog/${slug}`,
+    image: frontmatter.image || "/og-image.png",
+    type: "article",
+    publishedTime: dateToIso(frontmatter.date),
+    modifiedTime: stats.mtime.toISOString(),
+  });
 }
 
 // Server component - reads file at build time

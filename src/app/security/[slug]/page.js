@@ -1,4 +1,12 @@
 import EditorialHeader from "@/components/EditorialHeader";
+import { createMetadata } from "@/lib/seo";
+
+export const metadata = createMetadata({
+  title: "Security Note",
+  description: "This security note is not published yet.",
+  path: "/security",
+  noIndex: true,
+});
 
 export default function SecurityDetailPage() {
   return (

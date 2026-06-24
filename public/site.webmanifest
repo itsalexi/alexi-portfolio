@@ -1,7 +1,7 @@
 {
-  "name": "Alexi Canamo - Software Developer",
+  "name": "Alexi Canamo - Founder & Product Engineer",
   "short_name": "Alexi Canamo",
-  "description": "Portfolio of Alexi Canamo, software developer and CS student at Ateneo de Manila University",
+  "description": "Portfolio of Alexi Canamo, a founder and product engineer in Manila building student tools, startup software, and community products.",
   "icons": [
     {
       "src": "/avatar.webp",
@@ -10,8 +10,8 @@
       "purpose": "any maskable"
     }
   ],
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "theme_color": "#080807",
+  "background_color": "#080807",
   "display": "standalone",
   "start_url": "/",
   "scope": "/"
