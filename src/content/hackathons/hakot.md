@@ -15,7 +15,7 @@ link: >-
 highlights:
   - First overnight hackathon: Ship or Be Shipped with Build and Ship Philippines at Kaya Founders.
   - Built Hakot with Edward, Eduardo, and Abby, an AI-assisted logistics marketplace for farmers and truck drivers.
-  - 1st Runner-Up among 80+ participants after zero sleep and three pivots.
+  - 1st Runner-Up among 80+ participants after three pivots in 24 hours.
 ---
 
 ## The hook
@@ -30,7 +30,7 @@ Together with **Edward**, **Eduardo**, and **Abby**, we built **Hakot**, an AI-a
 
 ## Results
 
-Zero sleep and **three pivots** later, Hakot stood out among **80+ participants** and took **1st Runner-Up**.
+After **three pivots** in **24 hours**, Hakot stood out among **80+ participants** and took **1st Runner-Up**.
 
 Huge thanks to the mentors for the advice and to **Build and Ship Philippines** for organizing the event.
 

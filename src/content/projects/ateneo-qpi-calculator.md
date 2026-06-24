@@ -2,8 +2,8 @@
 slug: ateneo-qpi-calculator
 title: Ateneo QPI Calculator
 tagline: >-
-  A what-if grade planner for Ateneo students who want to see where their QPI
-  could land before finals week.
+  A what-if grade planner that reached 9,600+ sessions, 131,000+ interactions,
+  and the #2 Google spot for "QPI calculator."
 techStack:
   - nextjs
   - python
@@ -42,15 +42,12 @@ Once I had it working, I started using it all the time. I shared the link with a
 
 ![image_2025-11-05_192808830.png](/images/projects/ateneo-qpi-calculator-1762342088852.webp)
 
-I saw it was getting thousands of user sessions. It was cool to see that this personal dashboard I'd built for myself was something so many other students were also using to plan their semesters. Seeing it hit the #2 spot on Google for "QPI calculator" was a pretty surreal moment.
+The analytics eventually told the story: **9,600+ sessions**, **131,000+ interactions**, and the **#2 Google spot** for "QPI calculator." A finals-week tool I built for myself had become something Ateneo students were actively using to plan their semesters.
 
 ![image_2025-11-05_192840445.png](/images/projects/ateneo-qpi-calculator-1762342120465.webp)
 
 #### **It was a good reminder.**
 
 This project was a good reminder that if you have a small, recurring frustration in your own workflow, chances are a lot of other people feel the same way. I just wanted a better way to plan and predict my grades, and it turned out that was a problem a lot of us were looking to solve.
-
-
-
 
 

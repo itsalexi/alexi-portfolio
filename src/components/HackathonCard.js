@@ -32,7 +32,12 @@ export default function HackathonCard({
   }, [images, image]);
 
   const currentSrc = gallery[0] || "";
-  const showOrganizerLogo = organizer === "StartupQC";
+  const organizerLogos = ["StartupQC", "Build and Ship Philippines"];
+  const logoCompany = organizerLogos.includes(organizer)
+    ? organizer
+    : ["SALBAR", "Crystal"].includes(name)
+      ? name
+      : "";
 
   const article = (
     <motion.article
@@ -57,8 +62,12 @@ export default function HackathonCard({
 
       <div className="min-w-0">
         <div className="mb-4 flex items-center gap-3 font-mono text-[0.68rem] uppercase tracking-[0.13em] text-[var(--portfolio-ink-faint)]">
-          {showOrganizerLogo
-            ? <CompanyLogo company={organizer} size="xs" aria-hidden={false} />
+          {logoCompany
+            ? <CompanyLogo
+                company={logoCompany}
+                size="xs"
+                aria-hidden={false}
+              />
             : null}
           <span>{date}</span>
           {organizer ? <span>{organizer}</span> : null}

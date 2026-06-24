@@ -35,26 +35,30 @@ const productOrder = ["Bytespace", "NextPay (YC W21)", "Sip & Scale"];
 const productCopy = {
   Bytespace: {
     role: "Product engineer",
-    line: "Improving Bot0 onboarding and reliability so teams hit fewer snags getting agents live.",
+    line: "Shipped 8 Bot0 improvements in under a month, making agent workflows, memory, and integrations less fragile.",
   },
   "NextPay (YC W21)": {
     role: "Software engineer intern",
-    line: "Shipping dashboard and web flows that make finance ops lighter for Filipino small businesses.",
+    line: "Cut manual processing by 75% across SME money-movement and onboarding workflows.",
   },
   "Sip & Scale": {
     role: "Product engineering",
-    line: "Building the site and member systems behind a founder community across 20+ cities.",
+    line: "Own the systems supporting 1,000+ builders, 50+ events, and a founder network in 20+ cities.",
   },
 };
 
 const featuredProjectOrder = ["hati", "one-big-match", "ateneo-qpi-calculator"];
 
 const projectCopy = {
-  hati: "A simpler way to split KKB receipts after meals.",
-  "one-big-match": "A phone-based matching game for event rooms.",
-  "ateneo-qpi-calculator": "A grade planner I wish I had earlier.",
-  "ateneo-enlistment-helper": "A schedule planner for enlistment week.",
-  "misa-registration-system": "Check-ins and attendance for org events.",
+  hati: "200+ completed splits and 200k+ in shared expenses tracked after 156 downloads.",
+  "one-big-match":
+    "Led a 10-person team through 4 live event pilots and 80+ users.",
+  "ateneo-qpi-calculator":
+    "9,600+ sessions, 131,000+ interactions, and #2 on Google.",
+  "ateneo-enlistment-helper":
+    "Helped 500+ students plan schedules across 3,000+ enlistment-week visits.",
+  "misa-registration-system":
+    "Made event check-ins 75% faster for a 550-member org.",
   "tedx-admu": "The event website for TEDxAteneoDeManila.",
 };
 
@@ -66,15 +70,19 @@ const projectLabels = {
 };
 
 const timelineCopy = {
-  Bytespace: "Cleaner Bot0 setup and reliability for real customer workflows.",
+  Bytespace:
+    "8 Bot0 improvements in under a month, plus 5 reliability fixes shipped in one week.",
   "Sip & Scale":
-    "The public site and member systems behind a founder network across 20+ cities.",
+    "Systems supporting 1,000+ builders, 50+ events, and 20+ cities.",
   Crystal: "A shared team-memory experiment, currently a StartupQC finalist.",
-  SALBAR: "An offline-first emergency health prototype.",
+  Hakot:
+    "1st runner-up out of 80+ participants after three pivots in 24 hours.",
+  SALBAR: "Top 5 out of 200+ teams, then selected for LGU incubation.",
   "NextPay (YC W21)":
-    "Dashboard updates that made small-business finance ops less manual.",
-  "Ateneo MISA": "Developer workshops and faster check-ins for student events.",
-  "One Big Match": "A phone-based mixer game piloted at student events.",
+    "75% less manual processing across SME money-movement and onboarding flows.",
+  "Ateneo MISA":
+    "20+ devs trained and 75% faster check-ins across MISA events.",
+  "One Big Match": "4 event pilots, 80+ users, and a 10-person team.",
   "You can just do things.":
     "A campus talk on starting before the perfect plan exists.",
   "Ateneo de Manila University": "BS Computer Science.",
@@ -83,6 +91,9 @@ const timelineCopy = {
 
 function timelineLogoKey(entry) {
   if (entry.title === "SALBAR") return "SALBAR";
+  if (entry.organizer === "Build and Ship Philippines") {
+    return "Build and Ship Philippines";
+  }
   if (entry.title === "You can just do things.") return entry.title;
   return entry.company || entry.title;
 }
@@ -294,22 +305,40 @@ function BuilderTimeline({ talks = [], hackathons = [] }) {
   const experiences = allExperienceItems();
   const findExperience = (company) =>
     experiences.find((item) => item.company === company);
+  const findHackathon = (slug) =>
+    hackathons.find((hackathon) => hackathon.slug === slug);
+  const hackathonEntry = (slug, { thumbnail = false } = {}) => {
+    const hackathon = findHackathon(slug);
+    if (!hackathon) return null;
+    const types =
+      hackathon.organizer === "StartupQC"
+        ? ["startup", "competition"]
+        : ["competition"];
+
+    return {
+      type: types[0],
+      types,
+      year: hackathon.date.match(/\d{4}/)?.[0] || "2026",
+      title: hackathon.title,
+      company: hackathon.event,
+      organizer: hackathon.organizer,
+      duration: hackathon.result,
+      summary:
+        timelineCopy[hackathon.title] ||
+        hackathon.highlights?.[0] ||
+        hackathon.event,
+      thumbnail: thumbnail ? hackathon.image : undefined,
+      href: `/hackathons/${hackathon.slug}`,
+    };
+  };
 
   const timelineItems = [
     findExperience("Bytespace"),
+    hackathonEntry("crystal"),
+    hackathonEntry("salbar"),
     findExperience("Sip & Scale"),
-    hackathons[0]
-      ? {
-          type: "startup",
-          year: "2026",
-          title: hackathons[0].title,
-          company: hackathons[0].event,
-          duration: hackathons[0].result,
-          summary: timelineCopy[hackathons[0].title] || hackathons[0].event,
-          href: `/hackathons/${hackathons[0].slug}`,
-        }
-      : null,
     findExperience("NextPay (YC W21)"),
+    hackathonEntry("hakot"),
     findExperience("Ateneo MISA"),
     findExperience("One Big Match"),
     talks[0]
@@ -328,7 +357,9 @@ function BuilderTimeline({ talks = [], hackathons = [] }) {
   ].filter(Boolean);
 
   const filteredItems = timelineItems.filter(
-    (entry) => activeFilter === "all" || entry.type === activeFilter,
+    (entry) =>
+      activeFilter === "all" ||
+      (entry.types || [entry.type]).includes(activeFilter),
   );
 
   const groupedYears = [];
@@ -358,6 +389,12 @@ function BuilderTimeline({ talks = [], hackathons = [] }) {
             </p>
             <div className="grid gap-1">
               {items.map((entry) => {
+                const typeLabel = (entry.types || [entry.type])
+                  .filter(Boolean)
+                  .join(" + ");
+                const metaLabel = [typeLabel, entry.duration]
+                  .filter(Boolean)
+                  .join(" / ");
                 const row = (
                   <div
                     key={`${entry.year}-${entry.title}-${entry.company}-row`}
@@ -371,11 +408,7 @@ function BuilderTimeline({ talks = [], hackathons = [] }) {
                       aria-hidden={false}
                     />
                     <div>
-                      <p className="quiet-label mb-2">
-                        {[entry.type, entry.duration]
-                          .filter(Boolean)
-                          .join(" / ")}
-                      </p>
+                      <p className="quiet-label mb-2">{metaLabel}</p>
                       <h3 className="text-xl font-medium leading-tight tracking-[-0.018em] text-[var(--portfolio-ink)]">
                         {entry.title}
                       </h3>

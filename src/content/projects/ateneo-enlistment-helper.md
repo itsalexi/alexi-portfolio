@@ -2,8 +2,8 @@
 slug: ateneo-enlistment-helper
 title: Ateneo Enlistment Helper
 tagline: >-
-  A visual schedule builder for Ateneo enlistment week, powered by scraped class
-  data and used by students planning around closed slots and messy timetables.
+  A visual schedule builder that helped 500+ Ateneo students plan classes over
+  3,000+ enlistment-week visits.
 techStack:
   - nextjs
   - python
@@ -41,9 +41,9 @@ To keep the Helper updated, I set up a GitHub Actions job that re-ran the scrape
 
 Once I had the data figured out, I built a simple front-end with the features I always wanted: a good search, useful filters, and a visual schedule builder.
 
-I shared it with a few friends, not expecting much, but it kind of blew up from there. Word got around, and soon tons of students were using it instead of their spreadsheets.
+I shared it with a few friends, not expecting much. Word got around, and the helper ended up helping **500+ students** plan schedules across **3,000+ enlistment-week visits**.
 
-Seeing the visit count pass 3,000 was awesome. It was cool to see that something I built to solve my own problem ended up helping a bunch of other students get through the stress of enlistment.
+That was the first time one of my campus tools clearly moved beyond my own friend group. People were using it instead of spreadsheets because it made the stressful part of enlistment easier to reason about.
 
 
 

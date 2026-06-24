@@ -97,8 +97,8 @@ export default function Hero() {
           className="mt-6 max-w-2xl text-[clamp(1.25rem,2.15vw,1.8rem)] font-medium leading-[1.2] tracking-[-0.018em] text-[var(--portfolio-ink)]"
         >
           I’m a 19-year-old founder and product engineer in Manila, currently at
-          Bytespace. I build tools for students, startups, and communities that
-          people actually use.
+          Bytespace. I build tools that students, startups, and communities
+          actually use.
         </motion.p>
 
         <motion.div

@@ -8,6 +8,7 @@ export default function ExperienceFilter({ activeFilter, setActiveFilter }) {
     { value: "work", label: "Work" },
     { value: "leadership", label: "Leadership" },
     { value: "startup", label: "Startup" },
+    { value: "competition", label: "Competition" },
     { value: "education", label: "Education" },
   ];
 

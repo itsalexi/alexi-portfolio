@@ -2,8 +2,8 @@
 slug: one-big-match
 title: One Big Match
 tagline: >-
-  A live matching room for events, built with phones, a host screen, and a
-  low-pressure way to get people talking.
+  A live matching room built by a 10-person team and piloted across 4 student
+  events with 80+ users.
 techStack:
   - nextjs
   - postgresql
@@ -16,7 +16,7 @@ order: 2
 ---
 #### **The Gist**
 
-One Big Match is our little web app for making events less awkward. Think Jackbox Games, but instead of competing, you're connecting with new people. Everyone uses their phone, a host runs the show from a main screen, and it’s all about creating a fun, low-pressure way to get people talking.
+One Big Match is a web app for making event rooms less awkward. Think Jackbox Games, but instead of competing, you're connecting with new people. Everyone uses their phone, a host runs the show from a main screen, and the room gets a low-pressure way to start talking.
 
 #### **Where it came from.**
 
@@ -43,16 +43,14 @@ The part we obsessed over was the real-time connection. We spent a lot of time g
 ![image_2025-11-05_152811046.png](/images/projects/one-big-match-1762327691114.webp)
 
 
-#### **Then we kind of hit a wall.**
+#### **What shipped.**
 
-We built this thing we loved, put it out there, and... the reaction was pretty quiet.
+We coordinated a **10-person team** across product, design, engineering, and outreach. The app made it into **4 student-event pilots** with **80+ users**, which gave us real rooms to learn from instead of only guessing at the experience.
 
-It was a tough pill to swallow. We realized we had fallen into a classic trap. We were so focused on building a cool product and solving the problem *we* saw, that we forgot to actually go talk to the people who would be using it. We built the app for a hypothetical user, not a real one.
+Those pilots taught us what mattered most: fast joining, clear host controls, and making the first interaction feel easy enough that people would actually participate.
 
-#### **So, what now?**
+#### **What I took from it.**
 
-That’s what we're focused on now. The app is solid, the tech is there. But now we're doing the work we should have done at the start. We're trying to get it into the hands of anyone running an org or an event, not to sell them, but just to watch them use it and talk to them. We want to learn what they actually need.
-
-We built the engine first. Now we’re doing the slower work: finding the rooms where it actually belongs.
+One Big Match made me better at separating "cool product idea" from "thing a room will actually use." We built the engine, got it into student events, and learned how much the live facilitation layer matters.
 
 ![IMG_7491.jpeg](/images/projects/one-big-match-1762328352877.webp)

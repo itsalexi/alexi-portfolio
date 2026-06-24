@@ -2,8 +2,8 @@
 slug: hati
 title: Hati
 tagline: >-
-  A KKB receipt splitter where one person uses the app and everyone else checks
-  their share through a link.
+  A KKB receipt splitter that tracked 200k+ in shared expenses across 200+
+  completed splits after 156 downloads.
 techStack:
   - swiftui
   - swiftdata
@@ -46,7 +46,7 @@ The app does not move money. It just computes the breakdown clearly and makes co
 
 ## What shipped
 
-Hati launched as my first Apple app on the App Store.
+Hati launched as my first Apple app on the App Store. Since launch, it has reached **156 downloads**, handled **200+ completed splits**, and tracked **200k+ in shared expenses**.
 
 The iOS app is built with SwiftUI and SwiftData for the local organizer flow. StoreKit powers Hati AI purchases for receipt import. Convex handles shared splits, participant links, file storage, and backend receipt parsing. The web companion is a Next.js app so friends can view their share without installing anything.
 

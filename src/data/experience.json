@@ -9,11 +9,11 @@
           "company": "Bytespace",
           "duration": "May 2026 – Present",
           "location": "San Francisco, CA · Remote",
-          "summary": "Improving Bot0 onboarding, connections, and reliability with the Bytespace team.",
+          "summary": "Shipped 8 Bot0 improvements in under a month, making agent workflows, memory, and integrations less fragile.",
           "details": [
-            "Shipped 8 Bot0 improvements in under a month.",
-            "Fixed connection issues that made setup less fragile.",
-            "Improved reliability for teams using Bot0 day to day."
+            "Shipped 8 Bot0 improvements in under a month across agent workflows, memory, and integrations.",
+            "Released 5 integration and workflow reliability fixes in one week.",
+            "Reduced broken connection flows so users hit fewer setup failures in end-to-end automations."
           ],
           "skills": [
             "Product Engineering",
@@ -28,10 +28,11 @@
           "company": "Sip & Scale",
           "duration": "Jan 2026 – Present",
           "location": "Global",
-          "summary": "Building the public site and member systems for Sip & Scale, a founder community across 20+ cities.",
+          "summary": "Own the systems supporting 1,000+ builders, 50+ events, and a founder network in 20+ cities.",
           "details": [
-            "Built a site ranking #1 for branded search queries and driving 600 unique page views.",
-            "Built tools that help the team run partnerships, events, and community work."
+            "Own the technical roadmap for the marketing site and internal tools used across partnerships, operations, and community.",
+            "Built a site that ranks #1 for branded search and drove 600 unique page views.",
+            "Support a founder community spanning 1,000+ builders, 50+ events, and 20+ cities worldwide."
           ],
           "skills": [
             "Technical Architecture",
@@ -51,10 +52,11 @@
           "company": "NextPay (YC W21)",
           "duration": "Sep 2025 – Present",
           "location": "Remote",
-          "summary": "Shipped dashboard and web improvements for Filipino small businesses using NextPay.",
+          "summary": "Cut manual processing by 75% across SME money-movement and onboarding workflows.",
           "details": [
-            "Built and launched a production marketing site to accelerate acquisition experiments with the marketing team.",
-            "With 5+ engineers, shipped dashboard updates that cut manual processing time by 75%.",
+            "Built and launched a production marketing site for acquisition experiments with the marketing team.",
+            "With 5+ engineers, shipped SME dashboard features for money-movement and onboarding workflows.",
+            "Cut manual processing by 75% across SME money-movement and onboarding workflows.",
             "Built reusable front-end pieces for the product team."
           ],
           "skills": [
@@ -69,11 +71,11 @@
           "company": "Ateneo MISA",
           "duration": "Jul 2025 – Apr 2026",
           "location": "Quezon City, Philippines · On-site",
-          "summary": "Led developer workshops and built faster event check-in tools for MISA.",
+          "summary": "Trained 20+ developers through a 4-part workshop and made MISA event check-ins 75% faster.",
           "details": [
             "Led a 4-part web development workshop series for 20+ student developers.",
-            "Built an internal registration system that cut event check-in time by 75% across MISA events.",
-            "Helped run technical trainings and student-built projects."
+            "Built an internal registration system that made event check-ins 75% faster across MISA events.",
+            "Raised the org's capacity to ship technical projects through trainings and student-built tools."
           ],
           "skills": ["Project Management", "Training and Development"]
         },
@@ -102,9 +104,9 @@
           "company": "One Big Match",
           "duration": "May 2025 – Dec 2025",
           "location": "National Capital Region, Philippines · On-site",
-          "summary": "Started and piloted a phone-based matching game for student events.",
+          "summary": "Led product, backend, and GTM for an events app piloted across 4 student events with 80+ users.",
           "details": [
-            "Coordinated a 10-person team across product, design, and engineering.",
+            "Coordinated a 10-person team across product, design, engineering, and outreach.",
             "Ran 4 pilot events and supported 80+ users.",
             "Led product direction, development, and outreach."
           ],

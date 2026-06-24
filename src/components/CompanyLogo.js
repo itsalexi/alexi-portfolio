@@ -34,6 +34,12 @@ const logos = {
     className: "bg-[#f7f3ea] shadow-[inset_0_0_0_1px_rgba(47,45,43,0.12)]",
     imageBoxClassName: "h-[82%] w-[82%]",
   },
+  "Build and Ship Philippines": {
+    image: "/images/logos/build-and-ship.webp",
+    label: "Build and Ship Philippines",
+    className: "bg-[#0d2031] shadow-[inset_0_0_0_1px_rgba(60,224,201,0.16)]",
+    imageBoxClassName: "h-full w-full",
+  },
   Crystal: {
     image: "/images/logos/crystal.webp",
     label: "Crystal",

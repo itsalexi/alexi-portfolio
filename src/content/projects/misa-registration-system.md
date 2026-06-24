@@ -2,8 +2,7 @@
 slug: misa-registration-system
 title: MISA Registration System
 tagline: >-
-  A registration and member-tracking system for MISA events, check-ins, and
-  voting eligibility.
+  A 550-member event and eligibility system that made MISA check-ins 75% faster.
 techStack:
   - nextjs
   - tailwind
@@ -41,7 +40,7 @@ The system we built provides a simple, centralized solution. At its heart is the
 We then built a clean front-end interface that Operations Managers can use on a laptop or tablet at the entrance of any event. When a member checks in, the manager finds their name and, with a single click, marks them as attended. This instantly updates the master sheet, placing a checkmark next to their name for that specific event.
 
 The system changed how MISA runs event operations.
-*   **Faster check-ins:** Event attendance moved from manual sheets to a digital flow.
+*   **Faster check-ins:** Event attendance moved from manual sheets to a digital flow, making check-ins **75% faster**.
 *   **Cleaner records:** The team has a single view of member engagement.
 *   **Voting eligibility:** Election prep no longer depends on manually comparing spreadsheets.
 
