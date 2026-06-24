@@ -35,15 +35,15 @@ const productOrder = ["Bytespace", "NextPay (YC W21)", "Sip & Scale"];
 const productCopy = {
   Bytespace: {
     role: "Product engineer",
-    line: "Working on Bot0 setup, reliability, and small fixes that make it easier to use.",
+    line: "Improving Bot0 onboarding and reliability so teams hit fewer snags getting agents live.",
   },
   "NextPay (YC W21)": {
     role: "Software engineer intern",
-    line: "Helping with dashboard and web work for Filipino small businesses.",
+    line: "Shipping dashboard and web flows that make finance ops lighter for Filipino small businesses.",
   },
   "Sip & Scale": {
     role: "Product engineering",
-    line: "Making web and member tools for a founder community.",
+    line: "Building the site and member systems behind a founder community across 20+ cities.",
   },
 };
 
@@ -66,15 +66,19 @@ const projectLabels = {
 };
 
 const timelineCopy = {
-  Bytespace: "Small product fixes around setup and reliability.",
-  "Sip & Scale": "Web and member tools for a founder group.",
+  Bytespace: "Cleaner Bot0 setup and reliability for real customer workflows.",
+  "Sip & Scale":
+    "The public site and member systems behind a founder network across 20+ cities.",
+  Crystal: "A shared team-memory experiment, currently a StartupQC finalist.",
   SALBAR: "An offline-first emergency health prototype.",
-  "NextPay (YC W21)": "Dashboard work for small businesses.",
-  "Ateneo MISA": "Workshops and tools for student events.",
-  "One Big Match": "A matching game for student events.",
-  "You can just do things.": "A talk about starting before you feel ready.",
+  "NextPay (YC W21)":
+    "Dashboard updates that made small-business finance ops less manual.",
+  "Ateneo MISA": "Developer workshops and faster check-ins for student events.",
+  "One Big Match": "A phone-based mixer game piloted at student events.",
+  "You can just do things.":
+    "A campus talk on starting before the perfect plan exists.",
   "Ateneo de Manila University": "BS Computer Science.",
-  TEDxAteneoDeManila: "Website for TEDxAteneoDeManila.",
+  TEDxAteneoDeManila: "A clean event site for TEDxAteneoDeManila.",
 };
 
 function timelineLogoKey(entry) {
