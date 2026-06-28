@@ -72,7 +72,7 @@ const principles = [
 
 const bionote = [
   "Alexi Cañamo is a 19-year-old founder and product engineer in Manila, studying Computer Science at Ateneo de Manila University as a DOST Merit Scholar.",
-  "He builds useful things close to real people: tools for enlistment, grades, events, and teams trying to move faster.",
+  "He builds software around problems he has seen up close: enlistment, grades, event operations, fintech dashboards, and team workflows.",
   "His work includes Ateneo's QPI Calculator, Enlistment Helper, Hati, and One Big Match, plus projects with Bytespace, NextPay, Sip & Scale, Ateneo MISA, TEDxAteneoDeManila, and StartupQC.",
 ];
 
@@ -321,9 +321,10 @@ export default function AboutClient() {
             variants={item}
             className="mt-7 max-w-2xl text-pretty text-[clamp(1.15rem,2vw,1.6rem)] font-medium leading-[1.2] tracking-[-0.018em] text-[var(--portfolio-ink)]"
           >
-            I’m a 19-year-old founder and product engineer in Manila. I like
-            finding the small moments where people work around bad tools, then
-            building something better with friends.
+            I’m a 19-year-old founder and product engineer in Manila. Most of my
+            work starts from problems I’ve seen up close: student workflows,
+            event operations, fintech dashboards, and teams trying to move
+            faster.
           </motion.p>
           <motion.div variants={item} className="mt-8 flex flex-wrap gap-5">
             <TextLink href="/projects">See the work</TextLink>
