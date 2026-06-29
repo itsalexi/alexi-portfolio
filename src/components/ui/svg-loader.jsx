@@ -10,14 +10,8 @@ export function SvgLoader({ className, size = 64 }) {
       className={className}
       aria-label="Loading"
       role="img"
+      color="var(--portfolio-ink)"
     >
-      <defs>
-        <linearGradient id="loaderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#6366F1" />
-          <stop offset="50%" stopColor="#06B6D4" />
-          <stop offset="100%" stopColor="#8B5CF6" />
-        </linearGradient>
-      </defs>
       <path
         className="loader-path"
         pathLength="100"

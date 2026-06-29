@@ -9,6 +9,7 @@ import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { socials } from "../../config/socials";
+import { usePreloaderReady } from "../../hooks/usePreloaderReady";
 
 const reveal = {
   hidden: {},
@@ -84,11 +85,13 @@ const links = [
 ];
 
 function Section({ eyebrow, title, body, children, className = "" }) {
+  const isReady = usePreloaderReady();
+
   return (
     <motion.section
       variants={reveal}
       initial="hidden"
-      whileInView="visible"
+      whileInView={isReady ? "visible" : "hidden"}
       viewport={{ once: true, margin: "-96px" }}
       className={`py-10 sm:py-14 ${className}`}
     >
@@ -277,12 +280,14 @@ function PhotoCarousel() {
 }
 
 export default function AboutClient() {
+  const isReady = usePreloaderReady();
+
   return (
     <main className="mx-auto min-h-screen max-w-[1040px] px-5 pt-24 sm:px-8 sm:pt-28 lg:px-10">
       <motion.section
         variants={reveal}
         initial="hidden"
-        animate="visible"
+        animate={isReady ? "visible" : "hidden"}
         className="grid gap-10 py-10 sm:grid-cols-[17rem_1fr] sm:items-center sm:py-14 md:min-h-[calc(66dvh-4rem)] md:grid-cols-[19rem_1fr]"
       >
         <motion.div

@@ -10,6 +10,7 @@ import ExperienceFilter from "../components/ExperienceFilter";
 import Hero from "../components/Hero";
 import { socials } from "../config/socials";
 import experienceData from "../data/experience.json";
+import { usePreloaderReady } from "../hooks/usePreloaderReady";
 import { cn } from "../lib/utils";
 
 const reveal = {
@@ -155,11 +156,13 @@ function Section({
   className = "",
   align = "split",
 }) {
+  const isReady = usePreloaderReady();
+
   return (
     <motion.section
       variants={reveal}
       initial="hidden"
-      whileInView="visible"
+      whileInView={isReady ? "visible" : "hidden"}
       viewport={{ once: true, margin: "-96px" }}
       className={`py-12 sm:py-16 ${className}`}
     >
@@ -615,6 +618,7 @@ function ActivityPanels({ recentBlogs = [], talks = [], hackathons = [] }) {
 
 function AboutContactStrip() {
   const [copied, setCopied] = useState(false);
+  const isReady = usePreloaderReady();
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText(socials.email);
@@ -626,7 +630,7 @@ function AboutContactStrip() {
     <motion.section
       variants={reveal}
       initial="hidden"
-      whileInView="visible"
+      whileInView={isReady ? "visible" : "hidden"}
       viewport={{ once: true, margin: "-96px" }}
       className="py-14 sm:py-20"
     >

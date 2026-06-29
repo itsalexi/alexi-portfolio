@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import { Toaster, toast } from "sonner";
 import { socials } from "../config/socials";
+import { usePreloaderReady } from "../hooks/usePreloaderReady";
 
 const heroLinks = [
   { label: "Work", href: "/projects" },
@@ -51,6 +52,8 @@ function MagneticLink({ link }) {
 }
 
 export default function Hero() {
+  const isReady = usePreloaderReady();
+
   const copyEmail = async () => {
     await navigator.clipboard.writeText(socials.email);
     toast.success("Email copied");
@@ -63,7 +66,7 @@ export default function Hero() {
       <motion.div
         variants={container}
         initial="hidden"
-        animate="visible"
+        animate={isReady ? "visible" : "hidden"}
         className="relative flex min-h-[calc(58dvh-4rem)] w-full flex-col justify-center py-12 sm:py-16"
       >
         <motion.div variants={item} className="mb-10 flex items-center gap-4">

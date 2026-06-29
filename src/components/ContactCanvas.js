@@ -11,6 +11,7 @@ import {
 import { motion } from "motion/react";
 import { useState } from "react";
 import { socials } from "../config/socials";
+import { usePreloaderReady } from "../hooks/usePreloaderReady";
 
 const links = [
   { label: "GitHub", href: socials.github, icon: IconBrandGithub },
@@ -36,6 +37,7 @@ const item = {
 
 export default function ContactCanvas({ compact = false, showHeader = true }) {
   const [copied, setCopied] = useState(false);
+  const isReady = usePreloaderReady();
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText(socials.email);
@@ -48,7 +50,7 @@ export default function ContactCanvas({ compact = false, showHeader = true }) {
       id="contact"
       variants={reveal}
       initial="hidden"
-      whileInView="visible"
+      whileInView={isReady ? "visible" : "hidden"}
       viewport={{ once: true, margin: "-96px" }}
       className={compact ? "pb-14 sm:pb-20" : "py-16 sm:py-24"}
     >

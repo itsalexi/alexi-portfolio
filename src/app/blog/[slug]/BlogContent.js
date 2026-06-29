@@ -1,8 +1,156 @@
 "use client";
 
+import { Children, isValidElement } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import EditorialHeader from "@/components/EditorialHeader";
+
+function getText(children) {
+  return Children.toArray(children)
+    .map((child) => {
+      if (typeof child === "string" || typeof child === "number") {
+        return String(child);
+      }
+
+      if (isValidElement(child)) {
+        return getText(child.props.children);
+      }
+
+      return "";
+    })
+    .join("");
+}
+
+function isWhitespace(child) {
+  return typeof child === "string" && child.trim() === "";
+}
+
+function isImageElement(child) {
+  return (
+    isValidElement(child) &&
+    (child.type === ArticleImage || child.type === "img" || child.props?.src)
+  );
+}
+
+function isImageOnly(children) {
+  const content = Children.toArray(children).filter(
+    (child) => !isWhitespace(child),
+  );
+  return content.length === 1 && isImageElement(content[0]);
+}
+
+function isStandaloneEmphasis(children) {
+  const content = Children.toArray(children).filter(
+    (child) => !isWhitespace(child),
+  );
+  return (
+    content.length === 1 &&
+    isValidElement(content[0]) &&
+    content[0].type === "em"
+  );
+}
+
+function isLearningTrailText(text = "") {
+  return text.startsWith("Visual Basic → Wix websites → IcyFox");
+}
+
+function isMessageScreenshot(src = "") {
+  return /\/images\/blogs\/do-something-before-you-have-to\/(?:cold-outreach|feedback|nextpay)-/.test(
+    src,
+  );
+}
+
+const articleImageRatios = {
+  "/images/blogs/do-something-before-you-have-to/builder-workshop-group.webp":
+    "1600 / 900",
+  "/images/blogs/do-something-before-you-have-to/cold-outreach-internship.webp":
+    "642 / 382",
+  "/images/blogs/do-something-before-you-have-to/feedback-schedule-maker.webp":
+    "694 / 718",
+  "/images/blogs/do-something-before-you-have-to/hati-laptop.webp":
+    "1500 / 1100",
+  "/images/blogs/do-something-before-you-have-to/leni-robredo-qtrzip.webp":
+    "1400 / 1050",
+  "/images/blogs/do-something-before-you-have-to/naga-hackathon-pitch.webp":
+    "1500 / 950",
+  "/images/blogs/do-something-before-you-have-to/nextpay-invite.webp":
+    "682 / 304",
+  "/images/blogs/do-something-before-you-have-to/qpi-calculator-room.webp":
+    "1600 / 762",
+  "/images/blogs/do-something-before-you-have-to/quiet-cafe-work.webp":
+    "940 / 760",
+  "/images/blogs/do-something-before-you-have-to/sip-scale-room.webp":
+    "1600 / 900",
+  "/images/blogs/do-something-before-you-have-to/visible-work-impressions.webp":
+    "1094 / 684",
+};
+
+function getArticleImageRatio(src = "") {
+  return articleImageRatios[src.split("?")[0]];
+}
+
+function LearningTrail({ text }) {
+  const items = text.split("→").map((item) => item.trim());
+
+  return (
+    <div className="my-8 overflow-hidden rounded-[18px] border border-white/[0.08] bg-white/[0.035] p-4 shadow-[var(--shadow-border)]">
+      <div className="flex flex-wrap items-center gap-2">
+        {items.map((item, index) => (
+          <span key={item} className="contents">
+            <span className="rounded-full border border-white/[0.08] bg-white/[0.035] px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-[var(--portfolio-ink-muted)]">
+              {item}
+            </span>
+            {index < items.length - 1
+              ? <span className="font-mono text-xs text-[var(--portfolio-ink-faint)]">
+                  →
+                </span>
+              : null}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ArticleImage({ src, alt, title }) {
+  const isMessage = isMessageScreenshot(src);
+  const aspectRatio = getArticleImageRatio(src);
+
+  return (
+    <figure
+      className={
+        isMessage ? "my-10 mx-auto max-w-[min(100%,34rem)]" : "my-10 w-full"
+      }
+    >
+      <div
+        style={aspectRatio ? { aspectRatio } : undefined}
+        className={
+          isMessage
+            ? "overflow-hidden rounded-[18px] border border-white/[0.08] bg-white/[0.035] p-2 shadow-[var(--shadow-border)]"
+            : "overflow-hidden rounded-[18px] border border-white/[0.06] bg-white/[0.025] shadow-[var(--shadow-border)]"
+        }
+      >
+        <img
+          src={src}
+          alt={alt}
+          className={
+            isMessage
+              ? "h-full w-full rounded-[12px] object-contain"
+              : aspectRatio
+                ? "h-full w-full rounded-[18px] object-cover"
+                : "w-full rounded-[18px]"
+          }
+          loading="lazy"
+        />
+      </div>
+      {title
+        ? <figcaption className="mt-3 border-l border-white/[0.12] pl-3 font-mono text-[0.68rem] uppercase tracking-[0.13em] text-[var(--portfolio-ink-faint)]">
+            {title}
+          </figcaption>
+        : null}
+    </figure>
+  );
+}
 
 export default function BlogContent({ blog }) {
   return (
@@ -11,7 +159,7 @@ export default function BlogContent({ blog }) {
         <EditorialHeader
           eyebrow="Writing"
           title={blog.title}
-          body={blog.excerpt}
+          body={blog.subtitle || blog.excerpt}
           meta={[
             blog.date,
             blog.readTime,
@@ -21,13 +169,20 @@ export default function BlogContent({ blog }) {
         />
 
         {blog.image
-          ? <div className="mb-12 overflow-hidden rounded-[18px] bg-white/[0.025] shadow-[var(--shadow-border)]">
-              <img
-                src={blog.image}
-                alt={blog.title}
-                className="h-72 w-full object-cover object-top opacity-88 md:h-96"
-              />
-            </div>
+          ? <figure className="mb-12">
+              <div className="overflow-hidden rounded-[18px] border border-white/[0.06] bg-white/[0.025] shadow-[var(--shadow-border)]">
+                <img
+                  src={blog.image}
+                  alt={blog.title}
+                  className="h-72 w-full object-cover object-center opacity-92 sm:h-96 lg:h-[30rem]"
+                />
+              </div>
+              {blog.subtitle
+                ? <figcaption className="mt-3 border-l border-white/[0.12] pl-3 font-mono text-[0.68rem] uppercase tracking-[0.13em] text-[var(--portfolio-ink-faint)]">
+                    entering junior year.
+                  </figcaption>
+                : null}
+            </figure>
           : null}
 
         <div className="mx-auto max-w-[720px]">
@@ -54,11 +209,31 @@ export default function BlogContent({ blog }) {
                   {children}
                 </h4>
               ),
-              p: ({ children }) => (
-                <p className="mb-5 text-base leading-8 text-[var(--portfolio-ink-muted)]">
-                  {children}
-                </p>
-              ),
+              p: ({ children }) => {
+                if (isImageOnly(children)) {
+                  return <>{children}</>;
+                }
+
+                const text = getText(children).trim();
+
+                if (isLearningTrailText(text)) {
+                  return <LearningTrail text={text} />;
+                }
+
+                if (isStandaloneEmphasis(children)) {
+                  return (
+                    <p className="mb-6 font-mono text-[0.72rem] uppercase tracking-[0.13em] text-[var(--portfolio-ink-faint)]">
+                      {text}
+                    </p>
+                  );
+                }
+
+                return (
+                  <p className="mb-5 text-base leading-8 text-[var(--portfolio-ink-muted)]">
+                    {children}
+                  </p>
+                );
+              },
               ul: ({ children }) => (
                 <ul className="mb-7 space-y-3">{children}</ul>
               ),
@@ -96,13 +271,7 @@ export default function BlogContent({ blog }) {
                   {children}
                 </blockquote>
               ),
-              img: ({ src, alt }) => (
-                <img
-                  src={src}
-                  alt={alt}
-                  className="my-8 w-full rounded-[16px]"
-                />
-              ),
+              img: ArticleImage,
               hr: () => <hr className="my-10 border-white/[0.08]" />,
               table: ({ children }) => (
                 <div className="my-7 overflow-x-auto">

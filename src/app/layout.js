@@ -5,6 +5,7 @@ import BackgroundEffects from "../components/BackgroundEffects";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import PageTransition from "../components/PageTransition";
+import { Preloader } from "../components/ui/preloader";
 import { siteConfig } from "../lib/seo";
 
 const geistSans = Geist({
@@ -109,6 +110,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
+        <script
+          id="preloader-session-state"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: This only mirrors a local sessionStorage flag onto the root element before hydration.
+          dangerouslySetInnerHTML={{
+            __html:
+              'try{if(window.sessionStorage.getItem("preloader-seen")==="1"){document.documentElement.dataset.preloaderSeen="true";document.documentElement.dataset.preloaderReady="true";}else{document.documentElement.dataset.preloaderReady="false";}}catch(error){document.documentElement.dataset.preloaderReady="false";}',
+          }}
+        />
+
         {/* Structured Data - Person Schema */}
         <Script
           id="person-schema"
@@ -218,6 +228,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-[var(--portfolio-bg)] font-sans antialiased`}
       >
+        <Preloader />
         <BackgroundEffects />
         <div className="relative z-10">
           <Navbar />
