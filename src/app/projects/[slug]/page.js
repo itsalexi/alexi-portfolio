@@ -29,7 +29,7 @@ export async function generateMetadata({ params }) {
       frontmatter.description ||
       `${frontmatter.title} is a project by Alexi Canamo.`,
     path: `/projects/${slug}`,
-    image: frontmatter.image || "/og-image.png",
+    image: `/projects/${slug}/opengraph-image`,
     type: "article",
     modifiedTime: stats.mtime.toISOString(),
   });

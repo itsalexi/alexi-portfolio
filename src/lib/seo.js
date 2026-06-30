@@ -62,6 +62,10 @@ export function createMetadata({
       : `${title} | ${siteConfig.name}`;
   const imageUrl = absoluteUrl(image || siteConfig.ogImage);
   const defaultImage = image === siteConfig.ogImage || !image;
+  const generatedImage =
+    /(^\/og\?)|(^\/.*\/opengraph-image$)|(^\/opengraph-image$)/.test(
+      image || "",
+    );
 
   const metadata = {
     title: absoluteTitle ? { absolute: title } : title,
@@ -78,7 +82,9 @@ export function createMetadata({
         {
           url: imageUrl,
           alt: `${title} preview`,
-          ...(defaultImage ? { width: 1200, height: 630 } : {}),
+          ...(defaultImage || generatedImage
+            ? { width: 1200, height: 630, type: "image/png" }
+            : {}),
         },
       ],
       type,

@@ -24,7 +24,6 @@ export async function generateMetadata({ params }) {
   const description =
     hackathon.highlights?.[0] ||
     `${hackathon.title} — ${hackathon.event} (${hackathon.result})`;
-  const ogImage = hackathon.images?.[0] || hackathon.image || "/og-image.png";
   const filePath = `${getHackathonsDirectory()}/${slug}.md`;
   const stats = fs.existsSync(filePath) ? fs.statSync(filePath) : null;
 
@@ -32,7 +31,7 @@ export async function generateMetadata({ params }) {
     title: hackathon.title,
     description,
     path: `/hackathons/${slug}`,
-    image: ogImage,
+    image: `/hackathons/${slug}/opengraph-image`,
     type: "article",
     publishedTime: dateToIso(hackathon.date),
     modifiedTime: stats?.mtime.toISOString(),

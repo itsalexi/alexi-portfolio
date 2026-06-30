@@ -7,6 +7,7 @@ export const metadata = createMetadata({
   description:
     "Email Alexi Canamo about projects, talks, student tools, events, or a quick hello.",
   path: "/contact",
+  image: "/og?page=contact",
 });
 
 export default function ContactPage() {

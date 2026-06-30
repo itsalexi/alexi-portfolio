@@ -10,6 +10,7 @@ export const metadata = createMetadata({
   description:
     "Projects by Alexi Canamo, including Hati, One Big Match, the Ateneo QPI Calculator, Enlistment Helper, and event tools.",
   path: "/projects",
+  image: "/og?page=projects",
 });
 
 function ProjectsHeader() {

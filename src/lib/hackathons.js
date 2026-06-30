@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
 
 export function getHackathonsDirectory() {
@@ -7,8 +7,19 @@ export function getHackathonsDirectory() {
 }
 
 export function normalizeHighlights(highlights) {
+  const normalizeHighlight = (highlight) => {
+    if (typeof highlight === "string") return highlight.trim();
+    if (highlight && typeof highlight === "object") {
+      return Object.entries(highlight)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(" ")
+        .trim();
+    }
+    return String(highlight || "").trim();
+  };
+
   if (Array.isArray(highlights)) {
-    return highlights.map(String).map((s) => s.trim()).filter(Boolean);
+    return highlights.map(normalizeHighlight).filter(Boolean);
   }
   if (typeof highlights === "string") {
     return highlights
@@ -23,7 +34,10 @@ export function normalizeHighlights(highlights) {
 export function normalizeGalleryImages(images, fallbackImage) {
   let arr = [];
   if (Array.isArray(images)) {
-    arr = images.map(String).map((s) => s.trim()).filter(Boolean);
+    arr = images
+      .map(String)
+      .map((s) => s.trim())
+      .filter(Boolean);
   } else if (typeof images === "string") {
     arr = images
       .split("\n")
@@ -129,6 +143,6 @@ export function loadHackathonsForHome() {
       imageAlt,
       images,
       highlights,
-    })
+    }),
   );
 }

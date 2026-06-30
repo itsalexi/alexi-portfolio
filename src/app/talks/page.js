@@ -10,6 +10,7 @@ export const metadata = createMetadata({
   description:
     "Talks and workshops by Alexi Canamo on building, Python, student tools, and starting before you feel ready.",
   path: "/talks",
+  image: "/og?page=talks",
 });
 
 function TalksHeader() {

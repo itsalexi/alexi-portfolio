@@ -8,6 +8,7 @@ export const metadata = createMetadata({
   description:
     "Hackathon and competition projects by Alexi Canamo, from logistics marketplaces to offline emergency tools.",
   path: "/hackathons",
+  image: "/og?page=hackathons",
 });
 
 function HackathonsHeader() {

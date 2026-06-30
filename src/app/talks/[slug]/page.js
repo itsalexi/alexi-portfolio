@@ -23,16 +23,12 @@ export async function generateMetadata({ params }) {
   const description =
     frontmatter.shortDescription ||
     `${frontmatter.title} by Alexi Canamo at ${frontmatter.event}.`;
-  const image =
-    frontmatter.images && frontmatter.images.length > 0
-      ? frontmatter.images[0]
-      : "/og-image.png";
 
   return createMetadata({
     title: frontmatter.title,
     description,
     path: `/talks/${slug}`,
-    image,
+    image: `/talks/${slug}/opengraph-image`,
     type: "article",
     publishedTime: dateToIso(frontmatter.date),
     modifiedTime: stats.mtime.toISOString(),

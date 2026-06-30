@@ -11,6 +11,7 @@ export const metadata = createMetadata({
   description:
     "Notes by Alexi Canamo on school, work, bugs, and projects he is figuring out.",
   path: "/blog",
+  image: "/og?page=blog",
 });
 
 function BlogHeader() {

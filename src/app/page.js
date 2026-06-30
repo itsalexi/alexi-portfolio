@@ -10,6 +10,7 @@ export const metadata = createMetadata({
   title: siteConfig.title,
   description: siteConfig.description,
   path: "/",
+  image: "/og?page=home",
   absoluteTitle: true,
 });
 
