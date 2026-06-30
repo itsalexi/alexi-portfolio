@@ -115,6 +115,7 @@ export default function BlogClient({ blogs: initialBlogs = [] }) {
                 excerpt={blog.excerpt}
                 tags={blog.tags}
                 image={blog.image}
+                imagePosition={blog.imagePosition}
                 author={blog.author}
                 readTime={blog.readTime}
               />

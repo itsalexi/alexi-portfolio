@@ -11,6 +11,7 @@ tags:
   - College
   - Building
 image: /images/blogs/do-something-before-you-have-to/hero-cafe.webp
+imagePosition: top
 author: Alexi Canamo
 featured: true
 ---

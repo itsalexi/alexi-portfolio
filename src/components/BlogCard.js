@@ -10,7 +10,27 @@ function cleanSrc(src) {
   return src.split("?")[0];
 }
 
-export default function BlogCard({ slug, title, date, tags, readTime, image }) {
+function imageObjectPosition(position = "") {
+  const positions = {
+    top: "center top",
+    center: "center center",
+    bottom: "center bottom",
+    left: "left center",
+    right: "right center",
+  };
+
+  return positions[position] || positions.center;
+}
+
+export default function BlogCard({
+  slug,
+  title,
+  date,
+  tags,
+  readTime,
+  image,
+  imagePosition,
+}) {
   return (
     <Link href={`/blog/${slug}`} className="group block">
       <motion.article
@@ -54,7 +74,8 @@ export default function BlogCard({ slug, title, date, tags, readTime, image }) {
                 src={cleanSrc(image)}
                 alt={title}
                 fill
-                className="object-cover object-center opacity-78 transition-[scale,opacity] duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.035] group-hover:opacity-95"
+                className="object-cover opacity-78 transition-[scale,opacity] duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.035] group-hover:opacity-95"
+                style={{ objectPosition: imageObjectPosition(imagePosition) }}
                 sizes="(max-width: 768px) 100vw, 208px"
               />
             : <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-[0.16em] text-[var(--portfolio-ink-faint)]">

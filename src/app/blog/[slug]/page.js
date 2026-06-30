@@ -3,7 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import { use } from "react";
 import { calculateReadingTime } from "@/lib/reading-time";
-import { createMetadata, dateToIso } from "@/lib/seo";
+import { absoluteUrl, createMetadata, dateToIso } from "@/lib/seo";
 import BlogContent from "./BlogContent";
 
 // Generate static params for all blogs
@@ -40,15 +40,29 @@ export async function generateMetadata({ params }) {
   const { data: frontmatter } = matter(fileContents);
   const stats = fs.statSync(filePath);
 
-  return createMetadata({
+  const ogImage = `/blog/${slug}/opengraph-image`;
+  const metadata = createMetadata({
     title: frontmatter.title,
     description: frontmatter.excerpt || "Blog post by Alexi Canamo.",
     path: `/blog/${slug}`,
-    image: frontmatter.image || "/og-image.png",
+    image: ogImage,
     type: "article",
     publishedTime: dateToIso(frontmatter.date),
     modifiedTime: stats.mtime.toISOString(),
   });
+
+  metadata.openGraph.images = [
+    {
+      url: absoluteUrl(ogImage),
+      alt: `${frontmatter.title} preview`,
+      width: 1200,
+      height: 630,
+      type: "image/png",
+    },
+  ];
+  metadata.twitter.images = [absoluteUrl(ogImage)];
+
+  return metadata;
 }
 
 // Server component - reads file at build time
