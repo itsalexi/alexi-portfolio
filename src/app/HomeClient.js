@@ -31,9 +31,13 @@ const revealItem = {
   },
 };
 
-const productOrder = ["Bytespace", "NextPay (YC W21)", "Sip & Scale"];
+const productOrder = ["Swarm", "NextPay (YC W21)", "Bytespace"];
 
 const productCopy = {
+  Swarm: {
+    role: "Software engineer intern",
+    line: "Building compliance tooling that links overlapping privacy and security frameworks, so evidence is gathered once.",
+  },
   Bytespace: {
     role: "Product engineer",
     line: "Building core Bot0 agent-platform work across workflows, memory, and integrations. Shipped 8 improvements in under a month.",
@@ -71,6 +75,8 @@ const projectLabels = {
 };
 
 const timelineCopy = {
+  Swarm:
+    "Compliance tooling that maps overlapping privacy and security frameworks into one graph.",
   Bytespace:
     "Core Bot0 platform work: 8 product improvements in under a month, plus 5 reliability upgrades in one week.",
   "Sip & Scale":
@@ -339,6 +345,7 @@ function BuilderTimeline({ talks = [], hackathons = [] }) {
   };
 
   const timelineItems = [
+    findExperience("Swarm"),
     findExperience("Bytespace"),
     hackathonEntry("crystal"),
     hackathonEntry("salbar"),

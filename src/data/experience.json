@@ -5,6 +5,24 @@
       "items": [
         {
           "type": "work",
+          "title": "Software Engineer Intern",
+          "company": "Swarm",
+          "duration": "Jul 2026 – Present",
+          "location": "Manila, Philippines",
+          "summary": "Building compliance tooling that maps overlapping privacy and security frameworks so evidence can be reused across them.",
+          "details": [
+            "Built a cross-framework compliance graph over 2,711 requirements from 7 privacy and security frameworks, including GDPR, the Philippine Data Privacy Act, and NIST CSF 2.0.",
+            "Derived 2,182 scored links between equivalent controls, so evidence gathered once can be reused against another framework instead of collected again."
+          ],
+          "skills": [
+            "Compliance Automation",
+            "Data Modeling",
+            "Graph Systems",
+            "Backend Engineering"
+          ]
+        },
+        {
+          "type": "work",
           "title": "Product Engineer",
           "company": "Bytespace",
           "duration": "May 2026 – Present",

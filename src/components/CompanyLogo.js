@@ -2,6 +2,13 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const logos = {
+  Swarm: {
+    image: "/images/logos/swarm.webp",
+    label: "Swarm",
+    className: "bg-[#0b0b18] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)]",
+    imageBoxClassName: "h-full w-full",
+    imageClassName: "object-cover",
+  },
   Bytespace: {
     image: "/images/logos/bytespace.webp",
     label: "Bytespace",
