@@ -347,3 +347,207 @@
     transform: translate(calc(-50% - 0.5rem));
   }
 }
+
+/* An open sky. All cloud volume and scenery is rendered procedurally in Three.js. */
+.portfolio-home {
+  --sky-overlap: clamp(300px, 54svh, 600px);
+}
+.cloud-hero {
+  position: relative;
+  isolation: isolate;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: -32px;
+  height: calc(max(100svh, 800px) + 95svh);
+  background: var(--portfolio-bg);
+  overflow: clip;
+}
+.cloud-hero-stage {
+  position: sticky;
+  top: 0;
+  height: max(100svh, 800px);
+  background: linear-gradient(#101c32, #233652 58%, var(--portfolio-bg) 91%);
+  overflow: clip;
+  opacity: var(--sky-visibility, 1);
+}
+.cloud-world {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.cloud-world[data-ready="true"] {
+  opacity: 1;
+}
+.cloud-world canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.cloud-world canvas,
+.cloud-world img {
+  outline: none;
+  border: 0;
+}
+.cloud-world {
+  mask-image: linear-gradient(
+    #000 57%,
+    rgba(0, 0, 0, 0.95) 67%,
+    rgba(0, 0, 0, 0.35) 83%,
+    transparent 94%
+  );
+}
+.cloud-world.cloud-world-unavailable {
+  opacity: 0;
+}
+.cloud-legibility {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 58% 43% at 44% 43%,
+    rgba(6, 14, 28, 0.66),
+    rgba(6, 14, 28, 0.18) 75%,
+    transparent 100%
+  );
+}
+.cloud-original-introduction {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(100px, 15vh, 160px) 20px 0;
+  transform-origin: 50% 30%;
+}
+.cloud-hero-bottom {
+  position: absolute;
+  z-index: 3;
+  bottom: 135px;
+  left: max(40px, calc((100% - 900px) / 2));
+  right: max(40px, calc((100% - 900px) / 2));
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+.cloud-scroll,
+.cloud-pause {
+  display: inline-flex;
+  align-items: center;
+  gap: 17px;
+  min-height: 44px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: #b5bdc8;
+}
+.cloud-scroll span {
+  font-size: 19px;
+}
+.cloud-pause {
+  font-size: 9px;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.cloud-pause span {
+  font-size: 13px;
+  color: #decaa3;
+}
+.cloud-pause:hover,
+.cloud-scroll:hover {
+  color: #fff0d3;
+}
+.cloud-ground-fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    transparent 61%,
+    rgba(8, 8, 7, 0.15) 71%,
+    rgba(8, 8, 7, 0.85) 87%,
+    var(--portfolio-bg) 94%
+  );
+}
+@media (min-width: 640px) {
+  .cloud-hero {
+    margin-top: -40px;
+  }
+}
+@media (max-width: 760px) {
+  .cloud-hero {
+    height: calc(max(100svh, 850px) + 80svh);
+  }
+  .cloud-hero-stage {
+    height: max(100svh, 850px);
+  }
+  .cloud-original-introduction {
+    padding-top: 80px;
+  }
+  .cloud-hero-bottom {
+    left: 24px;
+    right: 24px;
+    bottom: 90px;
+  }
+  .cloud-scroll {
+    font-size: 7px;
+    gap: 10px;
+  }
+  .cloud-pause {
+    font-size: 8px;
+    gap: 9px;
+  }
+  .cloud-ground-fade {
+    background: linear-gradient(
+      180deg,
+      transparent 60%,
+      rgba(8, 8, 7, 0.3) 74%,
+      var(--portfolio-bg) 94%
+    );
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-home {
+    --sky-overlap: 64px;
+  }
+  .cloud-hero {
+    height: auto;
+  }
+  .cloud-hero-stage {
+    position: relative;
+  }
+  .cloud-world {
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+.cloud-hero:has(.cloud-world-unavailable) {
+  height: auto;
+}
+.cloud-hero:has(.cloud-world-unavailable) .cloud-hero-stage {
+  position: relative;
+  opacity: 1;
+}
+.portfolio-home:has(.cloud-world-unavailable) {
+  --sky-overlap: 64px;
+}
+
+#current-work {
+  position: relative;
+  margin-top: calc(-1 * var(--sky-overlap, 64px));
+}
+
+@media (min-width: 640px) {
+  .cloud-original-introduction {
+    padding-inline: 32px;
+  }
+}
+@media (min-width: 1024px) {
+  .cloud-original-introduction {
+    padding-inline: 40px;
+  }
+}

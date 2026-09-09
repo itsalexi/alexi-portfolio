@@ -25,9 +25,9 @@
           "type": "work",
           "title": "Product Engineer",
           "company": "Bytespace",
-          "duration": "May 2026 – Present",
+          "duration": "May 2026 – Sep 2026",
           "location": "San Francisco, CA · Remote",
-          "summary": "Building core Bot0 agent-platform work across workflows, memory, and integrations; shipped 8 product improvements in under a month.",
+          "summary": "Built core Bot0 agent-platform work across workflows, memory, and integrations; shipped 8 product improvements in under a month.",
           "details": [
             "Shipped 8 product improvements across Bot0 agent workflows, memory, and integrations in under a month.",
             "Delivered 5 integration and workflow reliability upgrades in one week.",
@@ -44,13 +44,13 @@
           "type": "work",
           "title": "Head of Product & Engineering",
           "company": "Sip & Scale",
-          "duration": "Jan 2026 – Present",
+          "duration": "2026",
           "location": "Global",
-          "summary": "Leading product engineering for a founder community across 20+ cities, 50+ events, and 1,000+ builders.",
+          "summary": "Led product engineering for a founder community across 20+ cities, 50+ events, and 1,000+ builders.",
           "details": [
             "Set the technical roadmap for the public site and internal tools used across partnerships, operations, and community.",
             "Built a site that ranks #1 for branded search and reached 600 unique page views.",
-            "Turn founder-community operations into lightweight product systems for events, members, and partnerships."
+            "Turned founder-community operations into lightweight product systems for events, members, and partnerships."
           ],
           "skills": [
             "Technical Architecture",

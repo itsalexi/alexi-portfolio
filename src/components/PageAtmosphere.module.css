@@ -1,0 +1,214 @@
+.atmosphere {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background-size: 1600px 1200px;
+  mask-image: linear-gradient(
+    transparent,
+    #000 200px,
+    #000 calc(100% - 160px),
+    transparent
+  );
+}
+
+.home {
+  top: 110svh;
+}
+
+.band {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 760px;
+  transform: translateY(-50%);
+}
+
+.firefly {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  color: var(--glow);
+  background: currentColor;
+  box-shadow: 0 0 5px 1px color-mix(in srgb, currentColor 28%, transparent);
+  opacity: 0.2;
+  animation: wander var(--duration) ease-in-out var(--delay) infinite;
+  animation-play-state: paused;
+}
+
+.meteor {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: 110px;
+  height: 1px;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent, #b9c9c6);
+  transform: rotate(33deg);
+  transform-origin: right center;
+  animation: pass var(--duration) linear var(--delay) infinite;
+  animation-play-state: paused;
+}
+
+.band[data-visible="true"] :is(.firefly, .meteor, .twinkle, .distantLight) {
+  animation-play-state: running;
+}
+.atmosphere[data-hidden="true"]
+  :is(.firefly, .meteor, .twinkle, .distantLight) {
+  animation-play-state: paused;
+}
+
+@keyframes wander {
+  0%,
+  100% {
+    opacity: 0.12;
+    transform: translate3d(0, 5px, 0);
+  }
+  32% {
+    opacity: 0.64;
+  }
+  55% {
+    opacity: 0.18;
+    transform: translate3d(var(--drift), -38px, 0);
+  }
+  76% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes pass {
+  /* Half the cycle, four times its visible share: 2x frequency and lifetime. */
+  0% {
+    opacity: 0;
+    transform: translate3d(-120px, -72px, 0) rotate(31deg) scaleX(0.45);
+  }
+  16% {
+    opacity: 0.62;
+  }
+  52% {
+    opacity: 0;
+    transform: translate3d(180px, 108px, 0) rotate(31deg) scaleX(0.9);
+  }
+  56%,
+  100% {
+    opacity: 0;
+    transform: translate3d(180px, 108px, 0) rotate(31deg) scaleX(0.9);
+  }
+}
+
+.meteor::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -1px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #d8e2df;
+  box-shadow: 0 0 5px rgb(216 226 223 / 25%);
+}
+
+@media (max-width: 640px) {
+  .firefly[data-side="left"] {
+    left: 8px;
+  }
+  .firefly[data-side="right"] {
+    left: calc(100% - 10px);
+  }
+  .meteor {
+    width: 66px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .firefly {
+    animation: none;
+    opacity: 0.15;
+  }
+  .meteor {
+    display: none;
+  }
+}
+
+.twinkle {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: 1.5px;
+  height: 1.5px;
+  border-radius: 50%;
+  background: #d0d7d4;
+  opacity: 0.16;
+  animation: glimmer var(--duration) ease-in-out var(--delay) infinite;
+  animation-play-state: paused;
+}
+
+.distantLight {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #bccbd2;
+  opacity: 0;
+  animation: crossing 34s linear var(--delay) infinite;
+  animation-play-state: paused;
+}
+
+.distantLight::before {
+  content: "";
+  position: absolute;
+  right: 1px;
+  width: 26px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(188 203 210 / 20%));
+}
+
+@keyframes glimmer {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  44% {
+    opacity: 0.65;
+  }
+  57% {
+    opacity: 0.25;
+  }
+  68% {
+    opacity: 0.48;
+  }
+}
+
+@keyframes crossing {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(-110px, 20px, 0);
+  }
+  15% {
+    opacity: 0.4;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  97% {
+    opacity: 0;
+    transform: translate3d(170px, -20px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .twinkle {
+    animation: none;
+    opacity: 0.2;
+  }
+  .distantLight {
+    display: none;
+  }
+}

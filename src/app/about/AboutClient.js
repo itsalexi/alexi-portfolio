@@ -44,7 +44,7 @@ const lifeImages = [
 const introFacts = [
   "19 / Manila",
   "CS @ Ateneo",
-  "Product engineer @ Bytespace",
+  "Engineering @ Swarm & NextPay",
 ];
 
 const story = [
@@ -73,6 +73,7 @@ const principles = [
 
 const bionote = [
   "Alexi Cañamo is a 19-year-old founder and product engineer in Manila, studying Computer Science at Ateneo de Manila University as a DOST Merit Scholar.",
+  "He is currently a software engineer intern at Swarm and NextPay.",
   "He builds software around problems he has seen up close: enlistment, grades, event operations, fintech dashboards, and team workflows.",
   "His work includes Ateneo's QPI Calculator, Enlistment Helper, Hati, and One Big Match, plus projects with Bytespace, NextPay, Sip & Scale, Ateneo MISA, TEDxAteneoDeManila, and StartupQC.",
 ];

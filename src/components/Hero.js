@@ -83,7 +83,7 @@ export default function Hero() {
           <div>
             <p className="quiet-label mb-2">Alexi Canamo</p>
             <p className="text-sm text-[var(--portfolio-ink-muted)]">
-              Manila / Ateneo / Bytespace
+              Manila / Ateneo / Swarm & NextPay
             </p>
           </div>
         </motion.div>
@@ -100,8 +100,8 @@ export default function Hero() {
           className="mt-6 max-w-2xl text-[clamp(1.25rem,2.15vw,1.8rem)] font-medium leading-[1.2] tracking-[-0.018em] text-[var(--portfolio-ink)]"
         >
           I’m a 19-year-old founder and product engineer in Manila, currently at
-          Bytespace. I build tools that students, startups, and communities
-          actually use.
+          Swarm and NextPay. I build tools that students, startups, and
+          communities actually use.
         </motion.p>
 
         <motion.div

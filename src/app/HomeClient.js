@@ -5,9 +5,9 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import Hero from "../components/CloudHero";
 import CompanyLogo from "../components/CompanyLogo";
 import ExperienceFilter from "../components/ExperienceFilter";
-import Hero from "../components/Hero";
 import { socials } from "../config/socials";
 import experienceData from "../data/experience.json";
 import { usePreloaderReady } from "../hooks/usePreloaderReady";
@@ -31,24 +31,16 @@ const revealItem = {
   },
 };
 
-const productOrder = ["Swarm", "NextPay (YC W21)", "Bytespace"];
+const productOrder = ["Swarm", "NextPay (YC W21)"];
 
 const productCopy = {
   Swarm: {
     role: "Software engineer intern",
     line: "Building compliance tooling that links overlapping privacy and security frameworks, so evidence is gathered once.",
   },
-  Bytespace: {
-    role: "Product engineer",
-    line: "Building core Bot0 agent-platform work across workflows, memory, and integrations. Shipped 8 improvements in under a month.",
-  },
   "NextPay (YC W21)": {
     role: "Software engineer intern",
     line: "Shipping fintech dashboard and acquisition work for SMEs. Helped cut manual processing by 75%.",
-  },
-  "Sip & Scale": {
-    role: "Product engineering",
-    line: "Leading product engineering for a founder network across 20+ cities, 50+ events, and 1,000+ builders.",
   },
 };
 
@@ -161,6 +153,7 @@ function Section({
   children,
   className = "",
   align = "split",
+  revealOnScroll = true,
 }) {
   const isReady = usePreloaderReady();
 
@@ -168,7 +161,10 @@ function Section({
     <motion.section
       variants={reveal}
       initial="hidden"
-      whileInView={isReady ? "visible" : "hidden"}
+      animate={!revealOnScroll && isReady ? "visible" : undefined}
+      whileInView={
+        revealOnScroll ? (isReady ? "visible" : "hidden") : undefined
+      }
       viewport={{ once: true, margin: "-96px" }}
       className={`py-12 sm:py-16 ${className}`}
     >
@@ -245,6 +241,7 @@ function ProductWork() {
     <Section
       eyebrow="Now"
       title="What I’m working on."
+      revealOnScroll={false}
       align="split"
       className="pt-4 sm:pt-6"
     >
@@ -694,13 +691,15 @@ export default function HomeClient({
   hackathons = [],
 }) {
   return (
-    <div className="relative min-h-screen overflow-clip">
+    <div className="portfolio-home relative min-h-screen overflow-clip">
       <main className="mx-auto flex w-full max-w-[980px] flex-col px-5 pt-8 sm:px-8 sm:pt-10 lg:px-10">
         <section aria-label="Hero">
           <Hero />
         </section>
 
-        <ProductWork />
+        <div id="current-work" className="scroll-mt-24">
+          <ProductWork />
+        </div>
 
         <BuilderTimeline talks={talks} hackathons={hackathons} />
 

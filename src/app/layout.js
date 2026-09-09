@@ -4,6 +4,7 @@ import Script from "next/script";
 import BackgroundEffects from "../components/BackgroundEffects";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import PageAtmosphere from "../components/PageAtmosphere";
 import PageTransition from "../components/PageTransition";
 import { Preloader } from "../components/ui/preloader";
 import { siteConfig } from "../lib/seo";
@@ -45,8 +46,8 @@ export const metadata = {
     "JavaScript",
     "DOST Scholar",
     "MISA",
+    "Swarm",
     "NextPay",
-    "Bytespace",
     "Sip & Scale",
     "Hati app",
     "Enlistment Helper",
@@ -230,7 +231,8 @@ export default function RootLayout({ children }) {
       >
         <Preloader />
         <BackgroundEffects />
-        <div className="relative z-10">
+        <div className="relative z-10 isolate">
+          <PageAtmosphere />
           <Navbar />
           <PageTransition>{children}</PageTransition>
           <Footer />
