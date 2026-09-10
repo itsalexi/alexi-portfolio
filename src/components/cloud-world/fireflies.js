@@ -112,8 +112,48 @@ export function createFireflies(T, atmosphere) {
   const swarm = new T.Mesh(geometry, material);
   swarm.frustumCulled = false;
   scene.add(swarm);
+  const instanceOffsets = geometry.getAttribute("aOffset");
+  const instanceSeeds = geometry.getAttribute("aSeed");
   return {
     scene,
+    sample(index, time, target) {
+      if (index >= geometry.instanceCount) return false;
+      const phase = instanceSeeds.getX(index);
+      const speed = instanceSeeds.getY(index);
+      const t = time * (0.22 + speed * 0.16);
+      // Use the same uploaded float values and drift as the vertex shader.
+      // The temporary foreground glow fades into the actual cloud occlusion.
+      target.position.set(
+        instanceOffsets.getX(index) *
+          (1 - material.uniforms.uMobile.value * 0.55) +
+          Math.sin(t + phase) * 1.25 +
+          Math.sin(t * 0.43 + phase * 2) * 0.4,
+        instanceOffsets.getY(index) +
+          Math.sin(t * 0.73 + phase * 1.8) * 0.65 +
+          Math.sin(t * 1.9 + phase) * 0.13,
+        instanceOffsets.getZ(index) + Math.cos(t * 0.67 + phase) * 1.15,
+      );
+      const pulse =
+        (0.5 +
+          0.5 *
+            Math.sin(
+              time * (0.72 + instanceSeeds.getZ(index) * 0.7) + phase,
+            )) **
+        4;
+      const warmth = T.MathUtils.smoothstep(
+        instanceSeeds.getW(index),
+        0.35,
+        0.7,
+      );
+      target.color.setRGB(
+        0.64 + warmth * 0.36,
+        0.94 - warmth * 0.18,
+        0.29 + warmth * 0.01,
+      );
+      target.glow = 0.16 + pulse * 0.94;
+      target.radius = 0.16 + speed * 0.18;
+      return true;
+    },
     setMobile(value) {
       geometry.instanceCount = value ? 45 : 66;
       material.uniforms.uMobile.value = value ? 1 : 0;

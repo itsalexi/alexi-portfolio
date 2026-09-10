@@ -1,0 +1,138 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--portfolio-ink);
+}
+
+.veil {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 75% 56%, rgb(92 73 66 / 8%), transparent 60%),
+    linear-gradient(
+      180deg,
+      #0e1426,
+      #151e32 46%,
+      #253148 67%,
+      #0a0d11 90%,
+      #080807
+    );
+  opacity: 1;
+  transition: opacity 1100ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 1;
+  transition:
+    opacity 990ms cubic-bezier(0.4, 0, 0.2, 1),
+    filter 990ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.firefly {
+  position: absolute;
+  left: var(--firefly-x);
+  top: var(--firefly-y);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(var(--firefly-core)) 0%,
+    rgb(var(--firefly-color) / 75%) 9%,
+    rgb(var(--firefly-color) / 15%) 28%,
+    transparent 70%
+  );
+  opacity: var(--firefly-opacity);
+  transform: translate3d(-50%, -50%, 0);
+  animation: firefly-drift var(--firefly-duration) ease-in-out
+    var(--firefly-delay) infinite;
+}
+
+@keyframes firefly-drift {
+  0%,
+  100% {
+    opacity: var(--firefly-opacity);
+    transform: translate3d(-50%, -50%, 0);
+  }
+  50% {
+    opacity: calc(var(--firefly-opacity) + 0.12);
+    transform: translate3d(calc(-50% + 9px), calc(-50% - 12px), 0);
+  }
+}
+
+.overlay[data-phase="revealing"] .ambient:not([data-managed="true"]) {
+  opacity: 0;
+  filter: blur(0.6px);
+}
+
+@media (max-width: 759px) {
+  .firefly {
+    left: var(--firefly-mobile-x);
+    top: var(--firefly-mobile-y);
+  }
+}
+
+/* A small procedural star field is available before any scene assets arrive. */
+.veil::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221600%22%20height%3D%221000%22%3E%3Cg%20fill%3D%22%23cfc3a4%22%3E%3Ccircle%20cx%3D%22448%22%20cy%3D%22319%22%20r%3D%221%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%221330%22%20cy%3D%22489%22%20r%3D%220.65%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%221268%22%20cy%3D%2283%22%20r%3D%220.65%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%221350%22%20cy%3D%2261%22%20r%3D%220.65%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%22680%22%20cy%3D%22631%22%20r%3D%220.65%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%221242%22%20cy%3D%22273%22%20r%3D%220.65%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%221500%22%20cy%3D%22555%22%20r%3D%220.65%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%221390%22%20cy%3D%22453%22%20r%3D%220.65%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%22336%22%20cy%3D%2279%22%20r%3D%220.65%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%22450%22%20cy%3D%22537%22%20r%3D%221%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%221156%22%20cy%3D%22691%22%20r%3D%220.65%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%22982%22%20cy%3D%22269%22%20r%3D%220.65%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%221144%22%20cy%3D%227%22%20r%3D%220.65%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%221322%22%20cy%3D%22641%22%20r%3D%220.65%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%22108%22%20cy%3D%22235%22%20r%3D%220.65%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%2262%22%20cy%3D%22533%22%20r%3D%220.65%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%22992%22%20cy%3D%22671%22%20r%3D%220.65%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%22786%22%20cy%3D%22281%22%20r%3D%220.65%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%22980%22%20cy%3D%22179%22%20r%3D%221%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%22998%22%20cy%3D%2229%22%20r%3D%220.65%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%22584%22%20cy%3D%22519%22%20r%3D%220.65%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%221274%22%20cy%3D%22513%22%20r%3D%220.65%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%221468%22%20cy%3D%22571%22%20r%3D%220.65%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%22142%22%20cy%3D%22517%22%20r%3D%220.65%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%221072%22%20cy%3D%22415%22%20r%3D%220.65%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%221122%22%20cy%3D%22185%22%20r%3D%220.65%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%22356%22%20cy%3D%22547%22%20r%3D%220.65%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%221526%22%20cy%3D%2213%22%20r%3D%221%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%221496%22%20cy%3D%22327%22%20r%3D%220.65%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%22394%22%20cy%3D%22689%22%20r%3D%220.65%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%22396%22%20cy%3D%22331%22%20r%3D%220.65%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%22478%22%20cy%3D%22709%22%20r%3D%220.65%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%22384%22%20cy%3D%22191%22%20r%3D%220.65%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%22265%22%20r%3D%220.65%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%22692%22%20cy%3D%2267%22%20r%3D%220.65%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%22262%22%20cy%3D%22589%22%20r%3D%220.65%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%221128%22%20cy%3D%22695%22%20r%3D%221%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%221114%22%20cy%3D%22177%22%20r%3D%220.65%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%221244%22%20cy%3D%22315%22%20r%3D%220.65%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%221262%22%20cy%3D%22149%22%20r%3D%220.65%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%22976%22%20cy%3D%22111%22%20r%3D%220.65%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%221410%22%20cy%3D%22281%22%20r%3D%220.65%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%221284%22%20cy%3D%22547%22%20r%3D%220.65%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%22573%22%20r%3D%220.65%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%22760%22%20cy%3D%22151%22%20r%3D%220.65%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%22810%22%20cy%3D%22193%22%20r%3D%221%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%22684%22%20cy%3D%22347%22%20r%3D%220.65%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%221022%22%20cy%3D%22101%22%20r%3D%220.65%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%22736%22%20cy%3D%22207%22%20r%3D%220.65%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%2218%22%20cy%3D%22601%22%20r%3D%220.65%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%22468%22%20cy%3D%2299%22%20r%3D%220.65%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%22294%22%20cy%3D%22205%22%20r%3D%220.65%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%221288%22%20cy%3D%22103%22%20r%3D%220.65%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%221466%22%20cy%3D%22449%22%20r%3D%220.65%22%20opacity%3D%220.32%22%2F%3E%3Ccircle%20cx%3D%221276%22%20cy%3D%22315%22%20r%3D%221%22%20opacity%3D%220.36%22%2F%3E%3Ccircle%20cx%3D%22782%22%20cy%3D%22549%22%20r%3D%220.65%22%20opacity%3D%220.18%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-size: 1600px 1000px;
+  mask-image: linear-gradient(#000 20%, transparent 78%);
+}
+
+.signature {
+  opacity: 1;
+  transition: opacity 320ms ease 80ms;
+}
+.signature svg {
+  filter: drop-shadow(0 18px 60px rgb(215 198 167 / 12%));
+}
+
+.continue {
+  position: absolute;
+  bottom: max(32px, env(safe-area-inset-bottom));
+  padding: 12px 16px;
+  min-height: 44px;
+  font-size: 12px;
+  color: #b5bdc8;
+  cursor: pointer;
+}
+.continue span {
+  margin-left: 8px;
+  color: #ddc38e;
+}
+.continue:hover {
+  color: var(--portfolio-ink);
+}
+
+.overlay[data-phase="revealing"] {
+  pointer-events: none;
+}
+.overlay[data-phase="revealing"] .veil,
+.overlay[data-phase="revealing"] .signature {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .veil,
+  .signature,
+  .ambient {
+    transition-duration: 160ms;
+    transition-delay: 0ms;
+  }
+  .firefly {
+    animation: none;
+  }
+}

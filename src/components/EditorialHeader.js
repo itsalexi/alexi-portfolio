@@ -8,7 +8,10 @@ export default function EditorialHeader({
   const visibleMeta = meta.filter(Boolean);
 
   return (
-    <header className={`mb-9 py-10 sm:py-14 ${className}`}>
+    <header
+      data-page-introduction
+      className={`mb-9 py-10 sm:py-14 ${className}`}
+    >
       <p className="quiet-label mb-5">{eyebrow}</p>
       <h1 className="max-w-4xl text-balance text-[clamp(3.2rem,8vw,7rem)] font-semibold leading-[0.86] tracking-[-0.018em] text-[var(--portfolio-ink)]">
         {title}

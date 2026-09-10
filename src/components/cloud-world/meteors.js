@@ -124,6 +124,7 @@ export function createMeteors(T, scene) {
     return { mesh, material, head, headMaterial, wake, ...spec };
   });
   return {
+    streaks: meteors.map(({ mesh, head }) => ({ mesh, head })),
     update(time) {
       for (const meteor of meteors) {
         const phase = (time + meteor.offset) % meteor.period,

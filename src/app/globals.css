@@ -135,6 +135,7 @@
   }
   html {
     scroll-behavior: smooth;
+    scrollbar-gutter: stable;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: var(--portfolio-bg);
@@ -222,39 +223,6 @@
     color: var(--portfolio-ink-faint);
   }
 
-  .preloader-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 80;
-    display: grid;
-    place-items: center;
-    color: var(--portfolio-ink);
-    background:
-      radial-gradient(
-        circle at 50% 46%,
-        rgba(215, 198, 167, 0.09),
-        transparent 28rem
-      ), var(--portfolio-bg);
-    transition:
-      opacity 560ms var(--ease-out-expo),
-      transform 560ms var(--ease-out-expo);
-    will-change: opacity, transform;
-  }
-
-  html[data-preloader-seen="true"] .preloader-overlay {
-    display: none;
-  }
-
-  .preloader-overlay[data-phase="fading"] {
-    opacity: 0;
-    transform: translateY(-6px);
-    pointer-events: none;
-  }
-
-  .preloader-overlay svg {
-    filter: drop-shadow(0 18px 60px rgba(215, 198, 167, 0.12));
-  }
-
   .loader-path {
     fill: none;
     stroke: currentColor;
@@ -263,25 +231,47 @@
     stroke-linejoin: round;
     stroke-dasharray: 100;
     stroke-dashoffset: 100;
-    animation: loader-draw 1350ms var(--ease-out-expo) 120ms forwards;
+    opacity: 0;
+    /* A gentle start keeps the pen from jumping across the first few frames. */
+    animation: loader-draw 1600ms cubic-bezier(0.32, 0, 0.48, 1) forwards;
+    /* Hold only until the loader's first frame, independently of hydration. */
+    animation-play-state: paused;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .preloader-overlay {
-    transition-duration: 1ms;
-  }
-
   .loader-path {
     animation: none;
     stroke-dashoffset: 0;
+    opacity: 1;
   }
 }
 
 @keyframes loader-draw {
+  from {
+    opacity: 0;
+    stroke-dashoffset: 100;
+  }
+  4% {
+    opacity: 1;
+  }
   to {
+    opacity: 1;
     stroke-dashoffset: 0;
   }
+}
+
+html[data-preloader-phase="revealing"] [data-page-introduction] {
+  animation: introduction-focus 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes introduction-focus {
+  from { opacity: 0; filter: blur(4px); transform: translateY(6px); }
+  to { opacity: 1; filter: none; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-preloader-phase="revealing"] [data-page-introduction] { animation: none; }
 }
 
 @keyframes spotlight {
@@ -378,6 +368,9 @@
 }
 .cloud-world[data-ready="true"] {
   opacity: 1;
+}
+html[data-preloader-ready="false"] .cloud-world {
+  transition: none;
 }
 .cloud-world canvas {
   display: block;

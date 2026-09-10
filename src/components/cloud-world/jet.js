@@ -41,6 +41,9 @@ export function createDistantJet(T, scene) {
     return { mesh, material, offset };
   });
   return {
+    jet,
+    trails,
+    trailOpacity: 0.24,
     update(time) {
       const x = ((time * 0.42 + 29) % 120) - 60;
       const y = 10.8 + Math.sin(time * 0.018) * 0.3;

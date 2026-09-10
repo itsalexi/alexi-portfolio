@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { beginSceneLoad } from "@/lib/sceneReadiness";
+import { createAmbientEntrance } from "./cloud-world/ambientEntrance";
 import { createSkyDetails } from "./cloud-world/details";
 import { createFireflies } from "./cloud-world/fireflies";
 import { createDistantJet } from "./cloud-world/jet";
 import { createSkyLife } from "./cloud-world/life";
+import { createPlaneEntrance } from "./cloud-world/planeEntrance";
 import { screenVertex, skyFragment } from "./cloud-world/shaders";
 import { CLOUD_VOLUME, createCloudVolume } from "./cloud-world/volume";
 
@@ -17,12 +20,16 @@ export default function CloudWorld({ paused, onReady }) {
   }, [paused]);
 
   useEffect(() => {
+    const settleScene = beginSceneLoad("home");
+    const controller = new AbortController();
     let cancelled = false;
     let cleanup = () => {};
     import("three")
       .then(async (T) => {
         if (cancelled) return;
-        const response = await fetch(CLOUD_VOLUME.url);
+        const response = await fetch(CLOUD_VOLUME.url, {
+          signal: controller.signal,
+        });
         if (!response.ok) throw new Error("Cloud material could not load");
         const stream = response.body.pipeThrough(
           new DecompressionStream("gzip"),
@@ -45,12 +52,20 @@ export default function CloudWorld({ paused, onReady }) {
         try {
           renderer = new T.WebGLRenderer({ antialias: false, alpha: false });
         } catch {
+          settleScene("fallback");
           setUnavailable(true);
           return;
         }
+        renderer.debug.onShaderError = () => {
+          throw new Error("The sky shaders could not compile");
+        };
         renderer.autoClear = false;
         renderer.setClearColor(0x101c32);
         host.appendChild(renderer.domElement);
+        cleanup = () => {
+          renderer.dispose();
+          renderer.domElement.remove();
+        };
         const scene = new T.Scene();
         const clouds = createCloudVolume(T, atlas);
         const details = createSkyDetails(T, scene);
@@ -62,6 +77,18 @@ export default function CloudWorld({ paused, onReady }) {
         const target = new T.Vector3(0, 2, -8);
         camera.lookAt(target);
         camera.updateMatrixWorld();
+        const entrance = createPlaneEntrance(T, {
+          plane: details.plane,
+          camera,
+          host,
+        });
+        const ambientEntrance = createAmbientEntrance(T, {
+          camera,
+          host,
+          fireflies,
+          streaks: details.streaks,
+          jet,
+        });
         const uniforms = {
           uTime: { value: 0 },
           uAspect: { value: 1 },
@@ -87,6 +114,15 @@ export default function CloudWorld({ paused, onReady }) {
         let last = 0;
         let frame;
         let first = true;
+        let signatureDrawn = false;
+        // Shader compilation/texture upload must not interrupt the pen stroke.
+        Promise.allSettled(
+          (document.querySelector(".loader-path")?.getAnimations() ?? []).map(
+            (animation) => animation.finished,
+          ),
+        ).then(() => {
+          signatureDrawn = true;
+        });
         let suspended = true;
         let scroll = 0;
         let journey = 0;
@@ -113,6 +149,8 @@ export default function CloudWorld({ paused, onReady }) {
           details.setMobile(w < 760);
           life.setMobile(w < 760);
           fireflies.setMobile(w < 760);
+          entrance.resize();
+          ambientEntrance.resize();
           onScroll();
           dirty = true;
         };
@@ -202,13 +240,14 @@ export default function CloudWorld({ paused, onReady }) {
         window.addEventListener("resize", onScroll);
         document.addEventListener("visibilitychange", markDirty);
         media.addEventListener("change", onMotionChange);
-        resize();
-
         function draw(now) {
           frame = requestAnimationFrame(draw);
           const dt = last ? Math.min((now - last) / 1000, 0.08) : 1 / 60;
           last = now;
-          if (!inView || document.hidden || (!sceneVisible && !first)) {
+          if (document.hidden || ((!inView || !sceneVisible) && !first)) {
+            entrance.cancel();
+            ambientEntrance.dispose();
+            if (!first) settleScene("ready");
             suspended = true;
             return;
           }
@@ -220,6 +259,11 @@ export default function CloudWorld({ paused, onReady }) {
             suspended = false;
           }
           const still = pausedRef.current || media.matches;
+          if (still) {
+            entrance.cancel();
+            ambientEntrance.dispose();
+            if (!first) settleScene("ready");
+          }
           if (still && !dirty && !first) return;
           if (!still) elapsed += dt;
           uniforms.uTime.value = elapsed;
@@ -250,28 +294,62 @@ export default function CloudWorld({ paused, onReady }) {
           fireflies.update(elapsed);
           camera.lookAt(target);
           camera.updateMatrixWorld();
-          clouds.render(
-            renderer,
-            sky,
-            screenCamera,
-            scene,
-            camera,
+          entrance.update(
+            dt,
+            !still && inView && sceneVisible && scroll < 0.04,
+          );
+          const loaderOpaque =
+            document.documentElement.dataset.preloaderPhase === "loading";
+          const renderFrame = !loaderOpaque || (first && signatureDrawn);
+          try {
+            // Prepare the GPU after the stroke, then leave its expensive cloud
+            // pass idle behind the opaque veil. Foreground details keep moving.
+            if (renderFrame) {
+              clouds.render(
+                renderer,
+                sky,
+                screenCamera,
+                scene,
+                camera,
+                elapsed,
+                fireflies.scene,
+              );
+            }
+            if (first && renderFrame && renderer.getContext().isContextLost())
+              throw new Error(
+                "The sky context was lost before its first frame",
+              );
+          } catch {
+            sceneLost = true;
+            onScroll();
+            cleanup();
+            settleScene("fallback");
+            if (!cancelled) setUnavailable(true);
+            return;
+          }
+          entrance.draw();
+          ambientEntrance.draw(
             elapsed,
-            fireflies.scene,
+            dt,
+            !still && inView && sceneVisible && scroll < 0.04,
           );
           dirty = false;
-          if (first) {
+          if (first && renderFrame) {
             first = false;
             host.dataset.ready = "true";
             onReady();
           }
+          if (!first && entrance.ready && ambientEntrance.ready)
+            settleScene("ready");
         }
-        frame = requestAnimationFrame(draw);
         const contextLost = (event) => {
           event.preventDefault();
           cancelAnimationFrame(frame);
+          entrance.dispose();
+          ambientEntrance.dispose();
           sceneLost = true;
           onScroll();
+          settleScene("fallback");
           setUnavailable(true);
         };
         renderer.domElement.addEventListener("webglcontextlost", contextLost);
@@ -289,6 +367,8 @@ export default function CloudWorld({ paused, onReady }) {
             "webglcontextlost",
             contextLost,
           );
+          entrance.dispose();
+          ambientEntrance.dispose();
           geometry.dispose();
           material.dispose();
           clouds.dispose();
@@ -299,12 +379,19 @@ export default function CloudWorld({ paused, onReady }) {
           renderer.dispose();
           renderer.domElement.remove();
         };
+        resize();
+        frame = requestAnimationFrame(draw);
       })
       .catch(() => {
-        if (!cancelled) setUnavailable(true);
+        cleanup();
+        if (!cancelled) {
+          settleScene("fallback");
+          setUnavailable(true);
+        }
       });
     return () => {
       cancelled = true;
+      controller.abort();
       cleanup();
     };
   }, [onReady]);

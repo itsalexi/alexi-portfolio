@@ -89,10 +89,13 @@ export function createSkyDetails(T, scene) {
   const turn = new T.Vector3();
   const previousRotation = new T.Quaternion();
   const flightRotation = new T.Quaternion();
+  const normalFlightRotation = new T.Quaternion();
   const meteors = createMeteors(T, scene);
   let mobile = false;
   let lastTime = null;
   return {
+    plane,
+    streaks: meteors.streaks,
     position: plane.position,
     setMobile(value) {
       mobile = value;
@@ -116,7 +119,8 @@ export function createSkyDetails(T, scene) {
       next.x *= 1 - journey * 0.3;
       tangent.normalize();
       next.normalize();
-      previousRotation.copy(plane.quaternion);
+      // Keep the underlying flight independent of the temporary entrance pose.
+      previousRotation.copy(normalFlightRotation);
       plane.lookAt(look.copy(plane.position).add(tangent));
       plane.rotateY(Math.PI);
       // Bank into the actual turn, then ease the rotation through each bend.
@@ -130,6 +134,7 @@ export function createSkyDetails(T, scene) {
           .copy(previousRotation)
           .slerp(flightRotation, 1 - Math.exp(-dt * 6));
       }
+      normalFlightRotation.copy(plane.quaternion);
       meteors.update(time);
     },
     dispose() {

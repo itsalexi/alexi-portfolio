@@ -16,17 +16,8 @@ export default function PageTransition({ children }) {
     <motion.div
       key={pathname}
       className={hasAtmosphere ? skyStyles.shell : undefined}
-      initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
-      animate={
-        isReady
-          ? {
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-              transitionEnd: { filter: "none" },
-            }
-          : { opacity: 0, y: 10, filter: "blur(4px)" }
-      }
+      initial={isReady ? { opacity: 0, y: 10 } : false}
+      animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.52,
         ease: [0.16, 1, 0.3, 1],

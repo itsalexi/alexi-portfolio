@@ -1,13 +1,16 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { beginSceneLoad } from "@/lib/sceneReadiness";
 import { screenVertex, skyFragment } from "./cloud-world/shaders";
 
 /** A quiet version of the homepage sky for the reading pages. */
 export default function MoonlitSky({ className }) {
   const hostRef = useRef(null);
   useEffect(() => {
+    const settleScene = beginSceneLoad("moonlit");
     let cancelled = false;
+    let failed = false;
     let cleanup = () => {};
     import("three")
       .then((T) => {
@@ -17,6 +20,10 @@ export default function MoonlitSky({ className }) {
           alpha: false,
           antialias: false,
         });
+        renderer.debug.onShaderError = () => {
+          throw new Error("The moonlit sky shaders could not compile");
+        };
+        cleanup = () => renderer.dispose();
         const geometry = new T.PlaneGeometry(2, 2);
         const uniforms = {
           uTime: { value: 0 },
@@ -36,6 +43,7 @@ export default function MoonlitSky({ className }) {
         scene.add(new T.Mesh(geometry, material));
         const reduced = matchMedia("(prefers-reduced-motion: reduce)");
         let visible = true,
+          first = true,
           frame = null,
           timer = null,
           last = 0;
@@ -48,16 +56,36 @@ export default function MoonlitSky({ className }) {
         };
         const request = () => {
           timer = null;
-          if (!cancelled && visible && !document.hidden && frame === null)
+          if (
+            !cancelled &&
+            !failed &&
+            (visible || first) &&
+            !document.hidden &&
+            frame === null
+          )
             frame = requestAnimationFrame(draw);
         };
         function draw(now) {
           frame = null;
-          if (cancelled || !visible || document.hidden) return;
+          if (cancelled || failed || (!visible && !first) || document.hidden)
+            return;
           if (!reduced.matches && last)
             uniforms.uTime.value += Math.min((now - last) / 1000, 0.1);
           last = now;
-          renderer.render(scene, camera);
+          try {
+            renderer.render(scene, camera);
+            if (first && renderer.getContext().isContextLost())
+              throw new Error("The moonlit sky context was lost");
+          } catch {
+            failed = true;
+            settleScene("fallback");
+            cleanup();
+            return;
+          }
+          if (first) {
+            first = false;
+            settleScene("ready");
+          }
           // Stars and thin high clouds move slowly; they don't need a 60 Hz pass.
           if (!reduced.matches) timer = setTimeout(request, 1000 / 24);
         }
@@ -81,6 +109,12 @@ export default function MoonlitSky({ className }) {
           stop();
           request();
         };
+        const contextLost = (event) => {
+          event.preventDefault();
+          failed = true;
+          settleScene("fallback");
+          cleanup();
+        };
         const observer = new ResizeObserver(resize);
         const intersection = new IntersectionObserver(([entry]) => {
           visible = entry.isIntersecting;
@@ -92,6 +126,10 @@ export default function MoonlitSky({ className }) {
           intersection.disconnect();
           document.removeEventListener("visibilitychange", resume);
           reduced.removeEventListener("change", resume);
+          renderer.domElement.removeEventListener(
+            "webglcontextlost",
+            contextLost,
+          );
           geometry.dispose();
           material.dispose();
           renderer.dispose();
@@ -102,11 +140,14 @@ export default function MoonlitSky({ className }) {
         intersection.observe(host);
         document.addEventListener("visibilitychange", resume);
         reduced.addEventListener("change", resume);
+        renderer.domElement.addEventListener("webglcontextlost", contextLost);
         resize();
       })
       .catch(() => {
         // The CSS sky remains visible if WebGL is unavailable.
+        failed = true;
         cleanup();
+        if (!cancelled) settleScene("fallback");
       });
     return () => {
       cancelled = true;

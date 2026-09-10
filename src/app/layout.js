@@ -109,17 +109,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html
+      lang="en"
+      className="dark"
+      data-preloader-ready="false"
+      suppressHydrationWarning
+    >
       <head>
-        <script
-          id="preloader-session-state"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: This only mirrors a local sessionStorage flag onto the root element before hydration.
-          dangerouslySetInnerHTML={{
-            __html:
-              'try{if(window.sessionStorage.getItem("preloader-seen")==="1"){document.documentElement.dataset.preloaderSeen="true";document.documentElement.dataset.preloaderReady="true";}else{document.documentElement.dataset.preloaderReady="false";}}catch(error){document.documentElement.dataset.preloaderReady="false";}',
-          }}
-        />
-
         {/* Structured Data - Person Schema */}
         <Script
           id="person-schema"
@@ -230,8 +226,15 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} bg-[var(--portfolio-bg)] font-sans antialiased`}
       >
         <Preloader />
+        {/* Start the visible signature without waiting for the React bundles. */}
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: Fixed local bootstrap; no interpolated data.
+          dangerouslySetInnerHTML={{
+            __html: `requestAnimationFrame(function(){var path=document.querySelector('.loader-path');if(path)for(var animation of path.getAnimations()){if(animation.playState==='paused')animation.play();}});`,
+          }}
+        />
         <BackgroundEffects />
-        <div className="relative z-10 isolate">
+        <div className="relative z-10 isolate" data-portfolio-content inert>
           <PageAtmosphere />
           <Navbar />
           <PageTransition>{children}</PageTransition>
