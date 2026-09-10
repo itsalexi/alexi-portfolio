@@ -122,17 +122,18 @@ export function createPlaneEntrance(T, { plane, camera, host }) {
       const progress = Math.min(flightTime / FLIGHT_DURATION, 1);
       const remaining = 1 - progress;
       const halfHeight = Math.tan((camera.fov * Math.PI) / 360);
+      const mobile = bounds.width < 760;
       start
         .set(
           -1.45 * 5.8 * halfHeight * camera.aspect,
-          0.03 * 5.8 * halfHeight,
+          (mobile ? 0.58 : 0.03) * 5.8 * halfHeight,
           -5.8,
         )
         .applyMatrix4(camera.matrixWorld);
       handle
         .set(
           0.45 * 6.5 * halfHeight * camera.aspect,
-          0.12 * 6.5 * halfHeight,
+          (mobile ? 0.68 : 0.12) * 6.5 * halfHeight,
           -6.5,
         )
         .applyMatrix4(camera.matrixWorld);

@@ -73,11 +73,12 @@ export function createSkyDetails(T, scene) {
   );
   const mobilePath = new T.CatmullRomCurve3(
     [
-      new T.Vector3(-1.3, -1.8, -4),
-      new T.Vector3(2, -2.2, -9),
-      new T.Vector3(4, -3, -18),
-      new T.Vector3(-2, -3.5, -15),
-      new T.Vector3(-1.8, -1.6, -4),
+      // Keep the mobile orbit in the clear sky above the introduction.
+      new T.Vector3(1.6, 7.6, -6),
+      new T.Vector3(3.2, 9.3, -13),
+      new T.Vector3(-0.4, 11, -24),
+      new T.Vector3(-2.3, 9.2, -15),
+      new T.Vector3(-0.7, 7.8, -7),
     ],
     true,
     "catmullrom",
