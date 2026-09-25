@@ -32,7 +32,12 @@ export default function HackathonCard({
   }, [images, image]);
 
   const currentSrc = gallery[0] || "";
-  const organizerLogos = ["StartupQC", "Build and Ship Philippines"];
+  const organizerLogos = [
+    "StartupQC",
+    "Build and Ship Philippines",
+    "OpenAI",
+    "eGovPH",
+  ];
   const logoCompany = organizerLogos.includes(organizer)
     ? organizer
     : ["SALBAR", "Crystal"].includes(name)

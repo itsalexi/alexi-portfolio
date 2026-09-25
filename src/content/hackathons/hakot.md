@@ -9,7 +9,7 @@ image: /images/hackathons/hakot.jpeg
 images:
   - /images/hackathons/hakot.jpeg
 imageAlt: Hakot at Ship or Be Shipped Hackathon
-order: 2
+order: 5
 link: >-
   https://www.linkedin.com/posts/alexicanamo_empty-trucks-are-costing-our-farmers-money-activity-7403373858218532864-spEj
 highlights:

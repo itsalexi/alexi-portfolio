@@ -12,7 +12,7 @@ images:
   - /images/hackathons/salbar-3.jpeg
   - /images/hackathons/salbar-4.jpeg
 imageAlt: SALBAR at the First Naga Mayoral Hackathon
-order: 1
+order: 4
 link: >-
   https://www.linkedin.com/posts/alexicanamo_while-we-didnt-win-the-crown-we-still-gained-activity-7431661669094785024-XpY
 highlights:

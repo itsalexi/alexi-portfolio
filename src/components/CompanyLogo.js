@@ -41,6 +41,32 @@ const logos = {
     className: "bg-[#f7f3ea] shadow-[inset_0_0_0_1px_rgba(47,45,43,0.12)]",
     imageBoxClassName: "h-[82%] w-[82%]",
   },
+  "OpenAI Build Week Manila": {
+    image: "/images/logos/openai.webp",
+    label: "OpenAI Build Week Manila",
+    className: "bg-[#f5f0e7] shadow-[inset_0_0_0_1px_rgba(25,25,24,0.08)]",
+    imageBoxClassName: "h-[64%] w-[64%]",
+  },
+  "eGovPH Hackathon 2026": {
+    image: "/images/logos/egovph.webp",
+    label: "eGovPH Hackathon 2026",
+    className: "bg-[#f8f8fb] shadow-[inset_0_0_0_1px_rgba(25,25,24,0.08)]",
+    imageBoxClassName: "h-full w-full",
+    imageClassName: "object-cover",
+  },
+  OpenAI: {
+    image: "/images/logos/openai.webp",
+    label: "OpenAI",
+    className: "bg-[#f5f0e7] shadow-[inset_0_0_0_1px_rgba(25,25,24,0.08)]",
+    imageBoxClassName: "h-[64%] w-[64%]",
+  },
+  eGovPH: {
+    image: "/images/logos/egovph.webp",
+    label: "eGovPH",
+    className: "bg-[#f8f8fb] shadow-[inset_0_0_0_1px_rgba(25,25,24,0.08)]",
+    imageBoxClassName: "h-full w-full",
+    imageClassName: "object-cover",
+  },
   "Build and Ship Philippines": {
     image: "/images/logos/build-and-ship.webp",
     label: "Build and Ship Philippines",

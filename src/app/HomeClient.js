@@ -73,8 +73,12 @@ const timelineCopy = {
     "Core Bot0 platform work: 8 product improvements in under a month, plus 5 reliability upgrades in one week.",
   "Sip & Scale":
     "Product systems for 1,000+ builders, 50+ events, and 20+ cities.",
+  eSalba:
+    "Won at the eGovPH 2026 Hackathon with an offline-first emergency triage system for LGUs.",
+  Yardshtick:
+    "3rd place at OpenAI Build Week Manila: one photo of a pile of stuff becomes a shareable garage sale.",
   Crystal:
-    "StartupQC finalist exploring shared team memory and faster context recovery.",
+    "StartupQC Squad 3 finalist exploring shared team memory and faster context recovery.",
   Hakot:
     "1st runner-up out of 80+ participants with an AI-assisted logistics marketplace.",
   SALBAR:
@@ -342,7 +346,9 @@ function BuilderTimeline({ talks = [], hackathons = [] }) {
   };
 
   const timelineItems = [
+    hackathonEntry("esalba"),
     findExperience("Swarm"),
+    hackathonEntry("yardshtick"),
     findExperience("Bytespace"),
     hackathonEntry("crystal"),
     hackathonEntry("salbar"),
@@ -701,8 +707,6 @@ export default function HomeClient({
           <ProductWork />
         </div>
 
-        <BuilderTimeline talks={talks} hackathons={hackathons} />
-
         <BuiltProjects projects={projects} />
 
         <ActivityPanels
@@ -710,6 +714,8 @@ export default function HomeClient({
           talks={talks}
           hackathons={hackathons}
         />
+
+        <BuilderTimeline talks={talks} hackathons={hackathons} />
 
         <AboutContactStrip />
       </main>
