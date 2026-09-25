@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import matter from "gray-matter";
 import { siteConfig } from "@/lib/seo";
 
 function fileModifiedAt(relativePath) {
@@ -24,6 +25,12 @@ function contentPages(contentDir, routePrefix, priority) {
   return fs
     .readdirSync(directory)
     .filter((file) => file.endsWith(".md"))
+    .filter((file) => {
+      const { data } = matter(
+        fs.readFileSync(path.join(directory, file), "utf8"),
+      );
+      return !data.draft;
+    })
     .map((file) => {
       const slug = file.replace(".md", "");
       const filePath = path.join(directory, file);

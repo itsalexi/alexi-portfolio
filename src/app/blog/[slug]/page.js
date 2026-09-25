@@ -18,6 +18,12 @@ export async function generateStaticParams() {
 
   return files
     .filter((file) => file.endsWith(".md"))
+    .filter((file) => {
+      const { data } = matter(
+        fs.readFileSync(path.join(blogsDirectory, file), "utf8"),
+      );
+      return !data.draft;
+    })
     .map((file) => ({
       slug: file.replace(".md", ""),
     }));
@@ -82,6 +88,15 @@ export default function BlogDetailPage({ params }) {
 
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data: frontmatter, content } = matter(fileContents);
+
+  // Drafts are previewable in dev only.
+  if (frontmatter.draft && process.env.NODE_ENV === "production") {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <p className="text-white">Blog post not found</p>
+      </div>
+    );
+  }
 
   const blog = {
     ...frontmatter,

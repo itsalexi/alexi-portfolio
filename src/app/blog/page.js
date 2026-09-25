@@ -52,6 +52,7 @@ export default function BlogPage() {
       const filePath = path.join(blogsDirectory, file);
       const fileContents = fs.readFileSync(filePath, "utf8");
       const { data: frontmatter, content } = matter(fileContents);
+      if (frontmatter.draft) return null;
 
       return {
         slug: file.replace(".md", ""),
@@ -59,6 +60,7 @@ export default function BlogPage() {
         readTime: calculateReadingTime(content),
       };
     })
+    .filter(Boolean)
     .sort((a, b) => {
       // Sort by date (newest first)
       if (a.date && b.date) {
