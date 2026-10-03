@@ -136,6 +136,29 @@ export const techStack = {
     name: "Convex",
     icon: "https://cdn.simpleicons.org/convex/EE342F",
   },
+  openai: {
+    name: "OpenAI",
+    icon: "https://cdn.simpleicons.org/openai/412991",
+  },
+  chrome: {
+    name: "Chrome Extension",
+    shortName: "Chrome",
+    icon: "https://cdn.simpleicons.org/googlechrome/4285F4",
+  },
+  esbuild: {
+    name: "esbuild",
+    icon: "https://cdn.simpleicons.org/esbuild/FFCF00",
+  },
+
+  // Testing
+  playwright: {
+    name: "Playwright",
+    icon: "https://cdn.simpleicons.org/playwright/2EAD33",
+  },
+  vitest: {
+    name: "Vitest",
+    icon: "https://cdn.simpleicons.org/vitest/6E9F18",
+  },
 };
 
 export function getTechLabel(tech) {

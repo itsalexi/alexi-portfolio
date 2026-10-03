@@ -9,9 +9,9 @@ techStack:
   - python
 liveUrl: 'https://schedule.alexi.life'
 githubUrl: 'https://github.com/itsalexi/Ateneo-Enlistment'
-image: /images/projects/ateneo-enlistment-helper-featured.webp?v=20260624
+image: /images/projects/ateneo-enlistment-helper-featured.webp?v=20261003
 featured: false
-order: 4
+order: 6
 ---
 
 #### **The Gist**

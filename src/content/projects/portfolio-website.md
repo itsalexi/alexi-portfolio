@@ -12,7 +12,7 @@ liveUrl: "https://alexi.life"
 githubUrl: null
 image: /images/projects/portfolio-website-featured.webp?v=1762341726193
 featured: false
-order: 6
+order: 8
 ---
 
 #### **The Gist**

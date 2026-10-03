@@ -9,9 +9,9 @@ techStack:
   - python
 liveUrl: null
 githubUrl: null
-image: /images/projects/ateneo-qpi-calculator-featured.webp?v=20260624
+image: /images/projects/ateneo-qpi-calculator-featured.webp?v=20261003
 featured: true
-order: 3
+order: 5
 ---
 
 #### **So, here's the deal.**

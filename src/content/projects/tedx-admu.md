@@ -11,7 +11,7 @@ liveUrl: 'https://tedxateneodemanilau.com'
 githubUrl: null
 image: /images/projects/tedx-admu-featured.webp?v=20260624
 featured: false
-order: 5
+order: 7
 ---
 #### **The Gist**
 

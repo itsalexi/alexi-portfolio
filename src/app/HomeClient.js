@@ -44,9 +44,11 @@ const productCopy = {
   },
 };
 
-const featuredProjectOrder = ["hati", "one-big-match", "ateneo-qpi-calculator"];
+const featuredProjectOrder = ["bluefolio", "hati", "one-big-match"];
 
 const projectCopy = {
+  bluefolio:
+    "A verified, portfolio-first career network for the Ateneo community. One link per person.",
   hati: "200+ completed splits and 200k+ in shared expenses tracked after 156 downloads.",
   "one-big-match":
     "Led a 10-person team through 4 live event pilots and 80+ users.",
@@ -60,6 +62,8 @@ const projectCopy = {
 };
 
 const projectLabels = {
+  bluefolio: "Career network",
+  subtext: "Chrome extension",
   hati: "iOS app",
   "one-big-match": "Event product",
   "ateneo-qpi-calculator": "Campus tool",

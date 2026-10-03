@@ -12,7 +12,7 @@ liveUrl: 'https://axie.alexi.life/'
 githubUrl: null
 image: /images/projects/axie-ui-featured.webp?v=20260624
 featured: false
-order: 7
+order: 9
 ---
 
 ## The gist

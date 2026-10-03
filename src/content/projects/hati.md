@@ -14,7 +14,7 @@ liveUrl: 'https://hati.me/download'
 githubUrl: null
 image: /images/projects/hati-featured.webp?v=20260624
 featured: true
-order: 1
+order: 3
 ---
 
 ## The gist
