@@ -14,7 +14,7 @@ techStack:
   - vitest
 liveUrl: 'https://bluefolio.app'
 githubUrl: null
-image: /images/projects/bluefolio-featured.webp?v=20261003
+image: /images/projects/bluefolio-featured.webp?v=20261003c
 featured: true
 order: 1
 ---

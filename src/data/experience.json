@@ -4,10 +4,23 @@
       "year": "2026",
       "items": [
         {
+          "type": "recognition",
+          "title": "PH100 2026",
+          "company": "StellarPH",
+          "duration": "Oct 2026",
+          "location": "Philippines",
+          "summary": "Part of the PH100 2026, StellarPH's annual list of the brightest minds under 30 in the Philippines, powered by PayMongo.",
+          "details": [
+            "Listed as Software Engineer Intern, NextPay (YC W21).",
+            "The PH100 is StellarPH's annual list of the brightest minds under 30 in the Philippines, powered by PayMongo."
+          ],
+          "skills": []
+        },
+        {
           "type": "work",
           "title": "Software Engineer Intern",
           "company": "Swarm",
-          "duration": "Jul 2026 – Present",
+          "duration": "Jul 2026 – Sep 2026",
           "location": "Manila, Philippines",
           "summary": "Building compliance tooling that maps overlapping privacy and security frameworks so evidence can be reused across them.",
           "details": [
@@ -95,7 +108,10 @@
             "Built an internal registration system that made event check-ins 75% faster across MISA events.",
             "Helped more student developers move from tutorials into shipped org tools."
           ],
-          "skills": ["Project Management", "Training and Development"]
+          "skills": [
+            "Project Management",
+            "Training and Development"
+          ]
         },
         {
           "type": "leadership",
@@ -214,7 +230,11 @@
             "Matched the site layout and navigation to the event theme and TEDx brand standards.",
             "Shipped a responsive site that made speakers, schedule, tickets, and event details easy to find."
           ],
-          "skills": ["Front-End Development", "HTML", "Web Design"]
+          "skills": [
+            "Front-End Development",
+            "HTML",
+            "Web Design"
+          ]
         }
       ]
     }

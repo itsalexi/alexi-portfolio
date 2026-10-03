@@ -104,6 +104,13 @@ const logos = {
     className: "bg-[#f7f3ea] shadow-[inset_0_0_0_1px_rgba(160,128,72,0.18)]",
     imageBoxClassName: "h-[82%] w-[82%]",
   },
+  StellarPH: {
+    image: "/images/logos/stellarph.webp",
+    label: "StellarPH",
+    className: "bg-white shadow-[inset_0_0_0_1px_rgba(25,25,24,0.08)]",
+    imageBoxClassName: "h-full w-full",
+    imageClassName: "object-cover",
+  },
   TEDxAteneoDeManila: {
     mark: "Tx",
     label: "TEDxAteneoDeManila",

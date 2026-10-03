@@ -31,7 +31,7 @@ const revealItem = {
   },
 };
 
-const productOrder = ["Swarm", "NextPay (YC W21)"];
+const productOrder = ["NextPay (YC W21)"];
 
 const productCopy = {
   Swarm: {
@@ -71,6 +71,8 @@ const projectLabels = {
 };
 
 const timelineCopy = {
+  StellarPH:
+    "Part of PH100 2026, the annual list of the brightest minds under 30 in the Philippines.",
   Swarm:
     "Compliance tooling that maps overlapping privacy and security frameworks into one graph.",
   Bytespace:
@@ -350,6 +352,7 @@ function BuilderTimeline({ talks = [], hackathons = [] }) {
   };
 
   const timelineItems = [
+    findExperience("StellarPH"),
     hackathonEntry("esalba"),
     findExperience("Swarm"),
     hackathonEntry("yardshtick"),
